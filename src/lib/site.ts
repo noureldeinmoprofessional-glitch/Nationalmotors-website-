@@ -32,16 +32,7 @@ export const NAV: NavItem[] = [
       { label: "Blu Light Mobility", href: "/brands/blu-light-mobility" },
     ],
   },
-  {
-    label: "After-Sales",
-    href: "/after-sales",
-    children: [
-      { label: "Services", href: "/after-sales#services" },
-      { label: "Spare Parts", href: "/after-sales#spare-parts" },
-      { label: "Maintenance", href: "/after-sales#maintenance" },
-      { label: "Service Centers", href: "/after-sales#centers" },
-    ],
-  },
+  { label: "After-Sales", href: "/after-sales" },
   {
     label: "News & Media",
     href: "/news",
@@ -53,10 +44,10 @@ export const NAV: NavItem[] = [
   },
   {
     label: "Locations",
-    href: "/locations",
+    href: "/locations/showrooms",
     children: [
-      { label: "Showrooms", href: "/locations#showrooms" },
-      { label: "Service Centers", href: "/locations#service-centers" },
+      { label: "Showrooms", href: "/locations/showrooms" },
+      { label: "Service Centers", href: "/locations/service-centers" },
     ],
   },
   { label: "Careers", href: "/careers" },
@@ -243,9 +234,8 @@ export const FOOTER_NAV = [
   {
     heading: "Locations",
     links: [
-      { label: "Showrooms", href: "/locations#showrooms" },
-      { label: "Service Centers", href: "/locations#service-centers" },
-      { label: "View All Locations", href: "/locations" },
+      { label: "Showrooms", href: "/locations/showrooms" },
+      { label: "Service Centers", href: "/locations/service-centers" },
     ],
   },
 ];

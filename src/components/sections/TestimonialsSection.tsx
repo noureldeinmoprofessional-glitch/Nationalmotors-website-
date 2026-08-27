@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Pause, Play, ChevronLeft, ChevronRight } from "lucide-react";
-import { useLineReveal, useReveal } from "@/lib/hooks";
+import { useReveal } from "@/lib/hooks";
 import { TESTIMONIALS } from "@/lib/site";
 import { prefersReducedMotion } from "@/lib/gsap";
 import CTAButton from "@/components/ui/CTAButton";
@@ -13,7 +13,6 @@ import VideoCard from "@/components/ui/VideoCard";
    via rAF and can be paused/nudged with the control buttons. Pauses on hover,
    focus, and when the tab is hidden, and stays still under reduced motion. */
 export default function TestimonialsSection() {
-  const headRef = useLineReveal<HTMLHeadingElement>();
   const introRef = useReveal<HTMLDivElement>({ y: 26, stagger: 0.1 });
 
   const trackRef = useRef<HTMLDivElement>(null);
@@ -80,15 +79,11 @@ export default function TestimonialsSection() {
   };
 
   return (
-    <section id="testimonials" className="nm-testi" aria-labelledby="testi-title">
+    <section id="testimonials" className="nm-testi" aria-label="Client Testimonials">
       <div className="nm-shell">
         <div className="nm-testi__head">
           <div>
-            <p className="nm-eyebrow">Client Testimonials</p>
-            <h2 ref={headRef} id="testi-title" className="nm-testi__title nm-h2">
-              <span className="nm-line-mask"><span className="nm-line-inner">Real Experiences.</span></span>
-              <span className="nm-line-mask"><span className="nm-line-inner">Lasting Partnerships.</span></span>
-            </h2>
+            <p className="nm-eyebrow nm-eyebrow--gap">Client Testimonials</p>
           </div>
           <div ref={introRef} className="nm-testi__intro">
             <p className="nm-lead" data-reveal>

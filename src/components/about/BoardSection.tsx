@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useLineReveal, useReveal, useClipReveal } from "@/lib/hooks";
+import { useReveal, useClipReveal } from "@/lib/hooks";
 import { BOARD } from "@/lib/aboutContent";
 
 function initials(name: string) {
@@ -15,7 +15,6 @@ function initials(name: string) {
 }
 
 export default function BoardSection() {
-  const headRef = useLineReveal<HTMLHeadingElement>();
   const introRef = useReveal<HTMLDivElement>({ y: 26, stagger: 0.1, start: "top 86%" });
   const chairFrameRef = useClipReveal<HTMLDivElement>({ from: "inset(0 0 100% 0)" });
   const chairBodyRef = useReveal<HTMLDivElement>({ y: 28, stagger: 0.1, start: "top 82%" });
@@ -24,14 +23,10 @@ export default function BoardSection() {
   const { chairman } = BOARD;
 
   return (
-    <section id="board" className="nm-board" aria-labelledby="board-title">
+    <section id="board" className="nm-board" aria-label="Board Members">
       <div className="nm-shell">
         <header className="nm-board__head">
-          <p className="nm-eyebrow" data-accent="sand">{BOARD.eyebrow}</p>
-          <h2 ref={headRef} id="board-title" className="nm-board__title nm-h2 nm-mask-lines">
-            <span className="nm-line-mask"><span className="nm-line-inner">Leadership That Builds</span></span>
-            <span className="nm-line-mask"><span className="nm-line-inner">Businesses, Markets &amp; Value</span></span>
-          </h2>
+          <p className="nm-eyebrow nm-eyebrow--gap" data-accent="sand">{BOARD.eyebrow}</p>
           <div ref={introRef} className="nm-board__intro">
             {BOARD.intro.map((p, i) => (
               <p key={i} className={i === 0 ? "nm-lead" : ""} data-reveal>{p}</p>

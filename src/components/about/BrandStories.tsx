@@ -202,14 +202,10 @@ export default function BrandStories() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="brands" className="nm-brands" aria-labelledby="brands-title">
+    <section ref={sectionRef} id="brands" className="nm-brands" aria-label="Our Brand Stories">
       <div className="nm-shell">
         <header className="nm-brands__head">
-          <p className="nm-eyebrow nm-eyebrow--static">{BRAND_STORIES.eyebrow}</p>
-          <h2 id="brands-title" className="nm-brands__title nm-h2">
-            <span>Every Brand Began</span>
-            <span>with a Market Need</span>
-          </h2>
+          <p className="nm-eyebrow nm-eyebrow--static nm-eyebrow--gap">{BRAND_STORIES.eyebrow}</p>
           <div className="nm-brands__intro">
             <p className="nm-lead">{BRAND_STORIES.intro}</p>
           </div>

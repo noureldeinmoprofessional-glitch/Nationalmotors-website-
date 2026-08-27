@@ -1,27 +1,22 @@
 "use client";
 
 import Image from "next/image";
-import { useLineReveal, useReveal, useParallax, useClipReveal } from "@/lib/hooks";
+import { useReveal, useParallax, useClipReveal } from "@/lib/hooks";
 import { SECTORS } from "@/lib/site";
 import CTAButton from "@/components/ui/CTAButton";
 
 export default function LegacySection() {
-  const headRef = useLineReveal<HTMLHeadingElement>();
   const bodyRef = useReveal<HTMLDivElement>({ y: 30, stagger: 0.12 });
   const imgFrameRef = useClipReveal<HTMLDivElement>();
   const parallaxRef = useParallax<HTMLDivElement>({ amount: 7 });
   const sectorsRef = useReveal<HTMLUListElement>({ y: 40, stagger: 0.1, start: "top 85%" });
 
   return (
-    <section id="legacy" className="nm-legacy" aria-labelledby="legacy-title">
+    <section id="legacy" className="nm-legacy" aria-label="Our Legacy">
       <div className="nm-shell">
         <div className="nm-legacy__grid">
           <div className="nm-legacy__intro">
-            <p className="nm-eyebrow" data-accent="sand">Our Legacy — Est. 1978</p>
-            <h2 ref={headRef} id="legacy-title" className="nm-legacy__title nm-h2">
-              <span className="nm-line-mask"><span className="nm-line-inner">Built since 1978.</span></span>
-              <span className="nm-line-mask"><span className="nm-line-inner nm-legacy__title-accent">Moving toward tomorrow.</span></span>
-            </h2>
+            <p className="nm-eyebrow nm-eyebrow--gap" data-accent="sand">Our Legacy — Est. 1978</p>
 
             <div ref={bodyRef} className="nm-legacy__copy">
               <p className="nm-lead" data-reveal>

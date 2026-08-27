@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useLineReveal, useReveal, useParallax, useClipReveal } from "@/lib/hooks";
+import { useReveal, useParallax, useClipReveal } from "@/lib/hooks";
 import CTAButton from "@/components/ui/CTAButton";
 
 const PILLARS = [
@@ -12,21 +12,16 @@ const PILLARS = [
 ];
 
 export default function AfterSalesSection() {
-  const headRef = useLineReveal<HTMLHeadingElement>();
   const bodyRef = useReveal<HTMLDivElement>({ y: 28, stagger: 0.1 });
   const frameRef = useClipReveal<HTMLDivElement>({ from: "inset(0 0 0 100%)" });
   const parallaxRef = useParallax<HTMLDivElement>({ amount: 6 });
 
   return (
-    <section id="after-sales" className="nm-aftersales" aria-labelledby="aftersales-title">
+    <section id="after-sales" className="nm-aftersales" aria-label="After-Sales Support">
       <div className="nm-shell">
         <div className="nm-aftersales__grid">
           <div className="nm-aftersales__text">
-            <p className="nm-eyebrow">After-Sales Support</p>
-            <h2 ref={headRef} id="aftersales-title" className="nm-aftersales__title nm-h2">
-              <span className="nm-line-mask"><span className="nm-line-inner">Support That</span></span>
-              <span className="nm-line-mask"><span className="nm-line-inner">Keeps You Moving</span></span>
-            </h2>
+            <p className="nm-eyebrow nm-eyebrow--gap">After-Sales Support</p>
             <div ref={bodyRef} className="nm-aftersales__body">
               <p className="nm-lead" data-reveal>
                 From scheduled maintenance to spare parts and technical support,

@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { Plus } from "lucide-react";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
-import { useIsoLayoutEffect, useLineReveal, useReveal } from "@/lib/hooks";
+import { useIsoLayoutEffect, useReveal } from "@/lib/hooks";
 import { FAQS } from "@/lib/site";
 import CTAButton from "@/components/ui/CTAButton";
 
@@ -79,20 +79,15 @@ function FaqItem({
 
 export default function FaqSection() {
   const [openIdx, setOpenIdx] = useState<number | null>(0);
-  const headRef = useLineReveal<HTMLHeadingElement>();
   const introRef = useReveal<HTMLDivElement>({ y: 24, stagger: 0.1 });
   const listRef = useReveal<HTMLDivElement>({ y: 30, stagger: 0.08, start: "top 82%" });
 
   return (
-    <section id="faq" className="nm-faq" aria-labelledby="faq-title">
+    <section id="faq" className="nm-faq" aria-label="Frequently Asked Questions">
       <div className="nm-shell">
         <div className="nm-faq__head">
           <div>
-            <p className="nm-eyebrow">Frequently Asked Questions</p>
-            <h2 ref={headRef} id="faq-title" className="nm-faq__title nm-h2">
-              <span className="nm-line-mask"><span className="nm-line-inner">Questions about National</span></span>
-              <span className="nm-line-mask"><span className="nm-line-inner">Motors? Start here.</span></span>
-            </h2>
+            <p className="nm-eyebrow nm-eyebrow--gap">Frequently Asked Questions</p>
           </div>
           <div ref={introRef} className="nm-faq__intro">
             <p className="nm-lead" data-reveal>

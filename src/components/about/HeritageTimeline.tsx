@@ -1,22 +1,18 @@
 "use client";
 
-import { useLineReveal, useReveal } from "@/lib/hooks";
+import { useReveal } from "@/lib/hooks";
 import { HERITAGE } from "@/lib/aboutContent";
 
 export default function HeritageTimeline() {
-  const headRef = useLineReveal<HTMLHeadingElement>();
   const yearRef = useReveal<HTMLDivElement>({ y: 60, duration: 1.2, start: "top 85%" });
   const copyRef = useReveal<HTMLDivElement>({ y: 30, stagger: 0.14, start: "top 82%" });
   const lineRef = useReveal<HTMLOListElement>({ y: 26, stagger: 0.12, start: "top 85%" });
 
   return (
-    <section id="story" className="nm-heritage" aria-labelledby="heritage-title">
+    <section id="story" className="nm-heritage" aria-label="Our Story">
       <div className="nm-shell">
         <header className="nm-heritage__head">
-          <p className="nm-eyebrow" data-accent="sand">{HERITAGE.eyebrow}</p>
-          <h2 ref={headRef} id="heritage-title" className="nm-heritage__title nm-h2 nm-mask-lines">
-            <span className="nm-line-mask"><span className="nm-line-inner">{HERITAGE.title}</span></span>
-          </h2>
+          <p className="nm-eyebrow nm-eyebrow--gap" data-accent="sand">{HERITAGE.eyebrow}</p>
         </header>
 
         <div className="nm-heritage__grid">

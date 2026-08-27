@@ -196,12 +196,7 @@ export default function AboutHero() {
       <div className="nm-ah__overlay" aria-hidden="true" />
 
       <div className="nm-ah__content nm-shell">
-        <p className="nm-eyebrow" data-ah-fade>{ABOUT_HERO.eyebrow}</p>
-        <h1 className="nm-ah__title nm-mask-lines">
-          {ABOUT_HERO.titleLines.map((line, i) => (
-            <span key={i} className="nm-line-mask"><span className="nm-line-inner">{line}</span></span>
-          ))}
-        </h1>
+        <h1 className="nm-eyebrow" data-ah-fade>{ABOUT_HERO.eyebrow}</h1>
         <p className="nm-ah__intro" data-ah-fade>
           <span className="nm-sr-only">{ABOUT_HERO.intro}</span>
           <span className="nm-ah__intro-inner" aria-hidden="true">

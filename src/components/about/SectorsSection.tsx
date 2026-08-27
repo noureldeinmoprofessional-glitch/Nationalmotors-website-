@@ -2,23 +2,18 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { useLineReveal, useReveal } from "@/lib/hooks";
+import { useReveal } from "@/lib/hooks";
 import { SECTORS } from "@/lib/aboutContent";
 
 export default function SectorsSection() {
-  const headRef = useLineReveal<HTMLHeadingElement>();
   const listRef = useReveal<HTMLUListElement>({ y: 40, stagger: 0.1, start: "top 80%" });
   const [active, setActive] = useState(0);
 
   return (
-    <section id="sectors" className="nm-sectors" aria-labelledby="sectors-title">
+    <section id="sectors" className="nm-sectors" aria-label="Our Sectors">
       <div className="nm-shell">
         <header className="nm-sectors__head">
-          <p className="nm-eyebrow">Our Sectors</p>
-          <h2 ref={headRef} id="sectors-title" className="nm-sectors__title nm-h2 nm-mask-lines">
-            <span className="nm-line-mask"><span className="nm-line-inner">More than</span></span>
-            <span className="nm-line-mask"><span className="nm-line-inner">automotive.</span></span>
-          </h2>
+          <p className="nm-eyebrow nm-eyebrow--gap">Our Sectors</p>
         </header>
 
         <div className="nm-sectors__grid">
