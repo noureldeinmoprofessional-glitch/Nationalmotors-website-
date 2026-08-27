@@ -14,7 +14,6 @@ export default function ContactView() {
   const heroBodyRef = useReveal<HTMLDivElement>({ y: 22, stagger: 0.1, start: "top 94%" });
   const introRef = useReveal<HTMLDivElement>({ y: 22, stagger: 0.1, start: "top 86%" });
   const formRef = useReveal<HTMLFormElement>({ y: 26, stagger: 0.07, start: "top 84%" });
-  const noticeRef = useReveal<HTMLDivElement>({ y: 20, start: "top 90%" });
 
   const [form, setForm] = useState({ name: "", phone: "", brand: "", inquiry: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -128,19 +127,13 @@ export default function ContactView() {
                       <><span className="nm-btn__text">{t.submit}</span><span className="nm-btn__arrow" aria-hidden="true"><ArrowRight strokeWidth={1.75} /></span></>
                     )}
                   </button>
+                  <p className="nm-ct-form__notice" data-reveal>
+                    <span className="nm-ct-form__notice-label">{t.noticeLabel}</span>
+                    {t.notice}
+                  </p>
                 </div>
               </form>
             )}
-          </div>
-        </div>
-      </section>
-
-      {/* Short notice */}
-      <section className="nm-ct-notice-sec" aria-label={t.noticeLabel}>
-        <div className="nm-shell">
-          <div ref={noticeRef} className="nm-ct-notice">
-            <span className="nm-ct-notice__label" data-reveal>{t.noticeLabel}</span>
-            <p className="nm-ct-notice__body" data-reveal>{t.notice}</p>
           </div>
         </div>
       </section>

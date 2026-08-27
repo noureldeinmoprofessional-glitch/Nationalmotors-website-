@@ -1,82 +1,93 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
-import { useReveal, useClipReveal, useLineReveal } from "@/lib/hooks";
-import { NewsroomHero, NewsroomContact } from "./NewsroomParts";
+import { ArrowRight } from "lucide-react";
+import { useReveal } from "@/lib/hooks";
+import { NewsroomHero } from "./NewsroomParts";
 import { ARTICLES } from "@/lib/newsroomData";
+import { ARTICLES_LIST, ARTICLE_TOPICS, type Article } from "@/lib/articlesData";
 
-// Placeholder blocks — clearly marked, NOT presented as published articles.
-// Topics are the real coverage areas from the approved description (slide 38).
-const BLOCKS = [
-  { topic: "Commercial Mobility", image: "/images/about-hero/automotive.jpg" },
-  { topic: "Electric Vehicles", image: "/images/hero/farizon-v6e.png" },
-  { topic: "Business & Sectors", image: "/images/about-hero/real-estate.jpg" },
-];
-
-function FeaturedPlaceholder() {
-  const headRef = useLineReveal<HTMLHeadingElement>({ start: "top 86%" });
-  const bodyRef = useReveal<HTMLDivElement>({ y: 22, stagger: 0.09, start: "top 84%" });
+// One archive card: cover image is the dominant element, title beneath.
+// The whole card is a link; per the PPTX, articles open in their own window.
+function ArticleCard({ a }: { a: Article }) {
   return (
-    <section className="nm-ar-feat-sec" aria-label="Articles coming soon">
-      <div className="nm-shell">
-        <div ref={bodyRef} className="nm-ar-feat">
-          <span className="nm-ar-soon-tag" data-reveal>Coming Soon</span>
-          <h2 ref={headRef} className="nm-ar-feat__title nm-mask-lines">
-            <span className="nm-line-mask"><span className="nm-line-inner">The first insights</span></span>
-            <span className="nm-line-mask"><span className="nm-line-inner">are in preparation.</span></span>
-          </h2>
-          <p className="nm-lead nm-ar-feat__body" data-reveal>
-            Our editorial team is preparing informative and educational articles across the areas National Motors operates in. They will appear here soon.
-          </p>
-          <ul className="nm-ar-topics" data-reveal>
-            {ARTICLES.placeholderTopics.map((t) => (
-              <li key={t}>{t}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </section>
+    <Link
+      href={`/articles/${a.slug}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="nm-arc-card"
+      data-reveal
+      data-cursor="VIEW"
+      aria-label={`${a.title} — opens in a new window`}
+    >
+      <span className="nm-arc-card__media">
+        <Image
+          src={a.coverImage}
+          alt={a.coverAlt ?? ""}
+          fill
+          loading="lazy"
+          sizes="(max-width: 720px) 100vw, (max-width: 1080px) 50vw, 33vw"
+          className="nm-arc-card__img"
+          style={{ objectFit: "cover", objectPosition: "50% 50%" }}
+        />
+        <span className="nm-arc-card__scrim" aria-hidden="true" />
+      </span>
+      <span className="nm-arc-card__body">
+        <h3 className="nm-arc-card__title">{a.title}</h3>
+        <span className="nm-arc-card__cue" aria-hidden="true">
+          Read Article
+          <ArrowRight strokeWidth={1.7} />
+        </span>
+      </span>
+    </Link>
   );
 }
 
-function ArchivePlaceholders() {
-  const headRef = useReveal<HTMLDivElement>({ y: 18, start: "top 90%" });
+// Honest empty state — shown while the PPTX supplies no articles. It is NOT a
+// fabricated article: it states the archive is in preparation and lists the
+// approved coverage areas. Replace by adding entries to ARTICLES_LIST.
+function EmptyState() {
+  const ref = useReveal<HTMLDivElement>({ y: 22, stagger: 0.08, start: "top 86%" });
   return (
-    <section className="nm-ar-archive" aria-label="Articles archive">
+    <div ref={ref} className="nm-arc__empty">
+      <span className="nm-arc__empty-tag" data-reveal>In Preparation</span>
+      <p className="nm-lead nm-arc__empty-lead" data-reveal>
+        Our editorial team is preparing informative and educational articles
+        across the areas National Motors operates in. They will appear here soon.
+      </p>
+      <ul className="nm-arc__topics" data-reveal>
+        {ARTICLE_TOPICS.map((t) => (
+          <li key={t}>{t}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function ArticlesGrid() {
+  const gridRef = useReveal<HTMLDivElement>({ y: 28, stagger: 0.09, start: "top 84%" });
+  const headRef = useReveal<HTMLDivElement>({ y: 18, start: "top 90%" });
+  const hasArticles = ARTICLES_LIST.length > 0;
+
+  return (
+    <section className="nm-arc" aria-label="Articles archive">
       <div className="nm-shell">
         <div ref={headRef} className="nm-nw-sechead">
-          <span className="nm-nw-sechead__label">The Archive</span>
+          <span className="nm-nw-sechead__label" data-reveal>The Archive</span>
         </div>
-        <div className="nm-ar-blocks">
-          {BLOCKS.map((b, i) => (
-            <ArticleBlock key={b.topic} b={b} flip={i % 2 === 1} />
-          ))}
-        </div>
+
+        {hasArticles ? (
+          <div ref={gridRef} className="nm-arc__grid">
+            {ARTICLES_LIST.map((a) => (
+              <ArticleCard key={a.id} a={a} />
+            ))}
+          </div>
+        ) : (
+          <EmptyState />
+        )}
       </div>
     </section>
-  );
-}
-
-function ArticleBlock({ b, flip }: { b: { topic: string; image: string }; flip: boolean }) {
-  const frameRef = useClipReveal<HTMLDivElement>({ from: flip ? "inset(0 100% 0 0)" : "inset(0 0 0 100%)", start: "top 82%" });
-  const bodyRef = useReveal<HTMLDivElement>({ y: 24, stagger: 0.1, start: "top 82%" });
-  return (
-    <article className={`nm-ar-block${flip ? " nm-ar-block--flip" : ""}`} aria-label={`${b.topic} — coming soon`}>
-      <div className="nm-ar-block__media">
-        <div ref={frameRef} className="nm-ar-block__frame">
-          <div className="nm-ar-block__img">
-            <Image src={b.image} alt="" fill loading="lazy" sizes="(max-width: 900px) 100vw, 52vw" style={{ objectFit: "cover", objectPosition: "50% 55%" }} />
-          </div>
-          <span className="nm-ar-block__tint" aria-hidden="true" />
-        </div>
-      </div>
-      <div ref={bodyRef} className="nm-ar-block__text">
-        <span className="nm-ar-soon-tag" data-reveal>Coming Soon</span>
-        <p className="nm-nw-index__tag nm-ar-block__topic" data-reveal>{b.topic}</p>
-        <h3 className="nm-ar-block__title" data-reveal>Insights on {b.topic.toLowerCase()} are on the way.</h3>
-        <span className="nm-ar-block__cue" data-reveal>Read Article <span aria-hidden="true">&rarr;</span></span>
-      </div>
-    </article>
   );
 }
 
@@ -84,9 +95,7 @@ export default function Articles() {
   return (
     <>
       <NewsroomHero data={ARTICLES.hero} variant="articles" />
-      <FeaturedPlaceholder />
-      <ArchivePlaceholders />
-      <NewsroomContact />
+      <ArticlesGrid />
     </>
   );
 }

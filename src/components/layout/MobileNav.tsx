@@ -100,9 +100,20 @@ export default function MobileNav({
               return (
                 <li key={item.label} data-mnav-item className="nm-mnav__row">
                   <div className="nm-mnav__rowhead">
-                    <Link href={item.href} className="nm-mnav__link" onClick={onClose} tabIndex={open ? 0 : -1}>
-                      {item.label}
-                    </Link>
+                    {item.disabled ? (
+                      <button
+                        type="button"
+                        className="nm-mnav__link nm-mnav__link--trigger"
+                        onClick={() => setExpanded(isOpen ? null : item.label)}
+                        tabIndex={open ? 0 : -1}
+                      >
+                        {item.label}
+                      </button>
+                    ) : (
+                      <Link href={item.href} className="nm-mnav__link" onClick={onClose} tabIndex={open ? 0 : -1}>
+                        {item.label}
+                      </Link>
+                    )}
                     {item.children && (
                       <button
                         className="nm-mnav__toggle"

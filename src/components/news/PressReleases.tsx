@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
 import { useReveal, useClipReveal } from "@/lib/hooks";
-import { NewsroomHero, NewsroomContact } from "./NewsroomParts";
+import { NewsroomHero } from "./NewsroomParts";
 import { PRESS } from "@/lib/newsroomData";
 
 function FeaturedRelease() {
@@ -83,7 +83,6 @@ export default function PressReleases() {
       <NewsroomHero data={PRESS.hero} variant="press" />
       <FeaturedRelease />
       <PressGrid />
-      <NewsroomContact />
     </>
   );
 }

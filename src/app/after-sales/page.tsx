@@ -3,6 +3,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import AfterSalesHero from "@/components/aftersales/AfterSalesHero";
 import ServicesGrid from "@/components/aftersales/ServicesGrid";
+import SparePartsWarranty from "@/components/aftersales/SparePartsWarranty";
 import AppointmentProvider from "@/components/aftersales/AppointmentProvider";
 import BrandLocations from "@/components/brands/BrandLocations";
 import { SERVICE_CENTERS } from "@/lib/afterSalesData";
@@ -28,6 +29,7 @@ export default function AfterSalesPage() {
         <AppointmentProvider>
           <AfterSalesHero />
           <ServicesGrid />
+          <SparePartsWarranty />
           <BrandLocations
             sectionTitle={SERVICE_CENTERS.eyebrow}
             sectionDescription={SERVICE_CENTERS.description}

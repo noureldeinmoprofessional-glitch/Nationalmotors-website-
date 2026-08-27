@@ -41,12 +41,21 @@ export default function Navbar() {
                   key={item.label}
                   className={`nm-nav__item${item.children ? " has-children" : ""}`}
                 >
-                  <Link href={item.href} className="nm-nav__link">
-                    {item.label}
-                    {item.children && (
-                      <ChevronDown className="nm-nav__caret" aria-hidden="true" />
-                    )}
-                  </Link>
+                  {item.disabled ? (
+                    <button type="button" className="nm-nav__link nm-nav__link--trigger" aria-haspopup="true">
+                      {item.label}
+                      {item.children && (
+                        <ChevronDown className="nm-nav__caret" aria-hidden="true" />
+                      )}
+                    </button>
+                  ) : (
+                    <Link href={item.href} className="nm-nav__link">
+                      {item.label}
+                      {item.children && (
+                        <ChevronDown className="nm-nav__caret" aria-hidden="true" />
+                      )}
+                    </Link>
+                  )}
                   {item.children && (
                     <div className="nm-nav__panel" role="menu">
                       <ul>

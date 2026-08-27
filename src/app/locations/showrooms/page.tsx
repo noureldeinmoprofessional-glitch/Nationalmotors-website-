@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { LocationHero, LocationExplorer, LocationContact } from "@/components/locations/Locations";
+import { LocationHero, LocationExplorer } from "@/components/locations/Locations";
 import { SHOWROOMS } from "@/lib/locationsData";
 
 export const metadata: Metadata = {
@@ -29,7 +29,6 @@ export default function ShowroomsPage() {
           sectionDescription={SHOWROOMS.sectionDescription}
           idBase="showrooms"
         />
-        <LocationContact />
       </main>
       <Footer />
     </>

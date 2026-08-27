@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { X, Play, Image as ImageIcon, Clock } from "lucide-react";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import { useIsoLayoutEffect, useReveal } from "@/lib/hooks";
-import { NewsroomHero, NewsroomContact } from "./NewsroomParts";
+import { NewsroomHero } from "./NewsroomParts";
 import { MEDIA } from "@/lib/newsroomData";
 
 type Tile = { type: string; label: string; size: "lg" | "sm"; youtubeId?: string; image?: string };
@@ -131,7 +131,6 @@ export default function Media() {
     <>
       <NewsroomHero data={MEDIA.hero} variant="media" />
       <Gallery onOpen={setActive} />
-      <NewsroomContact />
       {active && <MediaLightbox item={active} onClose={() => setActive(null)} />}
     </>
   );

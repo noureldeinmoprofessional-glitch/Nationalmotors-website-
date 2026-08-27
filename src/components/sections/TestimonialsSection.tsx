@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Pause, Play, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useReveal } from "@/lib/hooks";
 import { TESTIMONIALS } from "@/lib/site";
 import { prefersReducedMotion } from "@/lib/gsap";
@@ -56,12 +56,6 @@ export default function TestimonialsSection() {
       document.removeEventListener("visibilitychange", onVis);
     };
   }, []);
-
-  const togglePlay = () => {
-    const next = !playing;
-    setPlaying(next);
-    pausedRef.current = !next;
-  };
 
   const nudge = (dir: 1 | -1) => {
     const track = trackRef.current;
@@ -119,15 +113,6 @@ export default function TestimonialsSection() {
         <div className="nm-testi__controls" role="group" aria-label="Testimonial playback controls">
           <button type="button" className="nm-testi__ctrl" onClick={() => nudge(-1)} aria-label="Previous">
             <ChevronLeft strokeWidth={1.7} />
-          </button>
-          <button
-            type="button"
-            className="nm-testi__ctrl nm-testi__ctrl--play"
-            onClick={togglePlay}
-            aria-pressed={!playing}
-            aria-label={playing ? "Pause auto-scroll" : "Play auto-scroll"}
-          >
-            {playing ? <Pause strokeWidth={1.7} /> : <Play strokeWidth={1.7} />}
           </button>
           <button type="button" className="nm-testi__ctrl" onClick={() => nudge(1)} aria-label="Next">
             <ChevronRight strokeWidth={1.7} />

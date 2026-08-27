@@ -6,7 +6,6 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import { useIsoLayoutEffect } from "@/lib/hooks";
-import CTAButton from "@/components/ui/CTAButton";
 
 /* Our Brands — a quiet, editorial gateway. Three equal brand portals.
    No brand hierarchy, no detailed content: image + space + type + interaction.
@@ -195,18 +194,6 @@ export default function BrandsIndex() {
               <BrandPortal key={b.id} b={b} index={i} />
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* 03 — Contact CTA */}
-      <section className="nm-obr-cta" aria-labelledby="obr-cta-title">
-        <div className="nm-shell nm-obr-cta__inner">
-          <h2 id="obr-cta-title" className="nm-obr-cta__title">
-            Explore the brands behind National Motors.
-          </h2>
-          <CTAButton href="/contact" variant="primary" cursor="VIEW">
-            Contact Us
-          </CTAButton>
         </div>
       </section>
     </>

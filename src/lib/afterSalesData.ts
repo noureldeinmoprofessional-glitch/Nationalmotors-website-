@@ -54,6 +54,31 @@ export const AFTER_SALES_SERVICES = {
   ],
 };
 
+// Spare-Parts Availability + Extended Warranty (PPTX slide/page 33). Copy
+// reproduced verbatim from the approved English content. The two "Request"
+// actions direct to the existing Book-an-Appointment form (reusing its modal),
+// carrying the page-33 action label as the requested-service context.
+export const SPARE_PARTS_AVAILABILITY = {
+  eyebrow: "Spare-Parts Availability",
+  body:
+    "Download the latest National Motors spare-parts availability list to explore the parts currently listed for supported vehicles.",
+  // Downloadable document referenced on page 33. The actual PDF must be placed
+  // at this path by the client/CMS; it is intentionally not fabricated here.
+  downloadLabel: "Download Available Spare-Parts List",
+  downloadHref: "/documents/national-motors-spare-parts-availability.pdf",
+  requestLabel: "Request a Spare Part",
+};
+
+export const EXTENDED_WARRANTY = {
+  eyebrow: "Extended Warranty Request",
+  headline: "Confidence That Goes Further",
+  body:
+    "Submit your vehicle and contact details to request an eligibility review for available National Motors extended-warranty programs. Our after-sales team will review your information and contact you regarding the available options and next steps.",
+  requestLabel: "Request an Eligibility Review",
+  disclaimer:
+    "Submitting a request does not confirm extended-warranty eligibility or coverage. Approval is subject to the vehicle's brand, model, age, mileage, condition, maintenance history, technical inspection, and the terms of the available warranty program.",
+};
+
 // Booking — the approved "Book an appointment Form" (PPTX slide 56). Heading,
 // supporting copy, field labels, and the short-notice disclaimer are reproduced
 // verbatim; the form is directed to info@nationalmotorsco.com.

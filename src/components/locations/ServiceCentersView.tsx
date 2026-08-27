@@ -1,7 +1,7 @@
 "use client";
 
 import AppointmentProvider, { useAppointment } from "@/components/aftersales/AppointmentProvider";
-import { LocationHero, LocationExplorer, LocationContact, BookServiceButton } from "./Locations";
+import { LocationHero, LocationExplorer, BookServiceButton } from "./Locations";
 import { SERVICE_CENTERS } from "@/lib/locationsData";
 
 function Inner() {
@@ -16,7 +16,6 @@ function Inner() {
         idBase="service"
         onBook={() => open()}
       />
-      <LocationContact />
     </>
   );
 }

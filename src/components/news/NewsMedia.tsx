@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Play } from "lucide-react";
 import { useLineReveal, useReveal, useClipReveal, useParallax } from "@/lib/hooks";
-import CTAButton from "@/components/ui/CTAButton";
 import { NEWS_HERO, FEATURED, PRESS_INDEX, CHAPTERS } from "@/lib/newsData";
 
 /* NEWS & MEDIA — an editorial gateway. All copy verbatim from the approved
@@ -168,24 +167,6 @@ function Chapters() {
   );
 }
 
-// ---- Contact ----
-function Contact() {
-  const ref = useReveal<HTMLDivElement>({ y: 24, stagger: 0.1, start: "top 86%" });
-  return (
-    <section className="nm-nw-contact" aria-label="Contact National Motors">
-      <div ref={ref} className="nm-shell nm-nw-contact__inner">
-        <p className="nm-eyebrow nm-eyebrow--gap" data-reveal>Contact Us</p>
-        <p className="nm-lead nm-nw-contact__lead" data-reveal>
-          Have a question about our vehicles, services, or mobility solutions? Our team is here to help.
-        </p>
-        <div data-reveal>
-          <CTAButton href="/contact" variant="primary" cursor="VIEW">Contact Us</CTAButton>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export default function NewsMedia() {
   return (
     <>
@@ -193,7 +174,6 @@ export default function NewsMedia() {
       <Featured />
       <LatestPress />
       <Chapters />
-      <Contact />
     </>
   );
 }

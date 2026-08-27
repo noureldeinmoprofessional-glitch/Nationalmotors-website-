@@ -18,6 +18,10 @@ export const CONTACT = {
 export type NavItem = {
   label: string;
   href: string;
+  /** When true, the top-level label is not a link itself — it only opens the
+   *  dropdown. Used for "News & Media", whose landing page is disabled while
+   *  its sub-pages remain navigable. */
+  disabled?: boolean;
   children?: { label: string; href: string }[];
 };
 
@@ -36,6 +40,7 @@ export const NAV: NavItem[] = [
   {
     label: "News & Media",
     href: "/news",
+    disabled: true,
     children: [
       { label: "Press Releases", href: "/news/press-releases" },
       { label: "Articles & Insights", href: "/news/articles" },
@@ -224,7 +229,7 @@ export const FOOTER_NAV = [
   {
     heading: "Discover",
     links: [
-      { label: "News & Media", href: "/news" },
+      { label: "News & Media", href: "/news/press-releases" },
       { label: "Press Releases", href: "/news/press-releases" },
       { label: "Articles & Insights", href: "/news/articles" },
       { label: "Media", href: "/news/media" },

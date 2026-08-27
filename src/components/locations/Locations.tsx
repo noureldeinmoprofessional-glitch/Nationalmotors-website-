@@ -4,7 +4,6 @@ import { useState } from "react";
 import Image from "next/image";
 import { Navigation, CalendarClock, ArrowRight } from "lucide-react";
 import { useLineReveal, useReveal, useClipReveal, useParallax } from "@/lib/hooks";
-import CTAButton from "@/components/ui/CTAButton";
 import EgyptMap from "./EgyptMap";
 import type { NMLocation } from "@/lib/locationsData";
 
@@ -125,23 +124,6 @@ export function LocationExplorer({
               idBase={idBase}
             />
           </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function LocationContact() {
-  const ref = useReveal<HTMLDivElement>({ y: 24, stagger: 0.1, start: "top 86%" });
-  return (
-    <section className="nm-nw-contact" aria-label="Contact National Motors">
-      <div ref={ref} className="nm-shell nm-nw-contact__inner">
-        <p className="nm-eyebrow nm-eyebrow--gap" data-reveal>Contact Us</p>
-        <p className="nm-lead nm-nw-contact__lead" data-reveal>
-          Have a question about our vehicles, services, or mobility solutions? Our team is here to help.
-        </p>
-        <div data-reveal>
-          <CTAButton href="/contact" variant="primary" cursor="VIEW">Contact Us</CTAButton>
         </div>
       </div>
     </section>

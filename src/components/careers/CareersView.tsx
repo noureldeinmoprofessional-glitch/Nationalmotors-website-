@@ -4,7 +4,6 @@ import { useState } from "react";
 import Image from "next/image";
 import { ArrowRight, Mail } from "lucide-react";
 import { useLineReveal, useReveal, useClipReveal, useParallax } from "@/lib/hooks";
-import CTAButton from "@/components/ui/CTAButton";
 import { CAREERS } from "@/lib/careersData";
 import CVUpload, { validateCv } from "./CVUpload";
 import OpportunityGrid from "./OpportunityGrid";
@@ -54,6 +53,7 @@ function JobApplication() {
   const [cv, setCv] = useState<File | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [ready, setReady] = useState(false);
+  const [noticeAr, setNoticeAr] = useState(false);
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
@@ -146,50 +146,23 @@ function JobApplication() {
                   <span className="nm-btn__text">Apply</span>
                   <span className="nm-btn__arrow" aria-hidden="true"><ArrowRight strokeWidth={1.75} /></span>
                 </button>
+                <div className="nm-cr-form__notice" data-reveal dir={noticeAr ? "rtl" : "ltr"}>
+                  <span className="nm-cr-form__notice-head">
+                    <span className="nm-cr-form__notice-label">{noticeAr ? CAREERS.noticeTitleAr : CAREERS.noticeTitle}</span>
+                    <span className="nm-cr-form__notice-lang" role="group" aria-label="Notice language">
+                      <button type="button" className={!noticeAr ? "is-active" : ""} aria-pressed={!noticeAr} onClick={() => setNoticeAr(false)}>EN</button>
+                      <span aria-hidden="true">/</span>
+                      <button type="button" className={noticeAr ? "is-active" : ""} aria-pressed={noticeAr} lang="ar" onClick={() => setNoticeAr(true)}>ع</button>
+                    </span>
+                  </span>
+                  <p className="nm-cr-form__notice-body" lang={noticeAr ? "ar" : "en"}>
+                    {noticeAr ? CAREERS.recruitmentNoticeAr : CAREERS.recruitmentNotice}
+                  </p>
+                </div>
               </div>
             </form>
           )}
         </div>
-      </div>
-    </section>
-  );
-}
-
-// ---------- Recruitment notice (EN / AR) ----------
-function RecruitmentNotice() {
-  const ref = useReveal<HTMLDivElement>({ y: 22, stagger: 0.08, start: "top 88%" });
-  const [ar, setAr] = useState(false);
-  return (
-    <section className="nm-cr-notice-sec" aria-label={CAREERS.noticeTitle}>
-      <div className="nm-shell">
-        <div ref={ref} className="nm-cr-notice" dir={ar ? "rtl" : "ltr"}>
-          <div className="nm-cr-notice__head" data-reveal>
-            <span className="nm-cr-notice__label">{ar ? CAREERS.noticeTitleAr : CAREERS.noticeTitle}</span>
-            <div className="nm-cr-notice__lang" role="group" aria-label="Notice language">
-              <button type="button" className={!ar ? "is-active" : ""} aria-pressed={!ar} onClick={() => setAr(false)}>EN</button>
-              <span aria-hidden="true">/</span>
-              <button type="button" className={ar ? "is-active" : ""} aria-pressed={ar} lang="ar" onClick={() => setAr(true)}>ع</button>
-            </div>
-          </div>
-          <p className="nm-cr-notice__body" data-reveal lang={ar ? "ar" : "en"}>
-            {ar ? CAREERS.recruitmentNoticeAr : CAREERS.recruitmentNotice}
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function CareersContact() {
-  const ref = useReveal<HTMLDivElement>({ y: 24, stagger: 0.1, start: "top 86%" });
-  return (
-    <section className="nm-nw-contact" aria-label="Contact National Motors">
-      <div ref={ref} className="nm-shell nm-nw-contact__inner">
-        <p className="nm-eyebrow nm-eyebrow--gap" data-reveal>Contact Us</p>
-        <p className="nm-lead nm-nw-contact__lead" data-reveal>
-          Have a question about our vehicles, services, or mobility solutions? Our team is here to help.
-        </p>
-        <div data-reveal><CTAButton href="/contact" variant="primary" cursor="VIEW">Contact Us</CTAButton></div>
       </div>
     </section>
   );
@@ -201,8 +174,6 @@ export default function CareersView() {
       <CareersHero />
       <OpportunityGrid />
       <JobApplication />
-      <RecruitmentNotice />
-      <CareersContact />
     </>
   );
 }
