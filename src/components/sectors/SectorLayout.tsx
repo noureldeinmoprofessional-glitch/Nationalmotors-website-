@@ -33,10 +33,10 @@ export default function SectorLayout({ entrance, active, onSelect }: Props) {
   // Simplified, tighter spatial arrangement for small screens — reduced depth
   // and rotation, still perspectival (not a flat grid), fits one viewport.
   const MOBILE: Record<SectorId, { x: number; y: number; z: number; ry: number; scale: number }> = {
-    automotive: { x: -24, y: -23, z: 20, ry: 7, scale: 0.9 },
-    agriculture: { x: 24, y: -14, z: -10, ry: -7, scale: 0.86 },
-    "real-estate": { x: -24, y: 15, z: -10, ry: 7, scale: 0.86 },
-    csr: { x: 24, y: 24, z: 20, ry: -7, scale: 0.9 },
+    automotive: { x: -25, y: -22, z: 0, ry: 6, scale: 1 },
+    agriculture: { x: 25, y: -15, z: 0, ry: -6, scale: 1 },
+    "real-estate": { x: -25, y: 16, z: 0, ry: 6, scale: 1 },
+    csr: { x: 25, y: 23, z: 0, ry: -6, scale: 1 },
   };
 
   const settled = (id: SectorId) => {
