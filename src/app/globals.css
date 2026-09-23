@@ -4353,6 +4353,10 @@ html.nm-ready .nm-sx__nameinner { transform: translateY(118%); }
   inset: 0;
   z-index: 2;
   transform-style: preserve-3d;
+  /* The scene's own z=0 plane must not intercept clicks meant for planes
+     positioned behind it (negative translateZ). Only the planes are hit
+     targets — so every sector is hoverable/clickable regardless of depth. */
+  pointer-events: none;
 }
 
 .nm-x__plane {
@@ -4366,6 +4370,7 @@ html.nm-ready .nm-sx__nameinner { transform: translateY(118%); }
   border: 0;
   background: none;
   cursor: pointer;
+  pointer-events: auto;
   transform-style: preserve-3d;
   will-change: transform, opacity;
 }

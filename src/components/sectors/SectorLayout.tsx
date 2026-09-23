@@ -26,7 +26,7 @@ export default function SectorLayout({ entrance, active, onSelect }: Props) {
   const sceneRef = useRef<HTMLDivElement>(null);
   const planeRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const ambientRef = useRef<gsap.core.Tween[]>([]);
-  const tiltRef = useRef<{ x: (v: number) => void; y: (v: number) => void } | null>(null);
+  const parallaxRef = useRef<(() => void) | null>(null);
   const activeRef = useRef<SectorId | null>(active);
   const firstActiveRun = useRef(true);
 
@@ -100,9 +100,37 @@ export default function SectorLayout({ entrance, active, onSelect }: Props) {
         if (reduce) return;
         const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
         if (!fine) return;
-        const rx = gsap.quickTo(scene, "rotationX", { duration: 0.8, ease: "power3" });
-        const ry = gsap.quickTo(scene, "rotationY", { duration: 0.8, ease: "power3" });
-        tiltRef.current = { x: rx, y: ry };
+        // Window-level listener — the scene is pointer-events:none (so the far
+        // planes stay clickable), so we can't rely on a handler on the scene.
+        // Perspective + differing plane translateZ turn one scene tilt into
+        // real depth parallax (near planes shift more than far ones).
+        const ry = gsap.quickTo(scene, "rotationY", { duration: 0.9, ease: "power3" });
+        const rx = gsap.quickTo(scene, "rotationX", { duration: 0.9, ease: "power3" });
+        const tx = gsap.quickTo(scene, "x", { duration: 0.9, ease: "power3" });
+        const ty = gsap.quickTo(scene, "y", { duration: 0.9, ease: "power3" });
+        const onMove = (e: PointerEvent) => {
+          if (activeRef.current) return;
+          const nx = e.clientX / window.innerWidth - 0.5;
+          const ny = e.clientY / window.innerHeight - 0.5;
+          ry(nx * 10);
+          rx(-ny * 7);
+          tx(nx * 24);
+          ty(ny * 16);
+        };
+        const reset = () => {
+          ry(0);
+          rx(0);
+          tx(0);
+          ty(0);
+        };
+        window.addEventListener("pointermove", onMove, { passive: true });
+        window.addEventListener("blur", reset);
+        document.addEventListener("mouseleave", reset);
+        parallaxRef.current = () => {
+          window.removeEventListener("pointermove", onMove);
+          window.removeEventListener("blur", reset);
+          document.removeEventListener("mouseleave", reset);
+        };
       };
 
       if (reduce || entrance === "none") {
@@ -192,10 +220,11 @@ export default function SectorLayout({ entrance, active, onSelect }: Props) {
 
     return () => {
       ambientRef.current = [];
-      tiltRef.current = null;
+      parallaxRef.current?.();
+      parallaxRef.current = null;
       ctx.revert();
     };
-     
+
   }, []);
 
   // React to expand / return.
@@ -216,6 +245,8 @@ export default function SectorLayout({ entrance, active, onSelect }: Props) {
       // Recede: pause ambient/parallax, hide the active plane (the internal
       // pinned image takes over at the same spot), push the others back.
       ambientRef.current.forEach((t) => t.pause());
+      // Neutralise the parallax tilt so the scene isn't left skewed.
+      if (!reduce) gsap.to(scene, { rotationX: 0, rotationY: 0, x: 0, y: 0, duration: 0.5, ease: "power2.out" });
       planes.forEach((pl) => {
         const id = pl.dataset.sector as SectorId;
         if (id === active) {
@@ -251,15 +282,6 @@ export default function SectorLayout({ entrance, active, onSelect }: Props) {
      
   }, [active]);
 
-  // Pointer parallax (scene tilt). Kept out of React state for perf.
-  const onSceneMove = (e: React.PointerEvent) => {
-    if (active || !tiltRef.current) return;
-    const nx = e.clientX / window.innerWidth - 0.5;
-    const ny = e.clientY / window.innerHeight - 0.5;
-    tiltRef.current.y(nx * 7);
-    tiltRef.current.x(-ny * 5);
-  };
-
   const hover = (i: number, on: boolean) => {
     if (active || prefersReducedMotion()) return;
     const planes = planeRefs.current.filter(Boolean) as HTMLButtonElement[];
@@ -290,7 +312,6 @@ export default function SectorLayout({ entrance, active, onSelect }: Props) {
     <div
       className="nm-x__scene"
       ref={sceneRef}
-      onPointerMove={onSceneMove}
       aria-hidden={active ? true : undefined}
     >
       {SECTORS.map((s, i) => (
