@@ -48,6 +48,7 @@ export default function ParticleLogo({ onResolved, onComplete }: Props) {
     let raf = 0;
     let particles: P[] = [];
     let start = 0;
+    let retries = 0;
 
     // Phase timings (seconds)
     const ASSEMBLE = 1.8;
@@ -65,6 +66,18 @@ export default function ParticleLogo({ onResolved, onComplete }: Props) {
     };
 
     const build = (img: HTMLImageElement) => {
+      setSize();
+      // Guard against a not-yet-laid-out (zero-size) viewport: retry a few
+      // frames, then fall through gracefully so the experience never stalls.
+      if (W < 2 || H < 2) {
+        if (retries++ < 150) {
+          raf = requestAnimationFrame(() => build(img));
+          return;
+        }
+        onResolved();
+        onComplete();
+        return;
+      }
       // Rasterise the logo at a centered target size and sample its pixels.
       const logoH = Math.min(H * 0.34, 300);
       const logoW = logoH * (261.39 / 360.89);
