@@ -78,12 +78,29 @@ export default function ParticleLogo({ onResolved, onComplete }: Props) {
         onComplete();
         return;
       }
-      // Rasterise the logo at a centered target size and sample its pixels.
-      const logoH = Math.min(H * 0.34, 300);
-      const logoW = logoH * (261.39 / 360.89);
+      // Match the ACTUAL rendered logo (position + size) so the particle logo
+      // resolves seamlessly into the DOM logo on any screen — no size jump.
+      const RATIO = 261.39 / 360.89;
+      const logoEl = document.querySelector<HTMLElement>(".nm-x__logo");
+      let logoW: number;
+      let logoH: number;
+      let offsetX: number;
+      let offsetY: number;
+      if (logoEl && logoEl.offsetWidth > 4) {
+        const r = logoEl.getBoundingClientRect();
+        logoW = r.width;
+        logoH = r.height;
+        offsetX = r.left;
+        offsetY = r.top;
+      } else {
+        logoH = Math.min(H * 0.34, 300);
+        logoW = logoH * RATIO;
+        offsetX = (W - logoW) / 2;
+        offsetY = (H - logoH) / 2;
+      }
       const off = document.createElement("canvas");
-      const ow = Math.ceil(logoW);
-      const oh = Math.ceil(logoH);
+      const ow = Math.max(1, Math.ceil(logoW));
+      const oh = Math.max(1, Math.ceil(logoH));
       off.width = ow;
       off.height = oh;
       const octx = off.getContext("2d");
@@ -91,10 +108,8 @@ export default function ParticleLogo({ onResolved, onComplete }: Props) {
       octx.drawImage(img, 0, 0, ow, oh);
       const data = octx.getImageData(0, 0, ow, oh).data;
 
-      const offsetX = (W - logoW) / 2;
-      const offsetY = (H - logoH) / 2;
-      const cx = W / 2;
-      const cy = H / 2;
+      const cx = offsetX + logoW / 2;
+      const cy = offsetY + logoH / 2;
 
       // Adaptive step to keep the particle count elegant, not dense.
       let step = 3;
