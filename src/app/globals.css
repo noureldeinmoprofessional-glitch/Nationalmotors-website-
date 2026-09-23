@@ -3663,3 +3663,940 @@ html.nm-ready .nm-svc:not(.is-in) .nm-svc__card {
   .nm-sectors__row { grid-template-columns: 1fr; gap: 0.5rem; }
   .nm-sectors__n { padding-block-start: 0; }
 }
+
+
+/* ============================================================
+   SECTORS  (page-scoped experience — /sectors)
+   Foundation + default state: one unified art-directed composition
+   (four sectors around a central National Motors monogram), a layered
+   cinematic entrance, restrained ambient motion and subtle parallax.
+
+   Sector accents are a LOCALIZED visual language for this page only —
+   intentionally NOT added to the global @theme brand tokens. Automotive +
+   Real Estate reuse approved brand tokens; Agriculture and CSR use
+   restrained, desaturated page-scoped hues (provisional — to be signed off
+   once seen in context).
+   ============================================================ */
+.nm-sx {
+  --sector-automotive: var(--color-nm-green);    /* National Motors brand blue */
+  --sector-agriculture: #7f9b76;                 /* muted sage — provisional */
+  --sector-real-estate: var(--color-nm-sand);    /* heritage gold */
+  --sector-csr: #bb6f5e;                          /* muted terracotta — provisional */
+
+  position: relative;
+  min-height: 100svh;
+  background: var(--color-nm-black);
+  isolation: isolate;
+  overflow: clip;
+}
+
+/* Background — animated isometric wave-grid canvas (IsoLevelWarp). Sits
+   behind the whole composition; the stage (z-1) reads over it. */
+.nm-sx__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.nm-sx__stage {
+  position: relative;
+  z-index: 1;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  padding-block: clamp(112px, 15vh, 180px) clamp(3rem, 7vh, 5.5rem);
+}
+
+.nm-sx__eyebrow {
+  align-self: center;
+  margin-block-end: clamp(2rem, 5vh, 4rem);
+  color: var(--color-nm-gray);
+}
+
+/* --- Overview grid: 2x2 quadrants around a central monogram --- */
+.nm-sx__grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "s1 center s2"
+    "s3 center s4";
+  align-items: center;
+  gap: clamp(2.5rem, 6vh, 5rem) clamp(1.5rem, 4vw, 3.25rem);
+}
+
+/* Sector = one large, semantic, focusable control (expands in a later phase). */
+.nm-sx__sector {
+  --sx-accent: var(--color-nm-green);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: start;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  isolation: isolate;
+}
+.nm-sx__sector--automotive { grid-area: s1; --sx-accent: var(--sector-automotive); }
+.nm-sx__sector--agriculture { grid-area: s2; --sx-accent: var(--sector-agriculture); }
+.nm-sx__sector--real-estate { grid-area: s3; --sx-accent: var(--sector-real-estate); }
+.nm-sx__sector--csr { grid-area: s4; --sx-accent: var(--sector-csr); }
+
+/* Right-hand column mirrors to the right edge. */
+.nm-sx__sector--agriculture,
+.nm-sx__sector--csr {
+  align-items: flex-end;
+  text-align: end;
+}
+
+.nm-sx__sector:focus-visible {
+  outline: 2px solid var(--color-nm-green-light);
+  outline-offset: 10px;
+  border-radius: 3px;
+}
+
+/* Sector photo sits behind the type, feathered into the dark canvas. */
+.nm-sx__graphic {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(210px, 24vw, 360px);
+  aspect-ratio: 4 / 5;
+  z-index: 0;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(
+    ellipse 76% 76% at 50% 50%,
+    #000 32%,
+    transparent 82%
+  );
+  mask-image: radial-gradient(ellipse 76% 76% at 50% 50%, #000 32%, transparent 82%);
+}
+.nm-sx__sector--automotive .nm-sx__graphic,
+.nm-sx__sector--real-estate .nm-sx__graphic { right: -6%; }
+.nm-sx__sector--agriculture .nm-sx__graphic,
+.nm-sx__sector--csr .nm-sx__graphic { left: -6%; }
+.nm-sx__graphic img {
+  opacity: 0.5;
+  transition: opacity 0.5s var(--ease-nm);
+}
+.nm-sx__sector[data-active] .nm-sx__graphic img { opacity: 0.82; }
+
+/* Type layer sits above the graphic. */
+.nm-sx__num,
+.nm-sx__name,
+.nm-sx__tagline,
+.nm-sx__explore { position: relative; z-index: 1; }
+
+.nm-sx__num {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--color-nm-gray);
+  font-variant-numeric: tabular-nums;
+}
+.nm-sx__num::after {
+  content: "";
+  width: clamp(1.75rem, 3vw, 2.75rem);
+  height: 1px;
+  background: var(--color-nm-border-strong);
+}
+.nm-sx__sector--agriculture .nm-sx__num,
+.nm-sx__sector--csr .nm-sx__num { flex-direction: row-reverse; }
+
+.nm-sx__name {
+  margin-block: clamp(0.6rem, 1.4vh, 1.1rem) clamp(0.5rem, 1vh, 0.9rem);
+  font-size: clamp(1.7rem, 2.7vw, 3rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--color-nm-white);
+}
+.nm-sx__namemask { display: block; overflow: hidden; padding-block: 0.04em; }
+.nm-sx__nameinner { display: block; will-change: transform; }
+
+.nm-sx__tagline {
+  display: block;
+  max-width: 24ch;
+  font-size: clamp(0.9rem, 1vw, 1.08rem);
+  line-height: 1.4;
+  color: var(--color-nm-silver);
+}
+.nm-sx__sector--agriculture .nm-sx__tagline,
+.nm-sx__sector--csr .nm-sx__tagline { margin-inline-start: auto; }
+
+.nm-sx__explore {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-block-start: clamp(1rem, 2.4vh, 1.75rem);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--color-nm-silver);
+}
+.nm-sx__sector--agriculture .nm-sx__explore,
+.nm-sx__sector--csr .nm-sx__explore { flex-direction: row-reverse; }
+.nm-sx__explore-dot {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid var(--color-nm-border-strong);
+  transition: border-color 0.4s var(--ease-nm);
+}
+.nm-sx__explore-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--sx-accent);
+}
+.nm-sx__sector:hover .nm-sx__explore-dot,
+.nm-sx__sector:focus-visible .nm-sx__explore-dot { border-color: var(--sx-accent); }
+
+/* --- Central National Motors monogram + concentric rings --- */
+.nm-sx__center {
+  grid-area: center;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(200px, 24vw, 340px);
+  aspect-ratio: 1;
+  margin-inline: clamp(1rem, 3vw, 3rem);
+}
+.nm-sx__rings {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--color-nm-border-strong);
+}
+.nm-sx__mark {
+  position: relative;
+  z-index: 1;
+  height: clamp(120px, 15vw, 200px);
+  width: auto;
+  opacity: 0.95;
+  filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.5));
+}
+
+/* --- Pre-hydration hidden states (motion users only; reduced-motion never
+   adds html.nm-ready, so the full composition is shown immediately). --- */
+html.nm-ready .nm-sx__backdrop,
+html.nm-ready .nm-sx__center,
+html.nm-ready .nm-sx__graphic,
+html.nm-ready .nm-sx [data-sx-fade] { opacity: 0; }
+html.nm-ready .nm-sx__nameinner { transform: translateY(118%); }
+
+/* --- Tablet: keep the quadrant field, tighten spacing --- */
+@media (max-width: 1080px) {
+  .nm-sx__grid { gap: clamp(2rem, 5vh, 3.5rem) clamp(1rem, 3vw, 2rem); }
+  .nm-sx__center { margin-inline: clamp(0.5rem, 2vw, 1.5rem); width: clamp(170px, 22vw, 240px); }
+  .nm-sx__mark { height: clamp(100px, 13vw, 150px); }
+  .nm-sx__graphic { width: clamp(150px, 20vw, 230px); }
+}
+
+/* --- Mobile: guided vertical sequence, one connected system (not four cards) --- */
+@media (max-width: 768px) {
+  .nm-sx__stage { padding-block: clamp(96px, 18vh, 140px) clamp(2.5rem, 8vh, 4rem); }
+  .nm-sx__grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    grid-template-areas: "center" "s1" "s2" "s3" "s4";
+    align-items: stretch;
+    gap: clamp(1.75rem, 6vw, 2.5rem);
+  }
+  .nm-sx__center {
+    width: clamp(150px, 42vw, 210px);
+    margin-inline: auto;
+    margin-block-end: clamp(0.75rem, 4vw, 1.5rem);
+  }
+  .nm-sx__sector,
+  .nm-sx__sector--agriculture,
+  .nm-sx__sector--csr {
+    align-items: flex-start;
+    text-align: start;
+    border-block-start: 1px solid var(--color-nm-border);
+    padding-block-start: clamp(1.25rem, 5vw, 1.85rem);
+  }
+  .nm-sx__sector--agriculture .nm-sx__num,
+  .nm-sx__sector--csr .nm-sx__num,
+  .nm-sx__sector--agriculture .nm-sx__explore,
+  .nm-sx__sector--csr .nm-sx__explore { flex-direction: row; }
+  .nm-sx__sector--agriculture .nm-sx__tagline,
+  .nm-sx__sector--csr .nm-sx__tagline { margin-inline-start: 0; }
+  .nm-sx__tagline { max-width: 34ch; }
+  /* Keep the sector photo to the inner side, subtler, on mobile. */
+  .nm-sx__graphic,
+  .nm-sx__sector--agriculture .nm-sx__graphic,
+  .nm-sx__sector--csr .nm-sx__graphic {
+    width: clamp(150px, 46vw, 220px);
+    right: -6%;
+    left: auto;
+    transform: translateY(-50%);
+  }
+  .nm-sx__graphic img { opacity: 0.38; }
+}
+
+/* --- Reduced motion: no continuous motion; static, legible composition --- */
+@media (prefers-reduced-motion: reduce) {
+  .nm-sx__mark { filter: none; }
+}
+
+/* ============================================================
+   SECTORS — HOVER / FOCUS SYSTEM
+   State-driven (React sets [data-focus] on .nm-sx and [data-active]
+   on the focused sector). Everything here is CSS-transition driven so
+   the return to the default composition is deterministic and never
+   accumulates transforms. It only touches properties GSAP does NOT own
+   (sector opacity/scale, type colour/transform, focus-only SVG elements,
+   central mark/rings opacity) so it composes cleanly with the entrance,
+   ambient and parallax layers. Works identically for mouse, keyboard
+   (:focus) and touch (tap sets [data-active]).
+   ============================================================ */
+
+/* Smooth, reversible transitions on the pieces that rebalance. */
+.nm-sx__sector { transition: opacity 0.5s var(--ease-nm), transform 0.5s var(--ease-nm); }
+.nm-sx__name { transition: transform 0.55s var(--ease-nm), color 0.5s var(--ease-nm); }
+.nm-sx__num,
+.nm-sx__num::after,
+.nm-sx__tagline { transition: color 0.5s var(--ease-nm), background-color 0.5s var(--ease-nm); }
+.nm-sx__mark,
+.nm-sx__rings { transition: opacity 0.5s var(--ease-nm); }
+
+/* --- Non-focused sectors recede (never disappear or become unreadable) --- */
+.nm-sx[data-focus] .nm-sx__sector:not([data-active]) {
+  opacity: 0.34;
+  transform: scale(0.985);
+}
+
+/* --- Focused sector gains hierarchy --- */
+.nm-sx__sector[data-active] .nm-sx__name {
+  transform: translateX(6px) scale(1.03);
+  transform-origin: left center;
+}
+.nm-sx__sector--agriculture[data-active] .nm-sx__name,
+.nm-sx__sector--csr[data-active] .nm-sx__name {
+  transform: translateX(-6px) scale(1.03);
+  transform-origin: right center;
+}
+.nm-sx__sector[data-active] .nm-sx__num { color: var(--sx-accent); }
+.nm-sx__sector[data-active] .nm-sx__num::after { background: var(--sx-accent); }
+.nm-sx__sector[data-active] .nm-sx__tagline { color: var(--color-nm-white); }
+
+/* --- Central monogram: stable anchor, subtly recedes so the sector leads --- */
+.nm-sx[data-focus] .nm-sx__mark { opacity: 0.8; }
+.nm-sx[data-focus] .nm-sx__rings { opacity: 0.62; }
+
+/* --- SVG focus behaviour (energy) — only runs while [data-active] --- */
+.nm-sxg__fan { transition: transform 0.6s var(--ease-nm); }
+.nm-sxg__grow {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  transition: transform 0.6s var(--ease-nm);
+}
+.nm-sxg__reveal { opacity: 0; transition: opacity 0.55s var(--ease-nm); }
+.nm-sxg__pulse {
+  opacity: 0;
+  stroke-dasharray: 26 250;
+  stroke-dashoffset: 276;
+}
+.nm-sxg__halo {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.nm-sx__sector[data-active] .nm-sxg__fan { transform: translateX(5px); }
+.nm-sx__sector[data-active] .nm-sxg__grow { transform: scale(1.05); }
+.nm-sx__sector[data-active] .nm-sxg__reveal { opacity: 0.5; }
+.nm-sx__sector[data-active] .nm-sxg__bud { opacity: 0.9; }
+.nm-sx__sector[data-active] .nm-sxg__pulse {
+  opacity: 0.9;
+  animation: nm-sxg-flow 1.7s linear infinite;
+}
+.nm-sx__sector[data-active] .nm-sxg__pulse--b { animation-delay: 0.4s; }
+.nm-sx__sector[data-active] .nm-sxg__halo {
+  animation: nm-sxg-halo 2s var(--ease-nm) infinite;
+}
+.nm-sx__sector[data-active] .nm-sxg__halo--b { animation-delay: 0.55s; }
+.nm-sx__sector[data-active] .nm-sxg__halo--c { animation-delay: 1.1s; }
+
+@keyframes nm-sxg-flow {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes nm-sxg-halo {
+  0% { opacity: 0.55; transform: scale(0.6); }
+  70% { opacity: 0; transform: scale(1.7); }
+  100% { opacity: 0; transform: scale(1.7); }
+}
+
+/* --- Reduced motion: keep the hierarchy change, drop continuous pulses.
+   (The global reduced-motion rule already zeroes transition/animation
+   durations; this makes the intent explicit and ensures no looping.) --- */
+@media (prefers-reduced-motion: reduce) {
+  .nm-sx__sector[data-active] .nm-sxg__pulse,
+  .nm-sx__sector[data-active] .nm-sxg__halo { animation: none; opacity: 0; }
+}
+
+/* ============================================================
+   SECTORS — EXPANDED EDITORIAL DETAIL (.nm-sd)
+   A self-scrolling overlay that the overview transforms into. Its own
+   native scroll (data-lenis-prevent) is the ScrollTrigger scroller, so the
+   overview underneath stays put for a clean, reversible collapse. Sector
+   accents are re-declared here (this overlay lives outside .nm-sx).
+   ============================================================ */
+.nm-sd {
+  --sector-automotive: var(--color-nm-green);
+  --sector-agriculture: #7f9b76;
+  --sector-real-estate: var(--color-nm-sand);
+  --sector-csr: #bb6f5e;
+  --sx-accent: var(--color-nm-green);
+
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  color: var(--color-nm-silver);
+}
+.nm-sd[data-sector="automotive"] { --sx-accent: var(--sector-automotive); }
+.nm-sd[data-sector="agriculture"] { --sx-accent: var(--sector-agriculture); }
+.nm-sd[data-sector="real-estate"] { --sx-accent: var(--sector-real-estate); }
+.nm-sd[data-sector="csr"] { --sx-accent: var(--sector-csr); }
+
+.nm-sd__veil {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: var(--color-nm-black);
+}
+.nm-sd__bg {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.nm-sd__bg img { object-fit: cover; opacity: 0.55; }
+/* Scrim: darken the left (hero copy) and bottom so text stays legible. */
+.nm-sd__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(8, 10, 11, 0.94) 0%,
+      rgba(8, 10, 11, 0.62) 46%,
+      rgba(8, 10, 11, 0.12) 100%
+    ),
+    linear-gradient(0deg, rgba(8, 10, 11, 0.88) 0%, rgba(8, 10, 11, 0) 46%);
+}
+.nm-sd__scroll { position: relative; z-index: 2; }
+
+/* Persistent bar — return control + subtle sector identifier + brand mark. */
+.nm-sd__bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: 72px;
+  padding-inline: var(--nm-gutter);
+  background: color-mix(in srgb, var(--color-nm-black) 72%, transparent);
+  backdrop-filter: blur(14px);
+  border-block-end: 1px solid var(--color-nm-border);
+}
+.nm-sd__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: none;
+  border: 0;
+  padding: 0.4rem 0;
+  color: var(--color-nm-silver);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s var(--ease-nm);
+}
+.nm-sd__back:hover { color: var(--color-nm-white); }
+.nm-sd__back svg { width: 1.1rem; height: 1.1rem; transition: transform 0.35s var(--ease-nm); }
+.nm-sd__back:hover svg { transform: translateX(-3px); }
+.nm-sd__crumb {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-nm-gray);
+}
+.nm-sd__logo { height: 30px; width: auto; opacity: 0.9; }
+
+/* Hero — number, name, headline, introduction. */
+.nm-sd__hero {
+  width: 100%;
+  max-width: var(--nm-shell-max);
+  margin-inline: auto;
+  min-height: calc(100svh - 72px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-inline: var(--nm-gutter);
+  padding-block: clamp(3rem, 8vh, 7rem);
+}
+.nm-sd__hero-num {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  color: var(--sx-accent);
+  margin-block-end: clamp(1rem, 2vh, 1.6rem);
+}
+.nm-sd__hero-name {
+  font-size: clamp(2.8rem, 9vw, 8rem);
+  font-weight: 700;
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--color-nm-white);
+  will-change: transform;
+}
+.nm-sd__hero-head {
+  margin-block-start: clamp(1.25rem, 3vh, 2.25rem);
+  font-size: clamp(1.4rem, 3vw, 2.6rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--color-nm-white);
+  max-width: 20ch;
+}
+.nm-sd__hero-intro {
+  margin-block-start: clamp(1.5rem, 3vh, 2.25rem);
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  line-height: 1.6;
+  color: var(--color-nm-silver);
+  max-width: 46rem;
+}
+
+/* Body content. */
+.nm-sd__content { padding-block: clamp(2rem, 5vh, 4rem) clamp(6rem, 14vh, 10rem); }
+.nm-sd__para {
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  line-height: 1.62;
+  color: var(--color-nm-silver);
+  max-width: 44rem;
+  margin-block: clamp(1.5rem, 3.2vh, 2.6rem);
+}
+.nm-sd__emphasis {
+  font-size: clamp(1.9rem, 4.4vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.022em;
+  color: var(--color-nm-white);
+  max-width: 20ch;
+  margin-block: clamp(2.5rem, 6vh, 4.5rem);
+}
+.nm-sd__closing {
+  font-size: clamp(2.1rem, 5vw, 3.8rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.028em;
+  color: var(--color-nm-white);
+  max-width: 22ch;
+  margin-block: clamp(3rem, 8vh, 6rem);
+}
+.nm-sd__closing::before {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 2px;
+  background: var(--sx-accent);
+  margin-block-end: clamp(1.5rem, 3vh, 2.25rem);
+}
+
+/* Automotive milestone progression (vertical, line draws on scroll). */
+.nm-sd__timeline {
+  position: relative;
+  list-style: none;
+  margin: clamp(1rem, 2vh, 2rem) 0 clamp(2rem, 4vh, 3rem);
+  padding: 0 0 0 clamp(1.75rem, 3vw, 2.75rem);
+  max-width: 46rem;
+}
+.nm-sd__tl-line {
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0.5rem;
+  inset-block-end: 2.5rem;
+  width: 1px;
+  background: var(--sx-accent);
+  opacity: 0.5;
+  transform-origin: top center;
+}
+.nm-sd__tl-item { position: relative; padding-block-end: clamp(2.25rem, 5vh, 3.75rem); }
+.nm-sd__tl-item:last-child { padding-block-end: 0; }
+.nm-sd__tl-dot {
+  position: absolute;
+  inset-inline-start: calc(-1 * clamp(1.75rem, 3vw, 2.75rem) - 4px);
+  inset-block-start: 0.55rem;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--sx-accent);
+}
+.nm-sd__tl-brand {
+  font-size: clamp(1.3rem, 2.2vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-nm-white);
+  margin-block-end: 0.5rem;
+}
+.nm-sd__tl-text {
+  font-size: clamp(1rem, 1.3vw, 1.18rem);
+  line-height: 1.55;
+  color: var(--color-nm-silver);
+  max-width: 40rem;
+}
+
+/* --- Overview recedes beneath the detail during the transform --- */
+.nm-sx__stage { transition: opacity 0.5s var(--ease-nm), transform 0.6s var(--ease-nm); }
+.nm-sx[data-dim] .nm-sx__stage { opacity: 0.5; transform: scale(0.985); }
+
+/* --- Mobile: simplify, prioritise type --- */
+@media (max-width: 768px) {
+  .nm-sd__bg img { opacity: 0.4; }
+  /* Stronger, even scrim so full-width copy stays legible over the photo. */
+  .nm-sd__bg::after {
+    background:
+      linear-gradient(0deg, rgba(8, 10, 11, 0.92) 0%, rgba(8, 10, 11, 0.4) 55%, rgba(8, 10, 11, 0.55) 100%);
+  }
+  .nm-sd__bar { height: 62px; }
+  .nm-sd__crumb { display: none; }
+  .nm-sd__hero { min-height: calc(100svh - 62px); }
+  .nm-sd__hero-name { font-size: clamp(2.6rem, 15vw, 4.2rem); }
+}
+
+/* --- Reduced motion: no morph/parallax; content simply present --- */
+@media (prefers-reduced-motion: reduce) {
+  .nm-sd__hero-name { will-change: auto; }
+  .nm-sx__stage { transition: none; }
+}
+
+/* ============================================================
+   SECTORS — CINEMATIC EXPERIENCE (.nm-x) + INTERNAL (.nm-sc)
+   Three stages: intro (particles→logo), layout (orbiting 16:9 planes),
+   sector (pinned image + scrolling content). Sector accents are scoped
+   here only — never added to the global @theme.
+   ============================================================ */
+.nm-x {
+  --sector-automotive: var(--color-nm-green);
+  --sector-agriculture: #7f9b76;
+  --sector-real-estate: var(--color-nm-sand);
+  --sector-csr: #bb6f5e;
+
+  position: relative;
+  min-height: 100svh;
+  background: var(--color-nm-black);
+  overflow: clip;
+  isolation: isolate;
+  perspective: 1400px;
+}
+
+.nm-x__backdrop { position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0.25; }
+
+.nm-x__eyebrow {
+  position: absolute;
+  inset-block-start: clamp(104px, 13vh, 150px);
+  inset-inline: 0;
+  z-index: 4;
+  justify-content: center;
+  color: var(--color-nm-gray);
+  transition: opacity 0.5s var(--ease-nm);
+}
+.nm-x__eyebrow[data-stage-hide] { opacity: 0; }
+
+/* Central logo — the persistent anchor. Centred via GSAP xPercent/yPercent. */
+.nm-x__logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  width: clamp(120px, 15vw, 210px);
+  pointer-events: none;
+}
+.nm-x__logo-mark { width: 100%; height: auto; filter: drop-shadow(0 6px 30px rgba(0, 0, 0, 0.55)); }
+
+.nm-x__particles { position: fixed; inset: 0; z-index: 5; pointer-events: none; }
+
+/* Scene holds the four planes in a shared 3D space and tilts with the pointer. */
+.nm-x__scene {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  transform-style: preserve-3d;
+}
+
+.nm-x__plane {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(300px, 32vw, 520px);
+  aspect-ratio: 16 / 9;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+.nm-x__plane--automotive { --sx-accent: var(--sector-automotive); }
+.nm-x__plane--agriculture { --sx-accent: var(--sector-agriculture); }
+.nm-x__plane--real-estate { --sx-accent: var(--sector-real-estate); }
+.nm-x__plane--csr { --sx-accent: var(--sector-csr); }
+
+.nm-x__plane:focus-visible { outline: 2px solid var(--color-nm-green-light); outline-offset: 8px; border-radius: 3px; }
+
+.nm-x__plane-inner { position: absolute; inset: 0; transform-style: preserve-3d; }
+/* The image itself is 100% flat — no shadow, filter, gradient or lighting. */
+.nm-x__plane-img { position: absolute; inset: 0; overflow: hidden; border-radius: 2px; }
+.nm-x__plane-img img { width: 100%; height: 100%; }
+
+.nm-x__plane-label {
+  position: absolute;
+  inset-inline-start: clamp(0.75rem, 1.4vw, 1.15rem);
+  inset-block-end: clamp(0.6rem, 1.2vw, 1rem);
+  z-index: 2;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-size: clamp(0.9rem, 1.4vw, 1.25rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-nm-white);
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7);
+}
+.nm-x__plane-n {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--sx-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Stage 3: internal sector content (.nm-sc) ---------- */
+.nm-sc {
+  --sector-automotive: var(--color-nm-green);
+  --sector-agriculture: #7f9b76;
+  --sector-real-estate: var(--color-nm-sand);
+  --sector-csr: #bb6f5e;
+  --sx-accent: var(--color-nm-green);
+
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  color: var(--color-nm-silver);
+}
+.nm-sc[data-sector="automotive"] { --sx-accent: var(--sector-automotive); }
+.nm-sc[data-sector="agriculture"] { --sx-accent: var(--sector-agriculture); }
+.nm-sc[data-sector="real-estate"] { --sx-accent: var(--sector-real-estate); }
+.nm-sc[data-sector="csr"] { --sx-accent: var(--sector-csr); }
+
+.nm-sc__veil { position: fixed; inset: 0; z-index: 0; background: var(--color-nm-black); }
+
+.nm-sc__bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: 72px;
+  padding-inline: var(--nm-gutter);
+  background: color-mix(in srgb, var(--color-nm-black) 74%, transparent);
+  backdrop-filter: blur(14px);
+  border-block-end: 1px solid var(--color-nm-border);
+}
+.nm-sc__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: none;
+  border: 0;
+  padding: 0.4rem 0;
+  color: var(--color-nm-silver);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s var(--ease-nm);
+}
+.nm-sc__back:hover { color: var(--color-nm-white); }
+.nm-sc__back svg { width: 1.1rem; height: 1.1rem; transition: transform 0.35s var(--ease-nm); }
+.nm-sc__back:hover svg { transform: translateX(-3px); }
+.nm-sc__crumb { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: var(--color-nm-gray); }
+.nm-sc__logo { height: 30px; width: auto; opacity: 0.9; }
+
+.nm-sc__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: clamp(2rem, 5vw, 5rem);
+  max-width: var(--nm-shell-max);
+  margin-inline: auto;
+  padding-inline: var(--nm-gutter);
+}
+
+/* Left: pinned 16:9 image (flat, unlit) */
+.nm-sc__media {
+  position: sticky;
+  top: 72px;
+  height: calc(100svh - 72px);
+  display: flex;
+  align-items: center;
+}
+.nm-sc__frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 3px;
+  will-change: transform;
+}
+.nm-sc__frame img { width: 100%; height: 100%; }
+
+/* Right: scrolling editorial content */
+.nm-sc__content { padding-block: clamp(3rem, 12vh, 9rem) clamp(6rem, 16vh, 12rem); max-width: 42rem; }
+.nm-sc__num { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.32em; color: var(--sx-accent); margin-block-end: 1rem; }
+.nm-sc__name {
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  font-weight: 700;
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--color-nm-white);
+  margin-block-end: clamp(1rem, 2.4vh, 1.75rem);
+}
+.nm-sc__headline {
+  font-size: clamp(1.3rem, 2.4vw, 2rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--color-nm-white);
+  margin-block-end: clamp(1.25rem, 2.6vh, 2rem);
+  max-width: 22ch;
+}
+.nm-sc__intro { font-size: clamp(1.05rem, 1.4vw, 1.28rem); line-height: 1.6; color: var(--color-nm-silver); }
+.nm-sc__para { font-size: clamp(1.02rem, 1.35vw, 1.24rem); line-height: 1.62; color: var(--color-nm-silver); margin-block: clamp(1.5rem, 3.2vh, 2.5rem); }
+.nm-sc__emphasis {
+  font-size: clamp(1.7rem, 3.6vw, 2.9rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.022em;
+  color: var(--color-nm-white);
+  max-width: 18ch;
+  margin-block: clamp(2.25rem, 5vh, 3.75rem);
+}
+.nm-sc__closing {
+  font-size: clamp(1.9rem, 4vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.03;
+  letter-spacing: -0.026em;
+  color: var(--color-nm-white);
+  max-width: 20ch;
+  margin-block: clamp(2.75rem, 6vh, 5rem);
+}
+.nm-sc__closing::before {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 2px;
+  background: var(--sx-accent);
+  margin-block-end: clamp(1.5rem, 3vh, 2rem);
+}
+
+/* Automotive milestone progression */
+.nm-sc__timeline {
+  position: relative;
+  list-style: none;
+  margin: clamp(1.5rem, 3vh, 2.5rem) 0;
+  padding: 0 0 0 clamp(1.75rem, 3vw, 2.5rem);
+}
+.nm-sc__tl-line {
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0.5rem;
+  inset-block-end: 2.5rem;
+  width: 1px;
+  background: var(--sx-accent);
+  opacity: 0.5;
+  transform-origin: top center;
+}
+.nm-sc__tl-item { position: relative; padding-block-end: clamp(2rem, 4.5vh, 3.25rem); }
+.nm-sc__tl-item:last-child { padding-block-end: 0; }
+.nm-sc__tl-dot {
+  position: absolute;
+  inset-inline-start: calc(-1 * clamp(1.75rem, 3vw, 2.5rem) - 4px);
+  inset-block-start: 0.5rem;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--sx-accent);
+}
+.nm-sc__tl-brand { font-size: clamp(1.2rem, 2vw, 1.7rem); font-weight: 700; letter-spacing: -0.01em; color: var(--color-nm-white); margin-block-end: 0.45rem; }
+.nm-sc__tl-text { font-size: clamp(0.98rem, 1.2vw, 1.12rem); line-height: 1.55; color: var(--color-nm-silver); }
+
+/* ---------- Tablet ---------- */
+@media (max-width: 1080px) {
+  .nm-x__plane { width: clamp(280px, 40vw, 460px); }
+}
+
+/* ---------- Mobile: image sticky top, content below ---------- */
+@media (max-width: 900px) {
+  .nm-sc__grid { grid-template-columns: 1fr; gap: clamp(1.5rem, 5vw, 2.5rem); }
+  .nm-sc__media { position: sticky; top: 62px; height: auto; padding-block: clamp(0.75rem, 3vw, 1.25rem); }
+  .nm-sc__content { padding-block: clamp(1.5rem, 5vh, 3rem) clamp(5rem, 14vh, 8rem); max-width: none; }
+}
+@media (max-width: 768px) {
+  .nm-sc__bar { height: 62px; }
+  .nm-sc__crumb { display: none; }
+  /* Simplify the spatial layout: smaller planes, tighter arrangement. */
+  .nm-x__plane { width: min(48vw, 300px); }
+  .nm-x__plane-label { font-size: clamp(0.7rem, 3vw, 0.95rem); gap: 0.4rem; }
+  .nm-x__plane-n { font-size: 0.6rem; }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .nm-x__logo-mark { filter: none; }
+  .nm-sc__frame { will-change: auto; }
+}
