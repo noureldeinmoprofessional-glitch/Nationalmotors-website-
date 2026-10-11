@@ -3,9 +3,6 @@ import ParticleField from "@/components/hero/ParticleField";
 import HeroHome from "@/components/hero/HeroHome";
 import SectorsScroll from "@/components/sections/SectorsScroll";
 import LegacySection from "@/components/sections/LegacySection";
-import AfterSalesSection from "@/components/sections/AfterSalesSection";
-import TestimonialsSection from "@/components/sections/TestimonialsSection";
-import FaqSection from "@/components/sections/FaqSection";
 import Footer from "@/components/layout/Footer";
 import { CONTACT } from "@/lib/site";
 
@@ -42,9 +39,6 @@ export default function Home() {
         <HeroHome />
         <SectorsScroll />
         <LegacySection />
-        <AfterSalesSection />
-        <TestimonialsSection />
-        <FaqSection />
       </main>
       <Footer />
     </>
