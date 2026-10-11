@@ -4843,8 +4843,9 @@ html.nm-ready .nm-sx__nameinner { transform: translateY(118%); }
   position: fixed;
   inset: 0;
   z-index: 1200;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: clamp(1rem, 4vw, 2.5rem);
 }
 .nm-modal__scrim {
@@ -4856,9 +4857,15 @@ html.nm-ready .nm-sx__nameinner { transform: translateY(118%); }
   backdrop-filter: blur(6px);
   animation: nm-fade 0.3s var(--ease-nm);
 }
-.nm-modal__panel {
+/* Reusable Modal (Modal.tsx). It shares the .nm-modal / .nm-modal__panel
+   class names with the older Appointment modal above, so these rules are
+   scoped via the .nm-modal__scrim sibling (the Appointment modal uses
+   .nm-modal__backdrop instead) to stop the two from leaking into each other. */
+.nm-modal__scrim + .nm-modal__panel {
   position: relative;
   width: min(560px, 100%);
+  max-width: min(560px, 100%);
+  padding: 0;
   max-height: min(88vh, 920px);
   display: flex;
   flex-direction: column;
@@ -4869,7 +4876,7 @@ html.nm-ready .nm-sx__nameinner { transform: translateY(118%); }
   overflow: hidden;
   animation: nm-modal-in 0.4s var(--ease-nm);
 }
-.nm-modal__panel--wide { width: min(1040px, 100%); }
+.nm-modal__scrim + .nm-modal__panel--wide { width: min(1200px, 100%); max-width: min(1200px, 100%); }
 .nm-modal__head {
   display: flex;
   align-items: flex-start;
@@ -4962,8 +4969,8 @@ html.nm-ready .nm-sx__nameinner { transform: translateY(118%); }
 
 .nm-net__grid {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: clamp(1.25rem, 3vw, 2.25rem);
+  grid-template-columns: minmax(0, 1fr) minmax(400px, 1.08fr);
+  gap: clamp(1.25rem, 3vw, 2.5rem);
   align-items: start;
 }
 .nm-net__list {
@@ -5034,6 +5041,7 @@ html.nm-ready .nm-sx__nameinner { transform: translateY(118%); }
 .nm-net__dir:hover { color: var(--color-nm-green-light); }
 
 .nm-net__map { position: sticky; top: 0; }
+.nm-net__map .nm-loc-map { aspect-ratio: 1 / 0.92; }
 .nm-net__maphint {
   margin-block-start: 0.7rem;
   text-align: center;
