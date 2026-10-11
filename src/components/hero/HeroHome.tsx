@@ -1,78 +1,100 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import dynamic from "next/dynamic";
 import { ArrowRight } from "lucide-react";
 import Modal from "@/components/ui/Modal";
 import PartnerForm from "./PartnerForm";
+import { useLineReveal, useReveal, useIsoLayoutEffect } from "@/lib/hooks";
+import { gsap, prefersReducedMotion } from "@/lib/gsap";
 
-// WebGL canvas is client-only (no SSR). Allowed here because HeroHome
-// is itself a Client Component.
-const LogoCanvas = dynamic(() => import("./LogoCanvas"), {
-  ssr: false,
-  loading: () => <div className="nm-h3d__fallback" aria-hidden="true" />,
-});
+const HeroImage = dynamic(() => import("./HeroImage"), { ssr: false });
+
+const HERO_IMAGE = "/images/about-hero/automotive.jpg";
+
+const QUERY = "(prefers-reduced-motion: reduce)";
+function useReducedMotion() {
+  return useSyncExternalStore(
+    (cb) => {
+      const mq = window.matchMedia(QUERY);
+      mq.addEventListener("change", cb);
+      return () => mq.removeEventListener("change", cb);
+    },
+    () => window.matchMedia(QUERY).matches,
+    () => false
+  );
+}
 
 type ActiveModal = null | "network" | "partner";
 
 export default function HeroHome() {
   const [modal, setModal] = useState<ActiveModal>(null);
+  const reduced = useReducedMotion();
   const close = () => setModal(null);
 
+  const titleRef = useLineReveal<HTMLHeadingElement>({ start: "top 95%" });
+  const metaRef = useReveal<HTMLDivElement>({ y: 22, stagger: 0.1, start: "top 95%" });
+  const rootRef = useRef<HTMLElement>(null);
+
+  // Departure parallax: content lifts and fades, image recedes, as the hero
+  // scrolls away into the sectors section (hand-off feel).
+  useIsoLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root || prefersReducedMotion()) return;
+    const ctx = gsap.context(() => {
+      const st = { trigger: root, start: "top top", end: "bottom top", scrub: true as const };
+      gsap.to(".nm-hh__content", { yPercent: -16, autoAlpha: 0.15, ease: "none", scrollTrigger: st });
+      gsap.to(".nm-hh__frame", { yPercent: -8, scale: 0.955, ease: "none", scrollTrigger: st });
+    }, root);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section
-      className="nm-h3d"
-      aria-label="National Motors — driving the future of mobility in Egypt"
-    >
-      <div className="nm-h3d__glow" aria-hidden="true" />
+    <section ref={rootRef} className="nm-hh" aria-label="National Motors — driving the future of mobility in Egypt">
+      <div className="nm-shell nm-hh__inner">
+        <div className="nm-hh__content" ref={metaRef}>
+          <p className="nm-eyebrow nm-eyebrow--sm" data-reveal>
+            National Motors — Est. 1978
+          </p>
 
-      <div className="nm-shell nm-h3d__inner">
-        <p className="nm-eyebrow nm-eyebrow--sm nm-h3d__kicker">National Motors — Est. 1978</p>
+          <h1 ref={titleRef} className="nm-hh__title">
+            <span className="nm-line-mask"><span className="nm-line-inner">Driving the Future</span></span>
+            <span className="nm-line-mask"><span className="nm-line-inner">of Mobility in Egypt</span></span>
+          </h1>
 
-        <div className="nm-h3d__stage">
-          <LogoCanvas />
+          <div className="nm-hh__actions" data-reveal>
+            <Link href="/brands" className="nm-btn nm-btn--primary" data-cursor="VIEW">
+              <span className="nm-btn__text">Explore our Brands</span>
+              <span className="nm-btn__arrow" aria-hidden="true"><ArrowRight strokeWidth={1.75} /></span>
+            </Link>
+            <button type="button" className="nm-btn nm-btn--secondary" onClick={() => setModal("network")} data-cursor="OPEN">
+              <span className="nm-btn__text">Our Automotive Network</span>
+              <span className="nm-btn__arrow" aria-hidden="true"><ArrowRight strokeWidth={1.75} /></span>
+            </button>
+            <button type="button" className="nm-btn nm-btn--secondary" onClick={() => setModal("partner")} data-cursor="OPEN">
+              <span className="nm-btn__text">Partner with us</span>
+              <span className="nm-btn__arrow" aria-hidden="true"><ArrowRight strokeWidth={1.75} /></span>
+            </button>
+          </div>
         </div>
 
-        <h1 className="nm-h3d__title">Driving the Future of Mobility in Egypt</h1>
-
-        <div className="nm-h3d__actions">
-          <Link href="/brands" className="nm-btn nm-btn--primary" data-cursor="VIEW">
-            <span className="nm-btn__text">Explore our Brands</span>
-            <span className="nm-btn__arrow" aria-hidden="true">
-              <ArrowRight strokeWidth={1.75} />
-            </span>
-          </Link>
-
-          <button
-            type="button"
-            className="nm-btn nm-btn--secondary"
-            onClick={() => setModal("network")}
-            data-cursor="OPEN"
-          >
-            <span className="nm-btn__text">Our Automotive Network</span>
-            <span className="nm-btn__arrow" aria-hidden="true">
-              <ArrowRight strokeWidth={1.75} />
-            </span>
-          </button>
-
-          <button
-            type="button"
-            className="nm-btn nm-btn--secondary"
-            onClick={() => setModal("partner")}
-            data-cursor="OPEN"
-          >
-            <span className="nm-btn__text">Partner with us</span>
-            <span className="nm-btn__arrow" aria-hidden="true">
-              <ArrowRight strokeWidth={1.75} />
-            </span>
-          </button>
+        <div className="nm-hh__visual">
+          <div className="nm-hh__frame">
+            {reduced ? (
+              <Image src={HERO_IMAGE} alt="National Motors — mobility across Egypt" fill sizes="(max-width: 980px) 90vw, 45vw" style={{ objectFit: "cover" }} priority />
+            ) : (
+              <HeroImage src={HERO_IMAGE} />
+            )}
+            <span className="nm-hh__frame-label" aria-hidden="true">National Motors · Mobility in Egypt</span>
+          </div>
         </div>
       </div>
 
-      <div className="nm-h3d__scrollcue" aria-hidden="true">
+      <div className="nm-hh__scrollcue" aria-hidden="true">
         <span>Scroll</span>
-        <span className="nm-h3d__scrollcue-line" />
+        <span className="nm-hh__scrollcue-line" />
       </div>
 
       <Modal
@@ -84,12 +106,10 @@ export default function HeroHome() {
       >
         <div className="nm-netmap-placeholder">
           <p className="nm-lead">
-            An interactive map of every National Motors distributor, across all our brands, will
-            live here.
+            An interactive map of every National Motors distributor, across all our brands, will live here.
           </p>
           <p className="nm-body">
-            This section is built and ready — it&rsquo;s waiting on the distributor list and the
-            final map design.
+            This section is built and ready — it&rsquo;s waiting on the distributor list and the final map design.
           </p>
         </div>
       </Modal>

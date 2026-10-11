@@ -1,6 +1,7 @@
 import Navbar from "@/components/layout/Navbar";
+import ParticleField from "@/components/hero/ParticleField";
 import HeroHome from "@/components/hero/HeroHome";
-import Hero from "@/components/hero/Hero";
+import SectorsScroll from "@/components/sections/SectorsScroll";
 import LegacySection from "@/components/sections/LegacySection";
 import AfterSalesSection from "@/components/sections/AfterSalesSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
@@ -35,10 +36,11 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
       />
+      <ParticleField className="nm-particles-global" />
       <Navbar />
       <main id="main">
         <HeroHome />
-        <Hero />
+        <SectorsScroll />
         <LegacySection />
         <AfterSalesSection />
         <TestimonialsSection />

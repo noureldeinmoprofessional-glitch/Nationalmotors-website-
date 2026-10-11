@@ -1,71 +1,162 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
-import { useReveal, useParallax, useClipReveal } from "@/lib/hooks";
-import { SECTORS } from "@/lib/site";
 import CTAButton from "@/components/ui/CTAButton";
+import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import { useIsoLayoutEffect } from "@/lib/hooks";
+
+const LEGACY_IMG = "/images/about-hero/automotive.jpg";
+
+const STATS = [
+  { to: 50, label: "Years" },
+  { to: 4, label: "Sectors" },
+  { to: 13, label: "Brands" },
+  { to: 23458, label: "Vehicles Sold" },
+];
+
+const fmt = (n: number) => Math.round(n).toLocaleString("en-US");
 
 export default function LegacySection() {
-  const bodyRef = useReveal<HTMLDivElement>({ y: 30, stagger: 0.12 });
-  const imgFrameRef = useClipReveal<HTMLDivElement>();
-  const parallaxRef = useParallax<HTMLDivElement>({ amount: 7 });
-  const sectorsRef = useReveal<HTMLUListElement>({ y: 40, stagger: 0.1, start: "top 85%" });
+  const sectionRef = useRef<HTMLElement>(null);
+  const valRefs = useRef<(HTMLSpanElement | null)[]>([]);
+
+  useIsoLayoutEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    if (prefersReducedMotion() || window.innerWidth <= 768) return;
+
+    section.classList.add("nm-lg--pinned");
+    const ctx = gsap.context(() => {
+      const q = gsap.utils.selector(section);
+
+      gsap.set(q(".nm-lg__copy [data-fade]"), { autoAlpha: 0, y: 28 });
+      gsap.set(q(".nm-lg__stat"), { autoAlpha: 0, y: 30 });
+      valRefs.current.forEach((el) => {
+        if (el) el.textContent = "0";
+      });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "+=190%",
+          pin: true,
+          scrub: 1,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      // 1. image fades in
+      tl.fromTo(
+        q(".nm-lg__img"),
+        { autoAlpha: 0, scale: 1.14 },
+        { autoAlpha: 1, scale: 1, duration: 1, ease: "power2.out" }
+      );
+      // 2. "1978" mask resolves on the image
+      tl.fromTo(
+        q(".nm-lg__year"),
+        { autoAlpha: 0, scale: 1.16, yPercent: 5 },
+        { autoAlpha: 1, scale: 1, yPercent: 0, duration: 1, ease: "power3.out" },
+        0.45
+      );
+      // 3. image recedes so the numerals take over
+      tl.to(q(".nm-lg__img"), { autoAlpha: 0.16, duration: 0.8, ease: "power1.inOut" }, 1.15);
+      // 4. copy reveals
+      tl.to(
+        q(".nm-lg__copy [data-fade]"),
+        { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.14, ease: "power3.out" },
+        1.35
+      );
+      // 5. stats appear and count up
+      tl.to(
+        q(".nm-lg__stat"),
+        { autoAlpha: 1, y: 0, duration: 0.7, stagger: 0.12, ease: "power3.out" },
+        2.0
+      );
+      STATS.forEach((s, i) => {
+        const el = valRefs.current[i];
+        if (!el) return;
+        const proxy = { v: 0 };
+        tl.to(
+          proxy,
+          {
+            v: s.to,
+            duration: 1,
+            ease: "power1.out",
+            onUpdate: () => {
+              el.textContent = fmt(proxy.v);
+            },
+          },
+          2.0 + i * 0.12
+        );
+      });
+    }, section);
+
+    return () => {
+      ctx.revert();
+      section.classList.remove("nm-lg--pinned");
+    };
+  }, []);
 
   return (
-    <section id="legacy" className="nm-legacy" aria-label="Our Legacy">
-      <div className="nm-shell">
-        <div className="nm-legacy__grid">
-          <div className="nm-legacy__intro">
-            <p className="nm-eyebrow nm-eyebrow--gap" data-accent="sand">Our Legacy — Est. 1978</p>
-
-            <div ref={bodyRef} className="nm-legacy__copy">
-              <p className="nm-lead" data-reveal>
-                Established in Egypt in 1978, National Motors has built a legacy of
-                experience, trust, and excellence in the automotive industry.
+    <section id="legacy" ref={sectionRef} className="nm-lg" aria-label="Our Legacy">
+      <div className="nm-lg__stage">
+        <div className="nm-shell nm-lg__inner">
+          <div className="nm-lg__top">
+            <div className="nm-lg__copy">
+              <p className="nm-eyebrow" data-accent="sand" data-fade>
+                Our Legacy — Est. 1978
               </p>
-              <p className="nm-legacy__sub" data-reveal>
-                For decades, we have evolved with the market, representing leading
-                automotive brands and delivering reliable mobility solutions. Our
-                journey continues with a vision focused on innovation, quality, and
-                lasting customer relationships.
+              <p className="nm-lead nm-lg__lead" data-fade>
+                Established in Egypt in 1978, National Motors has built a legacy of experience,
+                trust, and excellence in the automotive industry.
               </p>
-              <div data-reveal className="nm-legacy__cta">
+              <p className="nm-lg__sub" data-fade>
+                For decades, we have evolved with the market, representing leading automotive brands
+                and delivering reliable mobility solutions. Our journey continues with a vision
+                focused on innovation, quality, and lasting customer relationships.
+              </p>
+              <div className="nm-lg__cta" data-fade>
                 <CTAButton href="/about" variant="secondary" cursor="VIEW">
-                  Discover Our Story
+                  Learn More
                 </CTAButton>
               </div>
             </div>
-          </div>
 
-          <div className="nm-legacy__media">
-            <div ref={imgFrameRef} className="nm-legacy__frame">
-              <div ref={parallaxRef} className="nm-parallax-wrap nm-legacy__frame-inner">
-                <div data-clip-inner data-parallax className="nm-parallax-img nm-legacy__img">
-                  <Image
-                    src="/images/hero/joylong-a4-standard.png"
-                    alt="National Motors commercial vehicle on the road in Egypt"
-                    fill
-                    sizes="(max-width: 900px) 100vw, 44vw"
-                    style={{ objectFit: "cover", objectPosition: "50% 55%" }}
-                  />
-                </div>
+            <div className="nm-lg__yearbox" aria-hidden="true">
+              <div className="nm-lg__img">
+                <Image
+                  src={LEGACY_IMG}
+                  alt=""
+                  fill
+                  sizes="(max-width: 900px) 90vw, 46vw"
+                  style={{ objectFit: "cover", objectPosition: "50% 45%" }}
+                />
               </div>
-              <div className="nm-legacy__year" aria-hidden="true">
-                <span className="nm-line-mask"><span className="nm-line-inner">1978</span></span>
-              </div>
+              <span className="nm-lg__year" style={{ backgroundImage: `url(${LEGACY_IMG})` }}>
+                1978
+              </span>
             </div>
           </div>
-        </div>
 
-        <ul ref={sectorsRef} id="sectors" className="nm-legacy__sectors">
-          {SECTORS.map((s) => (
-            <li key={s.n} className="nm-legacy__sector" data-reveal>
-              <span className="nm-legacy__sector-n">{s.n}</span>
-              <h3 className="nm-legacy__sector-name">{s.name}</h3>
-              <p className="nm-legacy__sector-note">{s.note}</p>
-            </li>
-          ))}
-        </ul>
+          <ul className="nm-lg__stats">
+            {STATS.map((s, i) => (
+              <li key={s.label} className="nm-lg__stat">
+                <span
+                  ref={(el) => {
+                    valRefs.current[i] = el;
+                  }}
+                  className="nm-lg__stat-value"
+                >
+                  {fmt(s.to)}
+                </span>
+                <span className="nm-lg__stat-label">{s.label}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );
