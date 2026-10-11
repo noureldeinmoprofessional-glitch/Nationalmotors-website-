@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 import Modal from "@/components/ui/Modal";
 import PartnerForm from "./PartnerForm";
 import { useIsoLayoutEffect } from "@/lib/hooks";
-import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
 
 const VIDEO_SRC = "/videos/hero.mp4";
 const VIDEO_POSTER = "/videos/hero-poster.jpg";
@@ -55,51 +55,46 @@ export default function HeroHome() {
       // hide/blur reveal targets up front (before paint) to avoid a flash
       gsap.set(".nm-vh__reveal", { autoAlpha: 0, "--b": 18 });
 
-      let built = false;
-      // If the video can't load (e.g. codec/network), don't trap the text
-      // hidden: show it statically over the poster and skip the scrub.
-      const revealStatic = () => {
-        if (built) return;
-        gsap.to(".nm-vh__reveal", { autoAlpha: 1, "--b": 0, y: 0, duration: 0.5, stagger: 0.06 });
-      };
+      // The pin + text reveal are built unconditionally so the hero never
+      // depends on the video decoding. The video scrub is layered in when the
+      // clip's metadata is ready.
+      const tl = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: root,
+          start: "top top",
+          end: () => "+=" + Math.round(window.innerHeight * 1.8),
+          pin: true,
+          scrub: 1,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
 
-      const build = () => {
-        if (built) return;
-        built = true;
-        const duration = video.duration || 6;
-        const tl = gsap.timeline({
-          defaults: { ease: "none" },
-          scrollTrigger: {
-            trigger: root,
-            start: "top top",
-            end: () => "+=" + Math.round(window.innerHeight * 2.2),
-            pin: true,
-            scrub: 1,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          },
-        });
-        tl.fromTo(video, { currentTime: 0 }, { currentTime: duration - 0.05, duration: 1 }, 0);
-        tl.fromTo(
-          ".nm-vh__reveal",
-          { autoAlpha: 0, "--b": 18, y: 26 },
-          { autoAlpha: 1, "--b": 0, y: 0, duration: 0.18, stagger: 0.035 },
-          0.03
-        );
-        tl.to(
-          ".nm-vh__reveal",
-          { autoAlpha: 0, "--b": 12, y: -18, duration: 0.16, stagger: 0.025 },
-          0.82
-        );
-      };
+      // text blur-reveals in, holds, then blurs out…
+      tl.fromTo(
+        ".nm-vh__reveal",
+        { autoAlpha: 0, "--b": 18, y: 26 },
+        { autoAlpha: 1, "--b": 0, y: 0, duration: 0.2, stagger: 0.04 },
+        0.05
+      );
+      tl.to(
+        ".nm-vh__reveal",
+        { autoAlpha: 0, "--b": 10, y: -22, duration: 0.16, stagger: 0.03 },
+        0.74
+      );
+      // …and the whole media fades/recedes near the end so the hero dissolves
+      // into the next section instead of hard-cutting.
+      tl.to(".nm-vh__media", { autoAlpha: 0, scale: 1.06, duration: 0.2, ease: "power1.in" }, 0.8);
 
-      if (video.readyState >= 1 && video.duration) build();
-      else {
-        video.addEventListener("loadedmetadata", build, { once: true });
-        video.addEventListener("error", revealStatic, { once: true });
-        // safety net: never leave the text hidden if nothing fires
-        gsap.delayedCall(2.5, revealStatic);
-      }
+      const addVideoScrub = () => {
+        const d = video.duration;
+        if (!d || !isFinite(d)) return;
+        tl.fromTo(video, { currentTime: 0 }, { currentTime: d - 0.05, duration: 1 }, 0);
+        ScrollTrigger.refresh();
+      };
+      if (video.readyState >= 1 && video.duration) addVideoScrub();
+      else video.addEventListener("loadedmetadata", addVideoScrub, { once: true });
     }, root);
 
     return () => ctx.revert();
