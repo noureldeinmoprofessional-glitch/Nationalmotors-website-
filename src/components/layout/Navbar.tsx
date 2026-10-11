@@ -9,14 +9,25 @@ import MobileNav from "./MobileNav";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [lang, setLang] = useState<"EN" | "AR">("EN");
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     let raf = 0;
+    let last = window.scrollY;
     const onScroll = () => {
       cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => setScrolled(window.scrollY > 40));
+      raf = requestAnimationFrame(() => {
+        const y = window.scrollY;
+        setScrolled(y > 40);
+        // Past the hero (~1.5 screens): hide on scroll-down, show on scroll-up.
+        const afterHero = window.innerHeight * 1.5;
+        if (y < afterHero) setHidden(false);
+        else if (y > last + 6) setHidden(true);
+        else if (y < last - 6) setHidden(false);
+        last = y;
+      });
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -26,9 +37,12 @@ export default function Navbar() {
     };
   }, []);
 
+  // Never keep the bar hidden while the mobile menu is open.
+  const barHidden = hidden && !mobileOpen;
+
   return (
     <>
-      <header className="nm-nav" data-scrolled={scrolled || undefined}>
+      <header className="nm-nav" data-scrolled={scrolled || undefined} data-hidden={barHidden || undefined}>
         <div className="nm-nav__inner nm-shell">
           <Link href="/" className="nm-nav__logo" aria-label="National Motors — home">
             <Logo className="nm-nav__logo-svg" />
