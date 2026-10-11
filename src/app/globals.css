@@ -4682,6 +4682,15 @@ html.nm-ready .nm-sx__nameinner { transform: translateY(118%); }
 /* ============================================================
    HOME — HERO (split: content + WebGL distortion image)
    ============================================================ */
+/* Page-wide interactive particle field (fixed behind the page; shows
+   through sections with a transparent background). */
+.nm-particles-global {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
 .nm-hh {
   position: relative;
   min-height: 100svh;
@@ -4689,14 +4698,8 @@ html.nm-ready .nm-sx__nameinner { transform: translateY(118%); }
   align-items: center;
   overflow: hidden;
   isolation: isolate;
-  background: var(--color-nm-black);
+  background: transparent;
   padding-block: 92px clamp(4rem, 9vh, 6rem);
-}
-.nm-hh__particles {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
 }
 .nm-hh__inner {
   position: relative;
@@ -5080,7 +5083,7 @@ html.nm-ready .nm-sx__nameinner { transform: translateY(118%); }
 /* ============================================================
    HOME — LEGACY "1978" (scroll-scrubbed mask reveal)
    ============================================================ */
-.nm-lg { position: relative; background: var(--color-nm-charcoal); }
+.nm-lg { position: relative; background: transparent; }
 .nm-lg__stage { position: relative; padding-block: clamp(4.5rem, 9vh, 8rem); }
 .nm-lg--pinned .nm-lg__stage {
   height: 100svh;

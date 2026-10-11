@@ -22,7 +22,6 @@ export default function ParticleField({ className }: { className?: string }) {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const parent = canvas.parentElement!;
     let w = 0;
     let h = 0;
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -33,7 +32,7 @@ export default function ParticleField({ className }: { className?: string }) {
     let running = true;
 
     const build = () => {
-      const rect = parent.getBoundingClientRect();
+      const rect = canvas.getBoundingClientRect();
       w = rect.width;
       h = rect.height;
       dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -144,22 +143,20 @@ export default function ParticleField({ className }: { className?: string }) {
     };
 
     const onMove = (e: PointerEvent) => {
-      const rect = parent.getBoundingClientRect();
+      const rect = canvas.getBoundingClientRect();
       pointer.x = e.clientX - rect.left;
       pointer.y = e.clientY - rect.top;
       pointer.active = true;
     };
-    const onLeave = () => (pointer.active = false);
     const onDown = (e: PointerEvent) => {
-      const rect = parent.getBoundingClientRect();
+      const rect = canvas.getBoundingClientRect();
       ripples.push({ x: e.clientX - rect.left, y: e.clientY - rect.top, t: 0 });
     };
 
     build();
     draw();
 
-    parent.addEventListener("pointermove", onMove);
-    parent.addEventListener("pointerleave", onLeave);
+    window.addEventListener("pointermove", onMove, { passive: true });
     window.addEventListener("pointerdown", onDown);
     const onResize = () => build();
     window.addEventListener("resize", onResize);
@@ -182,8 +179,7 @@ export default function ParticleField({ className }: { className?: string }) {
     return () => {
       cancelAnimationFrame(raf);
       io.disconnect();
-      parent.removeEventListener("pointermove", onMove);
-      parent.removeEventListener("pointerleave", onLeave);
+      window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerdown", onDown);
       window.removeEventListener("resize", onResize);
     };

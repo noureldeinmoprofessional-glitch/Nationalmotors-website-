@@ -1,16 +1,16 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { ArrowRight } from "lucide-react";
 import Modal from "@/components/ui/Modal";
 import PartnerForm from "./PartnerForm";
-import { useLineReveal, useReveal } from "@/lib/hooks";
+import { useLineReveal, useReveal, useIsoLayoutEffect } from "@/lib/hooks";
+import { gsap, prefersReducedMotion } from "@/lib/gsap";
 
 const HeroImage = dynamic(() => import("./HeroImage"), { ssr: false });
-const ParticleField = dynamic(() => import("./ParticleField"), { ssr: false });
 
 const HERO_IMAGE = "/images/about-hero/automotive.jpg";
 
@@ -36,11 +36,23 @@ export default function HeroHome() {
 
   const titleRef = useLineReveal<HTMLHeadingElement>({ start: "top 95%" });
   const metaRef = useReveal<HTMLDivElement>({ y: 22, stagger: 0.1, start: "top 95%" });
+  const rootRef = useRef<HTMLElement>(null);
+
+  // Departure parallax: content lifts and fades, image recedes, as the hero
+  // scrolls away into the sectors section (hand-off feel).
+  useIsoLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root || prefersReducedMotion()) return;
+    const ctx = gsap.context(() => {
+      const st = { trigger: root, start: "top top", end: "bottom top", scrub: true as const };
+      gsap.to(".nm-hh__content", { yPercent: -16, autoAlpha: 0.15, ease: "none", scrollTrigger: st });
+      gsap.to(".nm-hh__frame", { yPercent: -8, scale: 0.955, ease: "none", scrollTrigger: st });
+    }, root);
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section className="nm-hh" aria-label="National Motors — driving the future of mobility in Egypt">
-      {!reduced && <ParticleField className="nm-hh__particles" />}
-
+    <section ref={rootRef} className="nm-hh" aria-label="National Motors — driving the future of mobility in Egypt">
       <div className="nm-shell nm-hh__inner">
         <div className="nm-hh__content" ref={metaRef}>
           <p className="nm-eyebrow nm-eyebrow--sm" data-reveal>
