@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Modal from "@/components/ui/Modal";
 import PartnerForm from "./PartnerForm";
+import AutomotiveNetwork from "@/components/network/AutomotiveNetwork";
 import { useIsoLayoutEffect } from "@/lib/hooks";
 import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
 
@@ -144,14 +145,7 @@ export default function HeroHome() {
         subtitle="Distributors across Egypt — for every brand we represent."
         size="wide"
       >
-        <div className="nm-netmap-placeholder">
-          <p className="nm-lead">
-            An interactive map of every National Motors distributor, across all our brands, will live here.
-          </p>
-          <p className="nm-body">
-            This section is built and ready — it&rsquo;s waiting on the distributor list and the final map design.
-          </p>
-        </div>
+        <AutomotiveNetwork />
       </Modal>
 
       <Modal
