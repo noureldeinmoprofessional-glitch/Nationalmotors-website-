@@ -219,16 +219,16 @@ export const FARIZON: BrandPageData = {
 
 export const BLU: BrandPageData = {
   slug: "blu-light-mobility",
-  name: "Blu Light Mobility",
+  name: "Blu",
   hero: {
     tagline: "Smart mobility for every journey.",
     descriptor: "Electric Light Mobility",
     image: "/images/brands/blu-light-mobility.png",
-    imageAlt: "A Blu Light Mobility electric golf cart at a resort at golden hour",
+    imageAlt: "A Blu electric golf cart at a resort at golden hour",
     imagePosition: "50% 42%",
   },
   intro: {
-    eyebrow: "Blu Light Mobility",
+    eyebrow: "Blu",
     headline: "A Product Built by Listening",
     body: "Blu offers a premium range of innovative electric golf carts, engineered to deliver efficient, comfortable, and sustainable mobility. Designed for resorts, hotels, gated communities, universities, and recreational destinations, Blu vehicles combine modern technology, exceptional reliability, and refined performance to ensure a seamless transportation experience for every journey.",
   },

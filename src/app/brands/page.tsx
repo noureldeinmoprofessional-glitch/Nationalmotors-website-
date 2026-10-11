@@ -6,12 +6,12 @@ import BrandsIndex from "@/components/brands/BrandsIndex";
 export const metadata: Metadata = {
   title: "Our Brands",
   description:
-    "The National Motors automotive portfolio — Joylong, Farizon and Blu Light Mobility. Choose a brand to explore.",
+    "The National Motors automotive portfolio — Joylong, Farizon and Blu. Choose a brand to explore.",
   alternates: { canonical: "/brands" },
   openGraph: {
     title: "Our Brands | National Motors",
     description:
-      "Joylong, Farizon and Blu Light Mobility — three brands within one National Motors portfolio.",
+      "Joylong, Farizon and Blu — three brands within one National Motors portfolio.",
     url: "/brands",
     images: [{ url: "/images/brands/farizon-v6e.jpg", width: 1920, height: 1080, alt: "National Motors brands" }],
   },

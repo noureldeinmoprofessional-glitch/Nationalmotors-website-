@@ -7,7 +7,7 @@ import { FAQ_CATEGORIES } from "@/lib/faqData";
 export const metadata: Metadata = {
   title: "FAQ",
   description:
-    "Frequently asked questions about National Motors — our company, brands (Farizon, Joylong, Blu Light Mobility), vehicles, after-sales services, and business sectors.",
+    "Frequently asked questions about National Motors — our company, brands (Farizon, Joylong, Blu), vehicles, after-sales services, and business sectors.",
   alternates: { canonical: "/faq" },
   openGraph: {
     title: "FAQ | National Motors",

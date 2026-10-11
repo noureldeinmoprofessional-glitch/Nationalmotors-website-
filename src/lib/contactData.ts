@@ -10,7 +10,7 @@
 
 export const CONTACT = {
   destination: "info@nationalmotorsco.com",
-  brands: ["Joylong", "Farizon", "Blu Light Mobility"],
+  brands: ["Joylong", "Farizon", "Blu"],
   en: {
     eyebrow: "Contact Us",
     title: "Let's Get in Touch",

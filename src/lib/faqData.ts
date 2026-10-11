@@ -30,7 +30,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         q: "What automotive brands does National Motors represent?",
-        a: "The National Motors automotive portfolio includes Farizon, Joylong, and Blu Light Mobility. Each brand serves different passenger transportation, cargo transportation, electric mobility, and light-mobility requirements.",
+        a: "The National Motors automotive portfolio includes Farizon, Joylong, and Blu. Each brand serves different passenger transportation, cargo transportation, electric mobility, and light-mobility requirements.",
       },
     ],
   },
@@ -54,8 +54,8 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         a: "Joylong is a commercial-vehicle brand offering passenger and cargo vans for businesses, transportation operators, institutions, and other professional applications. National Motors is Joylong's official agent in Egypt.",
       },
       {
-        q: "What is Blu Light Mobility?",
-        a: "Blu Light Mobility is a golf-cart and light-mobility brand owned by National Motors. Its vehicles are developed under National Motors' technical and managerial direction, manufactured in China, and assembled in Egypt at the National Motors factory.",
+        q: "What is Blu?",
+        a: "Blu is a golf-cart and light-mobility brand owned by National Motors. Its vehicles are developed under National Motors' technical and managerial direction, manufactured in China, and assembled in Egypt at the National Motors factory.",
       },
       {
         q: "How do I choose the right commercial vehicle for my business?",

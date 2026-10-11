@@ -313,9 +313,9 @@ img, svg, video { display: block; max-width: 100%; }
     background-color 0.35s var(--ease-nm), margin 0.35s var(--ease-nm);
 }
 .nm-cursor[data-active] {
-  width: 46px;
-  height: 46px;
-  margin: -23px 0 0 -23px;
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
   background: var(--color-nm-white);
 }
 .nm-cursor[data-label] {
@@ -1911,7 +1911,7 @@ html.nm-ready .nm-obr:not(.is-in) .nm-obr__card {
 }
 
 /* ============================================================
-   INDIVIDUAL BRAND PAGES — Joylong / Farizon / Blu Light Mobility
+   INDIVIDUAL BRAND PAGES — Joylong / Farizon / Blu
    ============================================================ */
 /* 01 — Hero */
 .nm-bp-hero {

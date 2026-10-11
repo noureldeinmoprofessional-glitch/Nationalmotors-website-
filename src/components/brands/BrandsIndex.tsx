@@ -45,11 +45,11 @@ const BRANDS: Portal[] = [
   },
   {
     id: "blu",
-    name: "Blu Light Mobility",
+    name: "Blu",
     descriptor: "Electric light mobility",
     href: "/brands/blu-light-mobility",
     image: "/images/brands/blu-light-mobility.png",
-    alt: "A Blu Light Mobility electric cart at a resort at golden hour",
+    alt: "A Blu electric cart at a resort at golden hour",
     pos: "50% 42%",
     accent: "blue",
   },

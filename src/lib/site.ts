@@ -34,7 +34,7 @@ export const NAV: NavItem[] = [
     children: [
       { label: "Joylong", href: "/brands/joylong" },
       { label: "Farizon", href: "/brands/farizon" },
-      { label: "Blu Light Mobility", href: "/brands/blu-light-mobility" },
+      { label: "Blu", href: "/brands/blu-light-mobility" },
     ],
   },
   { label: "After-Sales", href: "/after-sales" },
@@ -132,7 +132,7 @@ export const SECTORS = [
 export const BRANDS = [
   { name: "Joylong", note: "Commercial vehicles" },
   { name: "Farizon", note: "New-energy commercial vehicles" },
-  { name: "Blu Light Mobility", note: "Light mobility & golf carts" },
+  { name: "Blu", note: "Light mobility & golf carts" },
 ];
 
 export type Testimonial = {
@@ -178,7 +178,7 @@ export const FAQS = [
   },
   {
     q: "What automotive brands does National Motors represent?",
-    a: "The National Motors automotive portfolio includes Farizon, Joylong, and Blu Light Mobility. Each brand serves different passenger transportation, cargo transportation, electric mobility, and light-mobility requirements.",
+    a: "The National Motors automotive portfolio includes Farizon, Joylong, and Blu. Each brand serves different passenger transportation, cargo transportation, electric mobility, and light-mobility requirements.",
   },
   {
     q: "What sectors does National Motors operate in?",
@@ -214,7 +214,7 @@ export const FOOTER_NAV = [
     links: [
       { label: "Joylong", href: "/brands/joylong" },
       { label: "Farizon", href: "/brands/farizon" },
-      { label: "Blu Light Mobility", href: "/brands/blu-light-mobility" },
+      { label: "Blu", href: "/brands/blu-light-mobility" },
     ],
   },
   {

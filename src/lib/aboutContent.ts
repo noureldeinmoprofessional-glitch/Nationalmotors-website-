@@ -43,7 +43,7 @@ export const SECTORS = [
   {
     n: "01",
     name: "Automotive",
-    note: "Passenger and commercial vehicles through Joylong, Farizon, and Blu Light Mobility.",
+    note: "Passenger and commercial vehicles through Joylong, Farizon, and Blu.",
     image: "/images/hero/farizon-v6e.png",
     imageAlt: "A National Motors commercial vehicle",
   },
@@ -106,15 +106,15 @@ export const BRAND_STORIES = {
     },
     {
       id: "blu",
-      name: "Blu Light Mobility",
+      name: "Blu",
       title: "A Product Built by Listening",
       paragraphs: [
-        "Blu Light Mobility began with in-depth market research into Egypt's golf-cart sector, customer pain points, and the features users valued most. National Motors translated those insights into a mobility product combining practical comfort, premium leisure features, and technological advancement.",
-        "A solar-panel-equipped model introduced an additional sustainability dimension to the range. Blu Light Mobility strengthened the National Motors portfolio with an owned brand developed around Egyptian market needs, local assembly capabilities, and the future of light mobility.",
+        "Blu began with in-depth market research into Egypt's golf-cart sector, customer pain points, and the features users valued most. National Motors translated those insights into a mobility product combining practical comfort, premium leisure features, and technological advancement.",
+        "A solar-panel-equipped model introduced an additional sustainability dimension to the range. Blu strengthened the National Motors portfolio with an owned brand developed around Egyptian market needs, local assembly capabilities, and the future of light mobility.",
       ],
-      cta: { label: "Explore Blu Light Mobility", href: "https://www.blulightmobility.com" },
+      cta: { label: "Explore Blu", href: "https://www.blulightmobility.com" },
       image: "/images/brands/blu-light-mobility.png",
-      imageAlt: "A Blu Light Mobility electric golf cart on a resort golf course at sunset",
+      imageAlt: "A Blu electric golf cart on a resort golf course at sunset",
       imagePosition: "50% 42%",
       accent: "blue" as const,
     },
@@ -246,7 +246,7 @@ export const BOARD = {
       role: "Managing Director",
       image: "/images/leadership/omar-abdelnaby.png",
       paragraphs: [
-        "Maintaining close oversight of National Motors' ongoing business processes, helping ensure that strategy translates into coordinated execution. His product-development experience includes directing one of the company's most successful initiatives: transforming market feedback into the development of Blu Light Mobility golf carts designed around the needs of customers in Egypt.",
+        "Maintaining close oversight of National Motors' ongoing business processes, helping ensure that strategy translates into coordinated execution. His product-development experience includes directing one of the company's most successful initiatives: transforming market feedback into the development of Blu golf carts designed around the needs of customers in Egypt.",
       ],
     },
   ],
