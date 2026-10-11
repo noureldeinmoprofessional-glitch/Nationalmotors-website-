@@ -4904,3 +4904,175 @@ html.nm-ready .nm-sx__nameinner { transform: translateY(118%); }
   background: var(--color-nm-graphite);
 }
 .nm-netmap-placeholder .nm-lead { max-width: 46ch; }
+
+/* ============================================================
+   HOME — SECTORS (pinned horizontal scroll)
+   Progressive enhancement: native horizontal scroll by default;
+   JS adds .nm-sct--pinned on capable desktops for the pinned scrub.
+   ============================================================ */
+.nm-sct {
+  position: relative;
+  background: var(--color-nm-black);
+}
+.nm-sct__inner {
+  position: relative;
+}
+.nm-sct__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+.nm-sct__counter {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-nm-gray);
+}
+.nm-sct__counter-now { font-size: var(--fs-2xl); font-weight: var(--fw-bold); color: var(--color-nm-white); }
+.nm-sct__counter-sep { font-size: var(--fs-lg); }
+
+.nm-sct__track {
+  display: flex;
+  gap: clamp(1.25rem, 2.5vw, 2.5rem);
+  padding-inline: var(--nm-gutter);
+}
+.nm-sct__card {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(300px, 46vw, 640px);
+  height: min(70vh, 660px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--color-nm-charcoal);
+  border: 1px solid var(--color-nm-border);
+}
+.nm-sct__card-media { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.nm-sct__card-img { position: absolute; inset: 0; width: 112%; left: -6%; will-change: transform; }
+.nm-sct__card-img img { width: 100%; height: 100%; }
+.nm-sct__card-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg,
+    rgba(8, 10, 11, 0.12) 0%,
+    rgba(8, 10, 11, 0.2) 42%,
+    rgba(8, 10, 11, 0.93) 100%);
+}
+.nm-sct__card-n {
+  position: absolute;
+  z-index: 2;
+  inset-block-start: 1.25rem;
+  inset-inline-start: 1.5rem;
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.08em;
+  color: var(--color-nm-white);
+  opacity: 0.85;
+  font-variant-numeric: tabular-nums;
+}
+.nm-sct__card-body {
+  position: relative;
+  z-index: 2;
+  padding: clamp(1.5rem, 2.5vw, 2.5rem);
+}
+.nm-sct__card-name {
+  font-size: var(--fs-6xl);
+  font-weight: var(--fw-semibold);
+  line-height: 1.02;
+  letter-spacing: var(--ls-tight);
+  color: var(--color-nm-white);
+}
+.nm-sct__card-headline {
+  margin-block-start: 0.55rem;
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-medium);
+  color: var(--color-nm-silver);
+}
+.nm-sct__card-desc {
+  margin-block-start: 0.85rem;
+  font-size: var(--fs-base);
+  line-height: 1.55;
+  color: var(--color-nm-silver);
+  max-width: 34rem;
+}
+.nm-sct__card-body .nm-btn { margin-block-start: 1.3rem; }
+
+.nm-sct__railwrap { width: 100%; }
+.nm-sct__rail {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--color-nm-border-strong);
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+.nm-sct__rail-fill {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  transform: scaleX(0);
+  background: var(--color-nm-green);
+}
+
+/* ---- Default (no JS pin): native horizontal scroll ---- */
+.nm-sct:not(.nm-sct--pinned) .nm-sct__inner {
+  padding-block: clamp(3.5rem, 8vh, 6rem);
+}
+.nm-sct:not(.nm-sct--pinned) .nm-sct__topbar {
+  width: 100%;
+  max-width: var(--nm-shell-max);
+  margin-inline: auto;
+  padding-inline: var(--nm-gutter);
+  margin-block-end: clamp(1.5rem, 3vw, 2.5rem);
+}
+.nm-sct:not(.nm-sct--pinned) .nm-sct__track {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.nm-sct:not(.nm-sct--pinned) .nm-sct__track::-webkit-scrollbar { display: none; }
+.nm-sct:not(.nm-sct--pinned) .nm-sct__card { scroll-snap-align: center; }
+.nm-sct:not(.nm-sct--pinned) .nm-sct__railwrap { display: none; }
+
+/* ---- Pinned mode (JS, capable desktop) ---- */
+.nm-sct--pinned .nm-sct__inner {
+  height: 100svh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.nm-sct--pinned .nm-sct__topbar {
+  position: absolute;
+  inset-block-start: calc(78px + clamp(1rem, 3vh, 1.75rem));
+  inset-inline: 0;
+  z-index: 3;
+  width: 100%;
+  max-width: var(--nm-shell-max);
+  margin-inline: auto;
+  padding-inline: var(--nm-gutter);
+  pointer-events: none;
+}
+.nm-sct--pinned .nm-sct__track { width: max-content; will-change: transform; }
+.nm-sct--pinned .nm-sct__railwrap {
+  position: absolute;
+  inset-block-end: clamp(1.75rem, 5vh, 3.25rem);
+  inset-inline: 0;
+  z-index: 3;
+  max-width: var(--nm-shell-max);
+  margin-inline: auto;
+  padding-inline: var(--nm-gutter);
+}
+
+@media (max-width: 768px) {
+  .nm-sct__card { width: 86vw; height: 62vh; }
+  .nm-sct__card-name { font-size: var(--fs-5xl); }
+}
