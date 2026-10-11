@@ -16,6 +16,8 @@ export default function SmoothScroll() {
     });
 
     lenis.on("scroll", ScrollTrigger.update);
+    // Expose for components that need to lock/unlock scroll (e.g. modals).
+    window.__lenis = lenis;
 
     const raf = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(raf);
@@ -48,6 +50,7 @@ export default function SmoothScroll() {
       window.clearTimeout(t);
       gsap.ticker.remove(raf);
       lenis.destroy();
+      delete window.__lenis;
     };
   }, []);
 

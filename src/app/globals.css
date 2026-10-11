@@ -4678,3 +4678,231 @@ html.nm-ready .nm-sx__nameinner { transform: translateY(118%); }
   .nm-x__logo-mark { filter: none; }
   .nm-sc__frame { will-change: auto; }
 }
+
+/* ============================================================
+   HOME — 3D LOGO HERO
+   ============================================================ */
+.nm-h3d {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--color-nm-black);
+  padding-block: 92px clamp(5rem, 11vh, 7rem);
+}
+.nm-h3d__glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(58% 48% at 50% 40%,
+      color-mix(in srgb, var(--color-nm-green) 20%, transparent) 0%,
+      transparent 68%),
+    radial-gradient(90% 70% at 50% 120%,
+      color-mix(in srgb, var(--color-nm-black) 0%, transparent) 0%,
+      var(--color-nm-black) 72%);
+}
+.nm-h3d__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: clamp(1rem, 2.2vw, 1.6rem);
+  padding-block: clamp(1.5rem, 5vh, 3.5rem);
+}
+.nm-h3d__kicker {
+  color: var(--color-nm-gray);
+  margin: 0;
+}
+.nm-h3d__stage {
+  position: relative;
+  width: min(580px, 92vw);
+  height: clamp(230px, 40vh, 440px);
+  touch-action: pan-y;
+}
+.nm-h3d__stage canvas { outline: none; }
+.nm-h3d__fallback {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 46%,
+    color-mix(in srgb, var(--color-nm-slate) 55%, transparent) 0%,
+    transparent 62%);
+  animation: nm-h3d-pulse 1.8s var(--ease-nm) infinite;
+}
+@keyframes nm-h3d-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+.nm-h3d__title {
+  font-size: var(--fs-7xl);
+  font-weight: var(--fw-bold);
+  line-height: 1.04;
+  letter-spacing: var(--ls-tight);
+  color: var(--color-nm-white);
+  max-width: 18ch;
+}
+.nm-h3d__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.85rem;
+  margin-block-start: clamp(0.4rem, 1.4vw, 0.9rem);
+}
+.nm-h3d__scrollcue {
+  position: absolute;
+  z-index: 1;
+  inset-block-end: clamp(1.25rem, 3vh, 2rem);
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-nm-gray);
+  pointer-events: none;
+}
+.nm-h3d__scrollcue-line {
+  width: 1px;
+  height: 34px;
+  background: var(--color-nm-border-strong);
+  position: relative;
+  overflow: hidden;
+}
+.nm-h3d__scrollcue-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-nm-white);
+  transform: translateY(-100%);
+  animation: nm-scrollcue-v 2.4s var(--ease-nm) infinite;
+}
+@keyframes nm-scrollcue-v {
+  0% { transform: translateY(-100%); }
+  50% { transform: translateY(0%); }
+  100% { transform: translateY(100%); }
+}
+@media (max-width: 768px) {
+  .nm-h3d__actions { width: 100%; flex-direction: column; align-items: stretch; }
+  .nm-h3d__actions .nm-btn { justify-content: space-between; }
+  .nm-h3d__scrollcue { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nm-h3d__fallback,
+  .nm-h3d__scrollcue-line::after { animation: none; }
+}
+
+/* ============================================================
+   MODAL (shared)
+   ============================================================ */
+.nm-scroll-lock { overflow: hidden !important; }
+
+.nm-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 2.5rem);
+}
+.nm-modal__scrim {
+  position: absolute;
+  inset: 0;
+  border: none;
+  cursor: pointer;
+  background: color-mix(in srgb, var(--color-nm-black) 66%, transparent);
+  backdrop-filter: blur(6px);
+  animation: nm-fade 0.3s var(--ease-nm);
+}
+.nm-modal__panel {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: min(88vh, 920px);
+  display: flex;
+  flex-direction: column;
+  background: var(--color-nm-charcoal);
+  border: 1px solid var(--color-nm-border);
+  border-radius: 10px;
+  box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  animation: nm-modal-in 0.4s var(--ease-nm);
+}
+.nm-modal__panel--wide { width: min(1040px, 100%); }
+.nm-modal__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: clamp(1.35rem, 2.5vw, 1.9rem) clamp(1.35rem, 2.5vw, 1.9rem) 1.1rem;
+  border-block-end: 1px solid var(--color-nm-border);
+}
+.nm-modal__title {
+  font-size: var(--fs-4xl);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-tight);
+  color: var(--color-nm-white);
+}
+.nm-modal__subtitle {
+  margin-block-start: 0.45rem;
+  font-size: var(--fs-md);
+  color: var(--color-nm-gray);
+}
+.nm-modal__close {
+  flex: 0 0 auto;
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  color: var(--color-nm-white);
+  background: var(--color-nm-graphite);
+  border: 1px solid var(--color-nm-border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.3s var(--ease-nm), transform 0.3s var(--ease-nm);
+}
+.nm-modal__close:hover { background: var(--color-nm-slate); transform: rotate(90deg); }
+.nm-modal__close svg { width: 1.15rem; height: 1.15rem; }
+.nm-modal__body {
+  padding: clamp(1.35rem, 2.5vw, 1.9rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+@keyframes nm-modal-in {
+  from { opacity: 0; transform: translateY(16px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes nm-fade { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .nm-modal__scrim, .nm-modal__panel { animation: none; }
+  .nm-modal__close:hover { transform: none; }
+}
+
+/* Partner form inside modal */
+.nm-partner-form { display: flex; flex-direction: column; gap: 1.05rem; }
+.nm-partner-form .nm-ct-submit { margin-block-start: 0.5rem; width: 100%; justify-content: space-between; }
+
+/* Automotive-network placeholder (pending data + map design) */
+.nm-netmap-placeholder {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 340px;
+  padding: clamp(2rem, 5vw, 3.5rem);
+  border: 1px dashed var(--color-nm-border-strong);
+  border-radius: 8px;
+  background: var(--color-nm-graphite);
+}
+.nm-netmap-placeholder .nm-lead { max-width: 46ch; }
