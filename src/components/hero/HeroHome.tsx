@@ -71,21 +71,15 @@ export default function HeroHome() {
         },
       });
 
-      // text blur-reveals in, holds, then blurs out…
+      // text blur-reveals in early and then holds — the hero stays on its
+      // last frame at the end of the pin; scrolling on reveals the next
+      // section by scrolling the whole hero away (no fade-to-black).
       tl.fromTo(
         ".nm-vh__reveal",
         { autoAlpha: 0, "--b": 18, y: 26 },
-        { autoAlpha: 1, "--b": 0, y: 0, duration: 0.2, stagger: 0.04 },
-        0.05
+        { autoAlpha: 1, "--b": 0, y: 0, duration: 0.22, stagger: 0.05 },
+        0.08
       );
-      tl.to(
-        ".nm-vh__reveal",
-        { autoAlpha: 0, "--b": 10, y: -22, duration: 0.16, stagger: 0.03 },
-        0.74
-      );
-      // …and the whole media fades/recedes near the end so the hero dissolves
-      // into the next section instead of hard-cutting.
-      tl.to(".nm-vh__media", { autoAlpha: 0, scale: 1.06, duration: 0.2, ease: "power1.in" }, 0.8);
 
       const addVideoScrub = () => {
         const d = video.duration;
