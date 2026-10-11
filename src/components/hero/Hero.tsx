@@ -219,13 +219,13 @@ export default function Hero() {
           <p className="nm-eyebrow nm-eyebrow--sm" data-accent={slide.accent} data-hero-fade>
             {slide.category}
           </p>
-          <h1 className="nm-hero__title">
+          <h2 className="nm-hero__title">
             {slide.titleLines.map((line, li) => (
               <span key={li} className="nm-line-mask">
                 <span className="nm-line-inner">{line}</span>
               </span>
             ))}
-          </h1>
+          </h2>
           <p className="nm-hero__official" data-hero-fade>{slide.officialTitle}</p>
           <p className="nm-hero__desc" data-hero-fade>{slide.description}</p>
           <div className="nm-hero__cta" data-hero-fade>
