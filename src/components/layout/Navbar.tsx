@@ -72,15 +72,32 @@ export default function Navbar() {
                   )}
                   {item.children && (
                     <div className="nm-nav__panel" role="menu">
-                      <ul>
-                        {item.children.map((c) => (
-                          <li key={c.label} role="none">
-                            <Link href={c.href} role="menuitem" className="nm-nav__sublink">
-                              <span>{c.label}</span>
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
+                      {item.groups ? (
+                        item.groups.map((g) => (
+                          <div key={g.heading} className="nm-nav__group">
+                            <p className="nm-nav__group-heading">{g.heading}</p>
+                            <ul>
+                              {g.links.map((c) => (
+                                <li key={c.label} role="none">
+                                  <Link href={c.href} role="menuitem" className="nm-nav__sublink">
+                                    <span>{c.label}</span>
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))
+                      ) : (
+                        <ul>
+                          {item.children.map((c) => (
+                            <li key={c.label} role="none">
+                              <Link href={c.href} role="menuitem" className="nm-nav__sublink">
+                                <span>{c.label}</span>
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </div>
                   )}
                 </li>

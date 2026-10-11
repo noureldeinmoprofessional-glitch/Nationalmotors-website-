@@ -128,15 +128,34 @@ export default function MobileNav({
                   </div>
                   {item.children && (
                     <div className="nm-mnav__sub" data-open={isOpen || undefined}>
-                      <ul>
-                        {item.children.map((c) => (
-                          <li key={c.label}>
-                            <Link href={c.href} onClick={onClose} tabIndex={open && isOpen ? 0 : -1}>
-                              {c.label}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
+                      {item.groups ? (
+                        <ul>
+                          {item.groups.map((g) => (
+                            <li key={g.heading} className="nm-mnav__subgroup">
+                              <span className="nm-mnav__subheading">{g.heading}</span>
+                              <ul>
+                                {g.links.map((c) => (
+                                  <li key={c.label}>
+                                    <Link href={c.href} onClick={onClose} tabIndex={open && isOpen ? 0 : -1}>
+                                      {c.label}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <ul>
+                          {item.children.map((c) => (
+                            <li key={c.label}>
+                              <Link href={c.href} onClick={onClose} tabIndex={open && isOpen ? 0 : -1}>
+                                {c.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </div>
                   )}
                 </li>

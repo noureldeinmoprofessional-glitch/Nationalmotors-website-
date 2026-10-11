@@ -15,6 +15,8 @@ export const CONTACT = {
   },
 } as const;
 
+export type NavLink = { label: string; href: string };
+
 export type NavItem = {
   label: string;
   href: string;
@@ -22,7 +24,11 @@ export type NavItem = {
    *  dropdown. Used for "News & Media", whose landing page is disabled while
    *  its sub-pages remain navigable. */
   disabled?: boolean;
-  children?: { label: string; href: string }[];
+  children?: NavLink[];
+  /** Grouped dropdown links with category headings (e.g. the Brands menu).
+   *  When present it drives the dropdown; `children` stays the flat list used
+   *  for the "has dropdown" affordance and as a fallback. */
+  groups?: { heading: string; links: NavLink[] }[];
 };
 
 export const NAV: NavItem[] = [
@@ -31,6 +37,11 @@ export const NAV: NavItem[] = [
   {
     label: "Our Brands",
     href: "/brands",
+    groups: [
+      { heading: "Commercial mobility", links: [{ label: "Joylong", href: "/brands/joylong" }] },
+      { heading: "Electric commercial mobility", links: [{ label: "Farizon", href: "/brands/farizon" }] },
+      { heading: "Electric light mobility", links: [{ label: "Blu", href: "/brands/blu-light-mobility" }] },
+    ],
     children: [
       { label: "Joylong", href: "/brands/joylong" },
       { label: "Farizon", href: "/brands/farizon" },
