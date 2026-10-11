@@ -1,12 +1,9 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import CTAButton from "@/components/ui/CTAButton";
-import { gsap, prefersReducedMotion } from "@/lib/gsap";
-import { useIsoLayoutEffect } from "@/lib/hooks";
-
-const LEGACY_IMG = "/images/about-hero/automotive.jpg";
+import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
+import { useIsoLayoutEffect, useLineReveal, useReveal } from "@/lib/hooks";
 
 const STATS = [
   { to: 50, label: "Years" },
@@ -21,125 +18,70 @@ export default function LegacySection() {
   const sectionRef = useRef<HTMLElement>(null);
   const valRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
+  const stmtRef = useLineReveal<HTMLHeadingElement>({ start: "top 82%", stagger: 0.14 });
+  const introRef = useReveal<HTMLDivElement>({ y: 24, stagger: 0.12, start: "top 84%" });
+
   useIsoLayoutEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-    if (prefersReducedMotion() || window.innerWidth <= 768) return;
 
-    section.classList.add("nm-lg--pinned");
     const ctx = gsap.context(() => {
-      const q = gsap.utils.selector(section);
-      const year = section.querySelector<HTMLElement>(".nm-lg__year")!;
-      const slot = section.querySelector<HTMLElement>(".nm-lg__slot")!;
+      if (prefersReducedMotion()) return;
 
-      // initial hidden states
-      gsap.set(q(".nm-lg__copy [data-fade]"), { autoAlpha: 0, y: 28 });
-      gsap.set(q(".nm-lg__stat"), { autoAlpha: 0, y: 30 });
-      gsap.set(year, { autoAlpha: 0, transformOrigin: "center center" });
+      // counters count up once the stat row enters
       valRefs.current.forEach((el) => {
         if (el) el.textContent = "0";
       });
-
-      // Travel target: year starts full-bleed & centred (identity) and is
-      // scaled/moved to sit over the invisible slot in the final layout.
-      // offsetWidth is transform-independent; the slot never carries a
-      // transform — so these recompute cleanly on refresh/resize.
-      const tScale = () => slot.getBoundingClientRect().width / year.offsetWidth;
-      const tDx = () => {
-        const sr = slot.getBoundingClientRect();
-        return sr.left + sr.width / 2 - window.innerWidth / 2;
-      };
-      const tDy = () => {
-        const sr = slot.getBoundingClientRect();
-        return sr.top + sr.height / 2 - window.innerHeight / 2;
-      };
-
-      const tl = gsap.timeline({
-        defaults: { ease: "none" },
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: "+=340%",
-          pin: true,
-          scrub: 1.5,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
+      ScrollTrigger.create({
+        trigger: ".nm-lg__stats",
+        start: "top 85%",
+        once: true,
+        onEnter: () => {
+          STATS.forEach((s, i) => {
+            const el = valRefs.current[i];
+            if (!el) return;
+            const proxy = { v: 0 };
+            gsap.to(proxy, {
+              v: s.to,
+              duration: 1.6,
+              ease: "power2.out",
+              onUpdate: () => { el.textContent = fmt(proxy.v); },
+            });
+          });
         },
-      });
-
-      // A (hold): full-bleed image on its own.
-      // B (crossfade): image dims away while the 1978 mask appears.
-      tl.to(q(".nm-lg__full"), { autoAlpha: 0, duration: 0.18, ease: "power1.inOut" }, 0.18);
-      tl.to(year, { autoAlpha: 1, duration: 0.18 }, 0.22);
-      // C (travel): the 1978 — still image-masked — glides to its final spot.
-      //   A long, eased segment so the move reads slow and smooth.
-      tl.fromTo(
-        year,
-        { x: 0, y: 0, scale: 1 },
-        { x: tDx, y: tDy, scale: tScale, duration: 0.44, ease: "power2.inOut" },
-        0.42
-      );
-      // copy reveals toward the end of the travel
-      tl.to(q(".nm-lg__copy [data-fade]"), { autoAlpha: 1, y: 0, duration: 0.14, stagger: 0.06, ease: "power3.out" }, 0.66);
-      // D: stats reveal + count up
-      tl.to(q(".nm-lg__stat"), { autoAlpha: 1, y: 0, duration: 0.12, stagger: 0.06, ease: "power3.out" }, 0.86);
-      STATS.forEach((s, i) => {
-        const el = valRefs.current[i];
-        if (!el) return;
-        const proxy = { v: 0 };
-        tl.to(
-          proxy,
-          { v: s.to, duration: 0.5, ease: "power1.out", onUpdate: () => { el.textContent = fmt(proxy.v); } },
-          0.86 + i * 0.05
-        );
       });
     }, section);
 
-    return () => {
-      ctx.revert();
-      section.classList.remove("nm-lg--pinned");
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
     <section id="legacy" ref={sectionRef} className="nm-lg" aria-label="Our Legacy">
-      <div className="nm-lg__stage">
-        <div className="nm-lg__full" aria-hidden="true">
-          <Image src={LEGACY_IMG} alt="" fill sizes="100vw" priority={false} style={{ objectFit: "cover", objectPosition: "50% 45%" }} />
+      <div ref={introRef} className="nm-shell nm-lg__wrap">
+        <p className="nm-eyebrow" data-accent="sand" data-reveal>Our Legacy</p>
+
+        <h2 ref={stmtRef} className="nm-lg__statement">
+          <span className="nm-line-mask"><span className="nm-line-inner">Since</span></span>
+          <span className="nm-line-mask"><span className="nm-line-inner"><span className="nm-lg__accent">1978</span></span></span>
+        </h2>
+
+        <p className="nm-lg__manifesto" data-reveal>
+          For more than four decades, National Motors has represented the world&rsquo;s leading
+          automotive brands across Egypt — a legacy built on experience, trust, and lasting
+          relationships.
+        </p>
+        <div className="nm-lg__cta" data-reveal>
+          <CTAButton href="/about" variant="secondary" cursor="VIEW">Learn More</CTAButton>
         </div>
 
-        <div className="nm-lg__maskstage" aria-hidden="true">
-          <span className="nm-lg__year" style={{ backgroundImage: `url(${LEGACY_IMG})` }}>1978</span>
-        </div>
-
-        <div className="nm-shell nm-lg__layout">
-          <div className="nm-lg__copy">
-            <p className="nm-eyebrow" data-accent="sand" data-fade>Our Legacy — Est. 1978</p>
-            <p className="nm-lead nm-lg__lead" data-fade>
-              Established in Egypt in 1978, National Motors has built a legacy of experience, trust,
-              and excellence in the automotive industry.
-            </p>
-            <p className="nm-lg__sub" data-fade>
-              For decades, we have evolved with the market, representing leading automotive brands and
-              delivering reliable mobility solutions. Our journey continues with a vision focused on
-              innovation, quality, and lasting customer relationships.
-            </p>
-            <div className="nm-lg__cta" data-fade>
-              <CTAButton href="/about" variant="secondary" cursor="VIEW">Learn More</CTAButton>
-            </div>
-          </div>
-
-          <div className="nm-lg__slot" aria-hidden="true" />
-
-          <ul className="nm-lg__stats">
-            {STATS.map((s, i) => (
-              <li key={s.label} className="nm-lg__stat">
-                <span ref={(el) => { valRefs.current[i] = el; }} className="nm-lg__stat-value">{fmt(s.to)}</span>
-                <span className="nm-lg__stat-label">{s.label}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <ul className="nm-lg__stats">
+          {STATS.map((s, i) => (
+            <li key={s.label} className="nm-lg__stat">
+              <span ref={(el) => { valRefs.current[i] = el; }} className="nm-lg__stat-value">{fmt(s.to)}</span>
+              <span className="nm-lg__stat-label">{s.label}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
