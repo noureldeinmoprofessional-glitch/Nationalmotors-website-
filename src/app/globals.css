@@ -5076,3 +5076,94 @@ html.nm-ready .nm-sx__nameinner { transform: translateY(118%); }
   .nm-sct__card { width: 86vw; height: 62vh; }
   .nm-sct__card-name { font-size: var(--fs-5xl); }
 }
+
+/* ============================================================
+   HOME — LEGACY "1978" (scroll-scrubbed mask reveal)
+   ============================================================ */
+.nm-lg { position: relative; background: var(--color-nm-charcoal); }
+.nm-lg__stage { position: relative; padding-block: clamp(4.5rem, 9vh, 8rem); }
+.nm-lg--pinned .nm-lg__stage {
+  height: 100svh;
+  min-height: 640px;
+  padding-block: 92px clamp(2rem, 5vh, 3rem);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.nm-lg__inner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.25rem, 4.5vw, 3.75rem);
+}
+.nm-lg__top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+.nm-lg__copy { max-width: 36rem; }
+.nm-lg__copy .nm-eyebrow { margin-block-end: clamp(1.25rem, 2.5vw, 2rem); }
+.nm-lg__lead { margin-block-end: 1.1rem; }
+.nm-lg__sub { color: var(--color-nm-gray); line-height: 1.62; font-size: var(--fs-base); }
+.nm-lg__cta { margin-block-start: clamp(1.6rem, 3vw, 2.2rem); }
+
+.nm-lg__yearbox {
+  position: relative;
+  aspect-ratio: 16 / 11;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.nm-lg__img { position: absolute; inset: 0; opacity: 0.18; will-change: opacity, transform; }
+.nm-lg__img img { width: 100%; height: 100%; }
+.nm-lg__year {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(5rem, 14vw, 12rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  background-size: cover;
+  background-position: center 42%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.nm-lg__stats {
+  list-style: none;
+  margin: 0;
+  padding: clamp(1.75rem, 3vw, 2.75rem) 0 0;
+  border-block-start: 1px solid var(--color-nm-border);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1.25rem, 3vw, 3rem);
+}
+.nm-lg__stat { display: flex; flex-direction: column; gap: 0.45rem; }
+.nm-lg__stat-value {
+  font-size: var(--fs-7xl);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.02em;
+  color: var(--color-nm-electric);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.nm-lg__stat-label {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-nm-silver);
+}
+
+@media (max-width: 900px) {
+  .nm-lg__top { grid-template-columns: 1fr; gap: clamp(2rem, 6vw, 3rem); }
+  .nm-lg__yearbox { aspect-ratio: 16 / 9; }
+}
+@media (max-width: 680px) {
+  .nm-lg__stats { grid-template-columns: repeat(2, 1fr); gap: 1.75rem 1rem; }
+}
