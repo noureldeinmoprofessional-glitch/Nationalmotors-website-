@@ -59,9 +59,9 @@ export default function LegacySection() {
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: "+=240%",
+          end: "+=340%",
           pin: true,
-          scrub: 1,
+          scrub: 1.5,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
@@ -69,27 +69,28 @@ export default function LegacySection() {
 
       // A (hold): full-bleed image on its own.
       // B (crossfade): image dims away while the 1978 mask appears.
-      tl.to(q(".nm-lg__full"), { autoAlpha: 0, duration: 0.22, ease: "power1.inOut" }, 0.26);
-      tl.to(year, { autoAlpha: 1, duration: 0.2 }, 0.3);
-      // C (travel): the 1978 — still image-masked — moves to its final spot.
+      tl.to(q(".nm-lg__full"), { autoAlpha: 0, duration: 0.18, ease: "power1.inOut" }, 0.18);
+      tl.to(year, { autoAlpha: 1, duration: 0.18 }, 0.22);
+      // C (travel): the 1978 — still image-masked — glides to its final spot.
+      //   A long, eased segment so the move reads slow and smooth.
       tl.fromTo(
         year,
         { x: 0, y: 0, scale: 1 },
-        { x: tDx, y: tDy, scale: tScale, duration: 0.32, ease: "power2.inOut" },
-        0.52
+        { x: tDx, y: tDy, scale: tScale, duration: 0.44, ease: "power2.inOut" },
+        0.42
       );
-      // copy reveals alongside the travel
-      tl.to(q(".nm-lg__copy [data-fade]"), { autoAlpha: 1, y: 0, duration: 0.2, stagger: 0.07, ease: "power3.out" }, 0.62);
+      // copy reveals toward the end of the travel
+      tl.to(q(".nm-lg__copy [data-fade]"), { autoAlpha: 1, y: 0, duration: 0.14, stagger: 0.06, ease: "power3.out" }, 0.66);
       // D: stats reveal + count up
-      tl.to(q(".nm-lg__stat"), { autoAlpha: 1, y: 0, duration: 0.16, stagger: 0.07, ease: "power3.out" }, 0.84);
+      tl.to(q(".nm-lg__stat"), { autoAlpha: 1, y: 0, duration: 0.12, stagger: 0.06, ease: "power3.out" }, 0.86);
       STATS.forEach((s, i) => {
         const el = valRefs.current[i];
         if (!el) return;
         const proxy = { v: 0 };
         tl.to(
           proxy,
-          { v: s.to, duration: 0.7, ease: "power1.out", onUpdate: () => { el.textContent = fmt(proxy.v); } },
-          0.84 + i * 0.09
+          { v: s.to, duration: 0.5, ease: "power1.out", onUpdate: () => { el.textContent = fmt(proxy.v); } },
+          0.86 + i * 0.05
         );
       });
     }, section);
