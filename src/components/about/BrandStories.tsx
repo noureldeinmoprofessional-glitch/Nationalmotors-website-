@@ -60,13 +60,18 @@ export default function BrandStories() {
 
     const pinned = section.classList.contains("nm-bt--pinned");
     const vw = window.innerWidth;
-    const center = vw / 2;
     // On-screen x of the track's content origin (its left edge sits at 0).
     const shift = pinned ? (gsap.getProperty(track, "x") as number) : -vp.scrollLeft;
     const span = pinned
       ? Math.max(1, track.scrollWidth - vw)
       : Math.max(1, vp.scrollWidth - vp.clientWidth);
     const progress = Math.min(1, Math.max(0, -shift / span));
+
+    // Highlight focus = the resting position of the first milestone (the left
+    // margin, aligned with the heading). Each milestone becomes active as it
+    // reaches this point, so the highlight runs from the first logo onward.
+    const n0 = nodeRefs.current[0];
+    const focal = n0 ? n0.offsetLeft + n0.offsetWidth / 2 : vw / 2;
 
     let nearest = 0;
     let nearestDist = Infinity;
@@ -77,7 +82,7 @@ export default function BrandStories() {
       const left = n.offsetLeft + shift;
       const right = left + n.offsetWidth;
       const c = left + n.offsetWidth / 2;
-      const d = Math.abs(c - center);
+      const d = Math.abs(c - focal);
       if (d < nearestDist) {
         nearestDist = d;
         nearest = i;
