@@ -1714,21 +1714,26 @@ html.nm-ready .nm-ah__word {
 .nm-brands__intro, .nm-values__intro, .nm-lead-sec__intro { max-width: 44rem; }
 
 /* ============================================================
-   BRAND STORY — scroll-navigated milestone timeline
-   A horizontal rail of representation milestones. Progressive
-   enhancement: native horizontal scroll + scroll-snap, synced to
-   a scrubber rail, a visible-window counter, and prev/next arrows.
+   BRAND STORY — scroll-driven milestone timeline
+   A horizontal rail of representation milestones. On capable desktops
+   JS pins the section and scrubs the track horizontally as the page
+   scrolls (.nm-bt--pinned), starting with the newest milestone at the
+   far right. Touch / reduced-motion fall back to native horizontal
+   scroll. A passive rail + counter track progress; there are no buttons.
    ============================================================ */
 .nm-bt {
+  position: relative;
   background: var(--color-nm-charcoal);
-  padding-block: clamp(4.5rem, 9vh, 8rem);
   overflow: hidden;
   --bt-logo-h: 64px;
   --bt-dot-gap: 30px;
   --bt-dot-size: 14px;
   --bt-node-w: clamp(158px, 15vw, 210px);
+  /* Default (non-pinned) centring pad; pinned mode overrides it to start
+     the first milestone at the far right. */
   --bt-pad: max(var(--nm-gutter), calc(50vw - var(--bt-node-w) / 2));
 }
+.nm-bt__inner { padding-block: clamp(4.5rem, 9vh, 8rem); }
 .nm-bt__head { margin-block-end: clamp(2.5rem, 5vw, 4.5rem); }
 .nm-bt__intro { max-width: 46rem; margin-block-start: clamp(1.5rem, 2.6vw, 2.25rem); }
 
@@ -1864,21 +1869,19 @@ html.nm-ready .nm-bt:not(.is-in) .nm-bt__axis { transform: scaleX(0); }
 }
 .nm-bt__node:not([data-active]) .nm-bt__name { color: color-mix(in srgb, var(--color-nm-white) 78%, var(--color-nm-gray)); }
 
-/* --- Controls: scrubber rail + counter + arrows --- */
+/* --- Controls: passive progress rail + counter (no buttons) --- */
 .nm-bt__controls {
   margin-block-start: clamp(2.5rem, 5vw, 4rem);
   display: flex;
-  flex-direction: column;
-  gap: clamp(1.25rem, 2.5vw, 2rem);
+  align-items: center;
+  gap: clamp(1rem, 2.5vw, 2rem);
 }
 .nm-bt__rail {
   position: relative;
   height: 2px;
-  width: 100%;
+  flex: 1 1 auto;
   background: var(--color-nm-border-strong);
   border-radius: 2px;
-  cursor: pointer;
-  touch-action: none;
 }
 .nm-bt__rail-fill {
   position: absolute;
@@ -1887,65 +1890,49 @@ html.nm-ready .nm-bt:not(.is-in) .nm-bt__axis { transform: scaleX(0); }
   transform: scaleX(0);
   background: var(--color-nm-green);
   border-radius: 2px;
-  pointer-events: none;
-}
-.nm-bt__handle {
-  position: absolute;
-  top: 50%;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--color-nm-white);
-  border: 2px solid var(--color-nm-green);
-  transform: translate(-50%, -50%);
-  cursor: grab;
-  padding: 0;
-  transition: box-shadow 0.3s var(--ease-nm);
-}
-.nm-bt__handle:active { cursor: grabbing; }
-.nm-bt__handle:hover { box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-nm-green) 20%, transparent); }
-
-.nm-bt__bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
 }
 .nm-bt__counter {
+  flex: 0 0 auto;
   font-size: var(--fs-sm);
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.04em;
   color: var(--color-nm-gray);
+  white-space: nowrap;
 }
 .nm-bt__counter-sep { color: var(--color-nm-border-strong); }
-.nm-bt__arrows { display: flex; gap: 0.75rem; }
-.nm-bt__arrow {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
+
+/* --- Pinned horizontal scrub (desktop, JS-enabled) --- */
+.nm-bt--pinned { --bt-pad: calc(100vw - var(--bt-node-w) - var(--nm-gutter)); }
+.nm-bt--pinned .nm-bt__inner {
+  height: 100svh;
+  /* Reserve space for the absolute head (top) and controls (bottom) so the
+     centred timeline never overlaps them. */
+  padding-block: clamp(170px, 24vh, 250px) clamp(90px, 13vh, 150px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  background: transparent;
-  border: 1px solid var(--color-nm-border-strong);
-  color: var(--color-nm-white);
-  cursor: pointer;
-  transition: background 0.35s var(--ease-nm), border-color 0.35s var(--ease-nm), color 0.35s var(--ease-nm), opacity 0.35s var(--ease-nm);
 }
-.nm-bt__arrow svg { width: 20px; height: 20px; }
-.nm-bt__arrow:hover:not(:disabled) {
-  background: var(--color-nm-green);
-  border-color: var(--color-nm-green);
+.nm-bt--pinned .nm-bt__head {
+  position: absolute;
+  inset-block-start: calc(78px + clamp(1rem, 3vh, 2rem));
+  inset-inline: 0;
+  z-index: 3;
+  margin-block-end: 0;
+  pointer-events: none;
 }
-.nm-bt__arrow:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--color-nm-green) 60%, transparent);
-  outline-offset: 2px;
+.nm-bt--pinned .nm-bt__viewport { overflow: visible; }
+.nm-bt--pinned .nm-bt__track { width: max-content; will-change: transform; }
+.nm-bt--pinned .nm-bt__controls {
+  position: absolute;
+  inset-block-end: clamp(1.75rem, 5vh, 3.25rem);
+  inset-inline: 0;
+  z-index: 3;
+  margin-block-start: 0;
 }
-.nm-bt__arrow:disabled { opacity: 0.32; cursor: default; }
 
 @media (max-width: 768px) {
   .nm-bt { --bt-node-w: clamp(150px, 54vw, 200px); }
-  .nm-bt__arrow { width: 40px; height: 40px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
