@@ -1795,14 +1795,17 @@ html.nm-ready .nm-bt:not(.is-in) .nm-bt__axis { transform: scaleX(0); }
 }
 /* Logo slot — real logo (when supplied) or a clean wordmark fallback */
 .nm-bt__logo {
+  position: relative;
+  width: 100%;
   height: var(--bt-logo-h);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0.55;
-  filter: grayscale(0.2);
-  transition: opacity 0.5s var(--ease-nm), transform 0.5s var(--ease-nm);
+  filter: grayscale(0.25);
+  transition: opacity 0.5s var(--ease-nm), transform 0.5s var(--ease-nm), filter 0.5s var(--ease-nm);
 }
+.nm-bt__logo img { object-position: center; }
 .nm-bt__mark {
   font-size: var(--fs-lg);
   font-weight: var(--fw-extrabold);

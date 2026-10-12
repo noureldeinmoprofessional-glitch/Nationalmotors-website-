@@ -215,9 +215,9 @@ export default function BrandStories() {
                   <Image
                     src={e.logo}
                     alt={e.name}
-                    width={160}
-                    height={56}
-                    style={{ objectFit: "contain", width: "auto", height: "100%" }}
+                    fill
+                    sizes="210px"
+                    style={{ objectFit: "contain" }}
                   />
                 ) : (
                   <span className="nm-bt__mark">{e.mark}</span>

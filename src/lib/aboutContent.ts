@@ -143,7 +143,7 @@ export const BRAND_TIMELINE = {
       note: "Official distributor for Farizon in Egypt",
       period: "2025 – Present",
       accent: "electric" as const,
-      logo: null as string | null,
+      logo: "/images/brands/timeline/farizon.png" as string | null,
     },
     {
       id: "joylong",
@@ -152,7 +152,7 @@ export const BRAND_TIMELINE = {
       note: "Sole agent for Joylong",
       period: "2025 – Present",
       accent: "blue" as const,
-      logo: null as string | null,
+      logo: "/images/brands/timeline/joylong.png" as string | null,
     },
     {
       id: "blu",
@@ -161,7 +161,7 @@ export const BRAND_TIMELINE = {
       note: "Sole agent for BLU Golf Carts by Marshell",
       period: "2025 – Present",
       accent: "blue" as const,
-      logo: null as string | null,
+      logo: "/images/brands/timeline/blu.png" as string | null,
     },
     {
       id: "dfsk",
@@ -170,7 +170,7 @@ export const BRAND_TIMELINE = {
       note: "Sole agent for Dongfeng DFSK",
       period: "2014 – 2025",
       accent: "blue" as const,
-      logo: null as string | null,
+      logo: "/images/brands/timeline/dfsk.png" as string | null,
     },
     {
       id: "saipa",
@@ -179,7 +179,7 @@ export const BRAND_TIMELINE = {
       note: "Sole agent for SAIPA",
       period: "2008 – 2014",
       accent: "blue" as const,
-      logo: null as string | null,
+      logo: "/images/brands/timeline/saipa.png" as string | null,
     },
     {
       id: "legacy-import",
@@ -188,7 +188,7 @@ export const BRAND_TIMELINE = {
       note: "Leading auto importer for the ISUZU-KIA-VW Group",
       period: "2001 – 2011",
       accent: "blue" as const,
-      logo: null as string | null,
+      logo: "/images/brands/timeline/legacy-import.png" as string | null,
     },
     {
       id: "kia",
@@ -197,7 +197,7 @@ export const BRAND_TIMELINE = {
       note: "Partnered with Kia Egypt for the CKD Project",
       period: "2001 – 2003",
       accent: "blue" as const,
-      logo: null as string | null,
+      logo: "/images/brands/timeline/kia.png" as string | null,
     },
     {
       id: "gm",
@@ -206,7 +206,7 @@ export const BRAND_TIMELINE = {
       note: "Authorized distributor for General Motors",
       period: "1988 – 2001",
       accent: "blue" as const,
-      logo: null as string | null,
+      logo: "/images/brands/timeline/gm.png" as string | null,
     },
     {
       id: "suzuki",
@@ -215,7 +215,7 @@ export const BRAND_TIMELINE = {
       note: "Sales distributor of Suzuki motorcycles",
       period: "1980 – 1987",
       accent: "blue" as const,
-      logo: null as string | null,
+      logo: "/images/brands/timeline/suzuki.png" as string | null,
     },
   ],
 };
