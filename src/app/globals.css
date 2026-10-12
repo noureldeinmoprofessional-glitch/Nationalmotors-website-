@@ -1907,10 +1907,11 @@ html.nm-ready .nm-bt:not(.is-in) .nm-bt__axis { transform: scaleX(0); }
 .nm-bt--pinned {
   /* Leading pad = the shell's content edge, so the first logo, the axis line
      and the heading above all share the same left margin. Trailing pad is
-     sized so the last milestone travels all the way to that same margin (where
-     the highlight focus sits), i.e. the whole set passes the focal point. */
+     symmetric, so the last milestone ends flush at the right margin and the
+     strip fills the viewport at the end (no trailing gap). The highlight is
+     driven by scroll progress, not a fixed on-screen point. */
   --bt-pad-start: max(var(--nm-gutter), calc((100vw - var(--nm-shell-max)) / 2 + var(--nm-gutter)));
-  --bt-pad-end: calc(100vw - var(--bt-node-w) - var(--bt-pad-start));
+  --bt-pad-end: var(--bt-pad-start);
 }
 .nm-bt--pinned .nm-bt__inner {
   height: 100svh;

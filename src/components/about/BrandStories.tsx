@@ -67,37 +67,28 @@ export default function BrandStories() {
       : Math.max(1, vp.scrollWidth - vp.clientWidth);
     const progress = Math.min(1, Math.max(0, -shift / span));
 
-    // Highlight focus = the resting position of the first milestone (the left
-    // margin, aligned with the heading). Each milestone becomes active as it
-    // reaches this point, so the highlight runs from the first logo onward.
-    const n0 = nodeRefs.current[0];
-    const focal = n0 ? n0.offsetLeft + n0.offsetWidth / 2 : vw / 2;
+    // Active milestone follows scroll progress: the first at the start, the
+    // last at the end. The visible-window counter is computed alongside.
+    const count = nodeRefs.current.length;
+    const active = count > 1 ? Math.round(progress * (count - 1)) : 0;
 
-    let nearest = 0;
-    let nearestDist = Infinity;
     let first = -1;
     let last = -1;
     nodeRefs.current.forEach((n, i) => {
       if (!n) return;
       const left = n.offsetLeft + shift;
       const right = left + n.offsetWidth;
-      const c = left + n.offsetWidth / 2;
-      const d = Math.abs(c - focal);
-      if (d < nearestDist) {
-        nearestDist = d;
-        nearest = i;
-      }
       if (right - 12 > 0 && left + 12 < vw) {
         if (first === -1) first = i;
         last = i;
       }
     });
     if (first === -1) {
-      first = nearest;
-      last = nearest;
+      first = active;
+      last = active;
     }
     nodeRefs.current.forEach((n, i) => {
-      if (n) n.toggleAttribute("data-active", i === nearest);
+      if (n) n.toggleAttribute("data-active", i === active);
     });
     if (fillRef.current) fillRef.current.style.transform = `scaleX(${progress})`;
     if (idxRef.current) {
