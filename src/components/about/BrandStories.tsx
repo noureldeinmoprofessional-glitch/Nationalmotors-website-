@@ -48,25 +48,41 @@ export default function BrandStories() {
   }, []);
 
   // Mark the milestone nearest the viewport centre as active, and refresh the
-  // visible-window counter. Written straight to the DOM to avoid re-rendering
-  // on every scroll frame.
-  const paint = (progress: number) => {
+  // progress rail + visible-window counter. Positions are derived from the
+  // track's actual transform (pinned) or scroll offset (fallback) so the
+  // readout stays frame-accurate and never goes stale on a ScrollTrigger
+  // refresh. Written straight to the DOM to avoid re-rendering each frame.
+  const paint = () => {
+    const track = trackRef.current;
+    const vp = viewportRef.current;
+    const section = sectionRef.current;
+    if (!track || !vp || !section) return;
+
+    const pinned = section.classList.contains("nm-bt--pinned");
     const vw = window.innerWidth;
     const center = vw / 2;
+    // On-screen x of the track's content origin (its left edge sits at 0).
+    const shift = pinned ? (gsap.getProperty(track, "x") as number) : -vp.scrollLeft;
+    const span = pinned
+      ? Math.max(1, track.scrollWidth - vw)
+      : Math.max(1, vp.scrollWidth - vp.clientWidth);
+    const progress = Math.min(1, Math.max(0, -shift / span));
+
     let nearest = 0;
     let nearestDist = Infinity;
     let first = -1;
     let last = -1;
     nodeRefs.current.forEach((n, i) => {
       if (!n) return;
-      const r = n.getBoundingClientRect();
-      const c = r.left + r.width / 2;
+      const left = n.offsetLeft + shift;
+      const right = left + n.offsetWidth;
+      const c = left + n.offsetWidth / 2;
       const d = Math.abs(c - center);
       if (d < nearestDist) {
         nearestDist = d;
         nearest = i;
       }
-      if (r.right - 12 > 0 && r.left + 12 < vw) {
+      if (right - 12 > 0 && left + 12 < vw) {
         if (first === -1) first = i;
         last = i;
       }
@@ -96,10 +112,7 @@ export default function BrandStories() {
 
     if (prefersReducedMotion() || window.innerWidth <= 768) {
       // Native-scroll fallback: keep active/counter synced to the scroll pos.
-      const onScroll = () => {
-        const max = viewport.scrollWidth - viewport.clientWidth;
-        paint(max > 0 ? viewport.scrollLeft / max : 0);
-      };
+      const onScroll = () => paint();
       onScroll();
       viewport.addEventListener("scroll", onScroll, { passive: true });
       window.addEventListener("resize", onScroll);
@@ -124,8 +137,8 @@ export default function BrandStories() {
           scrub: 1,
           anticipatePin: 1,
           invalidateOnRefresh: true,
-          onRefresh: (self) => paint(self.progress),
-          onUpdate: (self) => paint(self.progress),
+          onRefresh: () => paint(),
+          onUpdate: () => paint(),
         },
       });
 

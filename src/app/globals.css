@@ -1729,9 +1729,11 @@ html.nm-ready .nm-ah__word {
   --bt-dot-gap: 30px;
   --bt-dot-size: 14px;
   --bt-node-w: clamp(158px, 15vw, 210px);
-  /* Default (non-pinned) centring pad; pinned mode overrides it to start
-     the first milestone at the far right. */
-  --bt-pad: max(var(--nm-gutter), calc(50vw - var(--bt-node-w) / 2));
+  /* Leading / trailing pad on the track (also the axis inset). Default
+     centres the first milestone; pinned mode overrides them to start the
+     first milestone flush-left and finish with the last one centred. */
+  --bt-pad-start: max(var(--nm-gutter), calc(50vw - var(--bt-node-w) / 2));
+  --bt-pad-end: max(var(--nm-gutter), calc(50vw - var(--bt-node-w) / 2));
 }
 .nm-bt__inner { padding-block: clamp(4.5rem, 9vh, 8rem); }
 .nm-bt__head { margin-block-end: clamp(2.5rem, 5vw, 4.5rem); }
@@ -1776,13 +1778,13 @@ html.nm-ready .nm-bt:not(.is-in) .nm-bt__axis { transform: scaleX(0); }
   align-items: flex-start;
   gap: clamp(0.75rem, 2vw, 2rem);
   width: max-content;
-  padding-inline: var(--bt-pad);
+  padding-inline: var(--bt-pad-start) var(--bt-pad-end);
   padding-block-end: 0.5rem;
 }
 /* Continuous axis through every dot */
 .nm-bt__axis {
   position: absolute;
-  inset-inline: var(--bt-pad);
+  inset-inline: var(--bt-pad-start) var(--bt-pad-end);
   top: calc(var(--bt-logo-h) + var(--bt-dot-gap) + var(--bt-dot-size) / 2);
   height: 1px;
   background: color-mix(in srgb, var(--color-nm-white) 14%, transparent);
@@ -1902,7 +1904,10 @@ html.nm-ready .nm-bt:not(.is-in) .nm-bt__axis { transform: scaleX(0); }
 .nm-bt__counter-sep { color: var(--color-nm-border-strong); }
 
 /* --- Pinned horizontal scrub (desktop, JS-enabled) --- */
-.nm-bt--pinned { --bt-pad: calc(100vw - var(--bt-node-w) - var(--nm-gutter)); }
+.nm-bt--pinned {
+  --bt-pad-start: var(--nm-gutter);
+  --bt-pad-end: max(var(--nm-gutter), calc(50vw - var(--bt-node-w) / 2));
+}
 .nm-bt--pinned .nm-bt__inner {
   height: 100svh;
   /* Reserve space for the absolute head (top) and controls (bottom) so the
