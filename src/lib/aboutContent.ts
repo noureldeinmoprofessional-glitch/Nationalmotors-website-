@@ -190,6 +190,33 @@ export const BRAND_TIMELINE = {
       accent: "blue" as const,
       logo: null as string | null,
     },
+    {
+      id: "kia",
+      mark: "KIA",
+      name: "KIA",
+      note: "Partnered with Kia Egypt for the CKD Project",
+      period: "2001 – 2003",
+      accent: "blue" as const,
+      logo: null as string | null,
+    },
+    {
+      id: "gm",
+      mark: "GM",
+      name: "GM",
+      note: "Authorized distributor for General Motors",
+      period: "1988 – 2001",
+      accent: "blue" as const,
+      logo: null as string | null,
+    },
+    {
+      id: "suzuki",
+      mark: "SUZUKI",
+      name: "SUZUKI",
+      note: "Sales distributor of Suzuki motorcycles",
+      period: "1980 – 1987",
+      accent: "blue" as const,
+      logo: null as string | null,
+    },
   ],
 };
 
