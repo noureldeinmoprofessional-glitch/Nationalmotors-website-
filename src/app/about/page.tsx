@@ -8,7 +8,6 @@ import BrandStories from "@/components/about/BrandStories";
 import VisionMission from "@/components/about/VisionMission";
 import ValuesSection from "@/components/about/ValuesSection";
 import LeadershipSection from "@/components/about/LeadershipSection";
-import BoardSection from "@/components/about/BoardSection";
 import CSRSection from "@/components/about/CSRSection";
 import FutureSection from "@/components/about/FutureSection";
 
@@ -37,7 +36,6 @@ export default function AboutPage() {
         <BrandStories />
         <VisionMission />
         <ValuesSection />
-        <BoardSection />
         <LeadershipSection />
         <CSRSection />
         <FutureSection />

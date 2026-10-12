@@ -301,6 +301,19 @@ export const LEADERSHIP = {
   ],
 };
 
+/* Unified "Leadership" section header — one headline covering both the
+   founding family (BOARD) and the executive team (LEADERSHIP). Copy is
+   assembled from the approved board/leadership intros, not invented. */
+export const LEADERSHIP_HEADER = {
+  eyebrow: "Leadership",
+  intro:
+    "Since its establishment in 1978, National Motors has evolved through generations of family leadership—combining entrepreneurship, strategic thinking, and disciplined execution. Today, the founding family and an experienced executive team lead the company's continued evolution, bringing complementary expertise across portfolio management, brand development, electric mobility, strategic partnerships, and operational transformation.",
+  familyLabel: "The Founding Family",
+  familyNote: "A family business, led across generations.",
+  execLabel: "Executive Team",
+  execNote: "Experienced directors turning strategy into progress.",
+};
+
 /* BOARD MEMBERS (PPTX slides 15–18). */
 export const BOARD = {
   eyebrow: "Board Members",
