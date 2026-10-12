@@ -121,6 +121,78 @@ export const BRAND_STORIES = {
   ],
 };
 
+/* ------------------------------------------------------------
+   BRAND STORY — scroll-navigated milestone timeline.
+   Mirrors the approved demo: a horizontal rail of representation
+   milestones, newest → oldest. `mark` is the short label shown in
+   the logo slot; `logo` (optional) points to a real brand logo file
+   under /public/images/brands/timeline/ once supplied — when absent,
+   the `mark` wordmark is rendered. Copy is reproduced from the
+   approved demo; the earliest pre-2001 milestones remain to be
+   supplied from the source.
+   ------------------------------------------------------------ */
+export const BRAND_TIMELINE = {
+  eyebrow: "Brand Story",
+  intro:
+    "National Motors' automotive portfolio was not built by simply adding brands. Every decision began with a clear opportunity in the Egyptian market; an unmet customer need, a category ready to evolve, or a technology capable of changing how people and businesses move.",
+  entries: [
+    {
+      id: "farizon",
+      mark: "FARIZON",
+      name: "Farizon",
+      note: "Official distributor for Farizon in Egypt",
+      period: "2025 – Present",
+      accent: "electric" as const,
+      logo: null as string | null,
+    },
+    {
+      id: "joylong",
+      mark: "JOYLONG",
+      name: "Joylong",
+      note: "Sole agent for Joylong",
+      period: "2025 – Present",
+      accent: "blue" as const,
+      logo: null as string | null,
+    },
+    {
+      id: "blu",
+      mark: "BLU",
+      name: "Blu Light Mobility",
+      note: "Sole agent for BLU Golf Carts by Marshell",
+      period: "2025 – Present",
+      accent: "blue" as const,
+      logo: null as string | null,
+    },
+    {
+      id: "dfsk",
+      mark: "DFSK",
+      name: "DFSK",
+      note: "Sole agent for Dongfeng DFSK",
+      period: "2014 – 2025",
+      accent: "blue" as const,
+      logo: null as string | null,
+    },
+    {
+      id: "saipa",
+      mark: "SAIPA",
+      name: "SAIPA",
+      note: "Sole agent for SAIPA",
+      period: "2008 – 2014",
+      accent: "blue" as const,
+      logo: null as string | null,
+    },
+    {
+      id: "legacy-import",
+      mark: "BMW · MB · VW · ISUZU",
+      name: "BMW · MB · VW · ISUZU",
+      note: "Leading auto importer for the ISUZU-KIA-VW Group",
+      period: "2001 – 2011",
+      accent: "blue" as const,
+      logo: null as string | null,
+    },
+  ],
+};
+
 export const VISION = {
   eyebrow: "Our Vision",
   headline: "Shaping the Future of Mobility in Egypt",
