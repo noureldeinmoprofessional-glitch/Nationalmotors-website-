@@ -222,15 +222,18 @@ export const BRAND_TIMELINE = {
 
 export const VISION = {
   eyebrow: "Our Vision",
-  headline: "Shaping the Future of Mobility in Egypt",
-  headlineLines: ["Shaping the Future", "of Mobility", "in Egypt"],
-  body: "National Motors aspires to become Egypt's most respected automotive group and a regional benchmark for customer experience, operational excellence, and sustainable mobility. Building on a heritage that began in 1978, we continue to evolve beyond vehicle representation to help shape a more efficient and responsible future for mobility in Egypt and across the region.",
+  /* Two display lines; the last word is accented in the UI. */
+  headlineLines: ["Shaping the future", "of mobility."],
+  body: "To become Egypt's most respected automotive group and a regional benchmark for customer experience, operational excellence, and sustainable mobility.",
+  image: "/images/values/excellence.webp",
+  imageAlt: "A highway at dusk leading toward a glowing city skyline",
 };
 
 export const MISSION = {
   eyebrow: "Our Mission",
-  headline: "Creating Value Throughout the Ownership Journey",
-  body: "National Motors is committed to representing world-class automotive brands with excellence and delivering an integrated ownership experience at every stage—from enquiry and purchase to after-sales support. We create lasting value for our customers, partners, employees, and communities through professionalism, accountability, and sustainable growth.",
+  title: "Value at every step.",
+  body: "From enquiry and purchase to after-sales support, we bring world-class automotive brands and dependable service together throughout the ownership journey.",
+  est: "EST. 1978",
 };
 
 export const VALUES = {

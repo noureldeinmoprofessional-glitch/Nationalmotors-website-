@@ -3751,90 +3751,82 @@ html.nm-ready .nm-svc:not(.is-in) .nm-svc__card {
   .nm-ct-intro { position: relative; top: auto; }
 }
 
-/* ---- Vision & Mission — editorial diptych ---- */
-.nm-pv {
+/* ============================================================
+   VISION & MISSION — editorial split with angled media
+   Left: eyebrow, display headline, divider, vision copy.
+   Right: a large angled (clip-path) image that reveals and parallaxes,
+   a mission block on a blue rule, and an "EST. 1978" detail.
+   ============================================================ */
+.nm-vm {
   position: relative;
-  isolation: isolate;
   overflow: hidden;
   background:
-    radial-gradient(120% 90% at 75% 10%, #121f33 0%, rgba(18, 31, 51, 0) 58%),
-    linear-gradient(170deg, #0a0f17 0%, #0b1220 58%, var(--color-nm-black) 100%);
+    radial-gradient(130% 80% at 82% 6%, #15223699 0%, rgba(20, 31, 49, 0) 55%),
+    linear-gradient(165deg, #0a0f17 0%, #0b1220 55%, var(--color-nm-black) 100%);
   padding-block: clamp(4.5rem, 10vh, 9rem);
 }
-.nm-pv__glow {
-  position: absolute;
-  z-index: 0;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.5;
-  pointer-events: none;
-}
-.nm-pv__glow--a { width: 42vw; height: 42vw; inset-block-start: -12vw; inset-inline-end: -8vw; background: radial-gradient(circle, color-mix(in srgb, var(--color-nm-green-light) 42%, transparent), transparent 70%); }
-.nm-pv__glow--b { width: 34vw; height: 34vw; inset-block-end: -10vw; inset-inline-start: -6vw; background: radial-gradient(circle, color-mix(in srgb, var(--color-nm-green) 30%, transparent), transparent 70%); }
-.nm-pv__head { position: relative; z-index: 1; margin-block-end: clamp(2rem, 4vw, 3.25rem); }
-.nm-pv__grid {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1rem, 2.2vw, 1.75rem);
-  align-items: start;
-}
-.nm-pv__card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 16px;
-  padding: clamp(1.75rem, 3vw, 2.75rem);
-  background: color-mix(in srgb, var(--color-nm-charcoal) 72%, transparent);
-  border: 1px solid var(--color-nm-border);
-  backdrop-filter: blur(10px);
-  min-height: clamp(320px, 38vw, 460px);
-  display: flex;
-}
-/* Editorial offset: the Mission card drops a little lower on desktop.
-   Uses margin (not transform) so the scroll-reveal's inline transform
-   does not cancel it. */
-.nm-pv__card--mission { margin-block-start: clamp(1.5rem, 4vw, 3.5rem); }
-.nm-pv__card::before {
-  content: "";
-  position: absolute;
-  inset-block-start: 0;
-  inset-inline: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--color-nm-green-light), transparent 80%);
-  opacity: 0.8;
-}
-.nm-pv__card--mission::before { background: linear-gradient(90deg, var(--color-nm-green), transparent 80%); }
-.nm-pv__ghost {
-  position: absolute;
-  inset-block-start: -0.15em;
-  inset-inline-end: 0.1em;
-  font-size: clamp(9rem, 20vw, 16rem);
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  color: color-mix(in srgb, var(--color-nm-white) 4%, transparent);
-  pointer-events: none;
-  z-index: 0;
-}
-.nm-pv__card-inner { position: relative; z-index: 1; align-self: end; display: flex; flex-direction: column; }
-.nm-pv__label {
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-semibold);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--color-nm-green-light);
-}
-.nm-pv__card--mission .nm-pv__label { color: var(--color-nm-green); }
-.nm-pv__headline {
-  margin-block: 1rem 1.25rem;
-  font-size: var(--fs-4xl);
-  font-weight: var(--fw-semibold);
-  letter-spacing: -0.025em;
-  line-height: 1.1;
+.nm-vm__wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); gap: clamp(2rem, 4vw, 4rem); align-items: start; }
+
+/* Left */
+.nm-vm__headline {
+  margin-block-start: clamp(1.4rem, 3vw, 2.4rem);
+  font-size: clamp(2.2rem, 4.2vw, 3.7rem);
+  font-weight: var(--fw-extrabold);
+  letter-spacing: -0.03em;
+  line-height: 1.02;
   color: var(--color-nm-white);
 }
-.nm-pv__body { color: var(--color-nm-silver); font-size: var(--fs-lg); line-height: 1.65; max-width: 42rem; }
+.nm-vm__line { display: block; overflow: hidden; padding-block: 0.02em; }
+.nm-vm__line-in { display: block; white-space: nowrap; will-change: transform; }
+.nm-vm__accent { color: var(--color-nm-green-light); }
+.nm-vm__divider { display: block; height: 1px; width: min(100%, 30rem); margin-block: clamp(1.9rem, 4vw, 3rem); background: color-mix(in srgb, var(--color-nm-white) 20%, transparent); }
+.nm-vm__label { font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-nm-green-light); }
+.nm-vm__vision { max-width: 33rem; }
+.nm-vm__copy { font-size: var(--fs-lg); line-height: 1.65; color: var(--color-nm-silver); }
+.nm-vm__vision .nm-vm__copy { margin-block-start: 1rem; }
+
+/* Right */
+.nm-vm__right { position: relative; display: flex; flex-direction: column; }
+.nm-vm__media {
+  position: relative;
+  width: calc(100% + var(--nm-gutter));
+  margin-inline-end: calc(-1 * var(--nm-gutter));
+  aspect-ratio: 16 / 10;
+  clip-path: polygon(13% 0, 100% 0, 100% 100%, 0 100%);
+  overflow: hidden;
+  background: var(--color-nm-graphite);
+}
+.nm-vm__media-img { position: absolute; inset: -8% 0; will-change: transform; }
+.nm-vm__media-img img { width: 100%; height: 100%; }
+.nm-vm__mission {
+  position: relative;
+  margin-block-start: clamp(2rem, 4vw, 3.25rem);
+  padding-inline-start: clamp(1.25rem, 2vw, 1.75rem);
+  border-inline-start: 2px solid var(--color-nm-green);
+  max-width: 40rem;
+}
+.nm-vm__mission-title { margin-block: 0.7rem 0.9rem; font-size: var(--fs-4xl); font-weight: var(--fw-bold); letter-spacing: -0.02em; line-height: 1.12; color: var(--color-nm-white); }
+.nm-vm__est {
+  align-self: flex-end;
+  margin-block-start: clamp(1.75rem, 3.5vw, 3rem);
+  position: relative;
+  padding-inline-start: 2.6rem;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--color-nm-gray);
+}
+.nm-vm__est::before { content: ""; position: absolute; inset-inline-start: 0; inset-block-start: 50%; width: 2rem; height: 1px; background: color-mix(in srgb, var(--color-nm-white) 26%, transparent); }
+
+@media (max-width: 980px) {
+  .nm-vm__wrap { grid-template-columns: 1fr; gap: clamp(2rem, 6vw, 3rem); }
+  .nm-vm__media { width: 100%; margin-inline-end: 0; aspect-ratio: 16 / 9; clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%); }
+  .nm-vm__est { align-self: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nm-vm__media-img { will-change: auto; }
+}
 
 /* ============================================================
    VALUES — "What drives us." editorial timeline
@@ -4076,8 +4068,6 @@ html.nm-ready .nm-svc:not(.is-in) .nm-svc__card {
   .nm-heritage__grid { grid-template-columns: 1fr; gap: 2.5rem; }
   .nm-sg__head-row { grid-template-columns: 1fr; gap: 1rem; }
   .nm-sg__grid { grid-template-columns: 1fr; }
-  .nm-pv__grid { grid-template-columns: 1fr; }
-  .nm-pv__card--mission { margin-block-start: 0; }
   .nm-brands__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .nm-brandcard { height: clamp(440px, 52vh, 540px); }
   .nm-brandcard__name { font-size: var(--fs-4xl); }
