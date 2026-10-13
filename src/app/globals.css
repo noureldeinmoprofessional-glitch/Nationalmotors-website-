@@ -1975,9 +1975,9 @@ html.nm-ready .nm-bt:not(.is-in) .nm-bt__axis { transform: scaleX(0); }
 .nm-obr-hero__title {
   margin-block: 1.9rem 1.5rem;
   font-size: var(--fs-7xl);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.02;
-  letter-spacing: -0.028em;
+  letter-spacing: -0.03em;
   color: var(--color-nm-white);
 }
 .nm-obr-hero__title span { display: block; }
@@ -3788,10 +3788,10 @@ html.nm-ready .nm-svc:not(.is-in) .nm-svc__card {
 .nm-vm__label { font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-nm-green-light); }
 .nm-vm__title {
   margin-block: 0.85rem 1rem;
-  font-size: clamp(1.9rem, 3.4vw, 3rem);
-  font-weight: var(--fw-extrabold);
-  letter-spacing: -0.025em;
-  line-height: 1.08;
+  font-size: var(--fs-6xl);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
   color: var(--color-nm-white);
 }
 .nm-vm__vision { max-width: 34rem; }
@@ -3817,7 +3817,7 @@ html.nm-ready .nm-svc:not(.is-in) .nm-svc__card {
   border-inline-start: 2px solid var(--color-nm-green);
   max-width: 40rem;
 }
-.nm-vm__title--mission { margin-block: 0.7rem 0.9rem; font-size: clamp(1.6rem, 2.6vw, 2.3rem); font-weight: var(--fw-bold); line-height: 1.14; }
+.nm-vm__title--mission { margin-block: 0.7rem 0.9rem; font-size: var(--fs-5xl); font-weight: var(--fw-semibold); line-height: 1.14; letter-spacing: -0.015em; }
 .nm-vm__est {
   align-self: flex-end;
   margin-block-start: clamp(1.75rem, 3.5vw, 3rem);
@@ -5807,9 +5807,9 @@ html.nm-ready .nm-sx__nameinner { transform: translateY(118%); }
 .nm-nhub__title {
   max-width: 14ch;
   font-size: var(--fs-8xl);
-  font-weight: var(--fw-extrabold);
-  line-height: 1.08;
-  letter-spacing: -0.04em;
+  font-weight: var(--fw-bold);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
   color: var(--color-nm-white);
 }
 .nm-nhub__title .nm-line-mask { display: block; overflow: hidden; padding-block: 0.06em; }
