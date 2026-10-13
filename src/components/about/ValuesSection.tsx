@@ -1,38 +1,118 @@
 "use client";
 
-import { Heart, Handshake, Target, Users, Sprout } from "lucide-react";
-import { useReveal } from "@/lib/hooks";
+import { useRef } from "react";
+import Image from "next/image";
+import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
+import { useIsoLayoutEffect } from "@/lib/hooks";
 import { VALUES } from "@/lib/aboutContent";
 
-// One icon per approved value, in order (presentation only — copy unchanged).
-const ICONS = [Heart, Handshake, Target, Users, Sprout];
-
 export default function ValuesSection() {
-  const introRef = useReveal<HTMLDivElement>({ y: 24, start: "top 88%" });
-  const listRef = useReveal<HTMLDivElement>({ y: 40, stagger: 0.1, start: "top 82%" });
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useIsoLayoutEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    if (prefersReducedMotion()) return; // leave everything in its visible default
+
+    const ctx = gsap.context(() => {
+      // 01 — Section entrance: headline + draw timeline + stagger rows
+      gsap.from(".nm-val__headline", {
+        y: 32,
+        autoAlpha: 0,
+        duration: 0.9,
+        ease: "power3.out",
+        scrollTrigger: { trigger: section, start: "top 78%" },
+      });
+      gsap.from(".nm-val__track", {
+        scaleY: 0,
+        transformOrigin: "top",
+        duration: 1.1,
+        ease: "power2.out",
+        scrollTrigger: { trigger: ".nm-val__list", start: "top 82%" },
+      });
+      gsap.from(".nm-val__row", {
+        y: 46,
+        autoAlpha: 0,
+        duration: 0.85,
+        stagger: 0.12,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".nm-val__list", start: "top 80%" },
+      });
+
+      // 03 — Scroll-linked progress line + subtle active-row emphasis
+      const rows = gsap.utils.toArray<HTMLElement>(".nm-val__row");
+      gsap.fromTo(
+        ".nm-val__fill",
+        { scaleY: 0 },
+        {
+          scaleY: 1,
+          transformOrigin: "top",
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".nm-val__list",
+            start: "top 60%",
+            end: "bottom 75%",
+            scrub: 0.6,
+            onUpdate: (self) => {
+              const idx = Math.round(self.progress * (rows.length - 1));
+              rows.forEach((r, i) =>
+                r.toggleAttribute("data-active", self.progress > 0.02 && i <= idx)
+              );
+            },
+          },
+        }
+      );
+
+      ScrollTrigger.refresh();
+    }, section);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="values" className="nm-values" aria-label="Our Values">
-      <div className="nm-shell">
-        <header className="nm-values__head">
-          <p className="nm-eyebrow nm-eyebrow--gap">{VALUES.eyebrow}</p>
-          <div ref={introRef} className="nm-values__intro">
-            <p className="nm-lead" data-reveal>{VALUES.intro}</p>
-          </div>
-        </header>
+    <section ref={sectionRef} id="values" className="nm-val" aria-label="Our Values">
+      <div className="nm-shell nm-val__wrap">
+        <div className="nm-val__aside">
+          <p className="nm-eyebrow nm-eyebrow--static">{VALUES.eyebrow}</p>
+          <h2 className="nm-val__headline">
+            What drives <span className="nm-val__accent">us.</span>
+          </h2>
+        </div>
 
-        <div ref={listRef} className="nm-values__list">
-          {VALUES.items.map((v, i) => {
-            const Icon = ICONS[i % ICONS.length];
-            return (
-              <article key={v.n} className="nm-values__item" data-reveal>
-                <span className="nm-values__icon" aria-hidden="true">
-                  <Icon strokeWidth={1.5} />
-                </span>
-                <h3 className="nm-values__item-title">{v.title}</h3>
-              </article>
-            );
-          })}
+        <div className="nm-val__list">
+          <span className="nm-val__track" aria-hidden="true" />
+          <span className="nm-val__fill" aria-hidden="true" />
+
+          {VALUES.items.map((v) => (
+            <article key={v.n} className="nm-val__row" tabIndex={0} aria-label={v.title}>
+              <span className="nm-val__num">{v.n}</span>
+              <span className="nm-val__sep" aria-hidden="true" />
+              <div className="nm-val__body">
+                <h3 className="nm-val__title">{v.title}</h3>
+                <p className="nm-val__desc">{v.body}</p>
+              </div>
+              <span className="nm-val__arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M5 12h14M13 6l6 6-6 6"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+              <div className="nm-val__thumb">
+                <Image
+                  src={v.image}
+                  alt={v.imageAlt}
+                  fill
+                  sizes="(max-width: 900px) 42vw, 230px"
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>

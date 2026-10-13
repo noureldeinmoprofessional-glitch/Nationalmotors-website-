@@ -235,34 +235,43 @@ export const MISSION = {
 
 export const VALUES = {
   eyebrow: "Our Values",
-  title: "The Principles Behind Every Decision",
-  intro:
-    "At National Motors, our values define how we serve our customers, represent global automotive brands, develop our people, strengthen our operations, and create sustainable value in Egypt and beyond.",
+  /* Display headline; the final word is accented in the UI. */
+  headline: "What drives us.",
   items: [
     {
       n: "01",
       title: "Customers at the Heart of Everything",
       body: "We place customers at the center of every decision and deliver a consistent, reliable, and differentiated journey across every interaction; from the initial enquiry and vehicle purchase to ownership and after-sales support.",
+      image: "/images/values/customers.webp",
+      imageAlt: "Close-up of a National Motors commercial van on the road at dusk",
     },
     {
       n: "02",
       title: "Partnerships Built on Excellence",
       body: "We build strong, long-term partnerships with leading global automotive brands. Through responsible representation in Egypt, we protect each brand's identity, strengthen its market value, and create shared opportunities for sustainable success.",
+      image: "/images/values/partnerships.webp",
+      imageAlt: "The National Motors glass showroom at dusk",
     },
     {
       n: "03",
       title: "Excellence in Execution",
       body: "We pursue operational excellence through efficient processes, clear governance, measurable performance, and evolving digital capabilities. This enables National Motors to deliver consistently, respond effectively, and grow responsibly.",
+      image: "/images/values/excellence.webp",
+      imageAlt: "A highway with light trails and a city skyline at dusk",
     },
     {
       n: "04",
       title: "People Empowered to Lead",
       body: "We invest in talent, develop capable leaders, encourage accountability, and foster a high-performance culture where people are empowered to grow, take ownership, and contribute meaningfully to our shared success.",
+      image: "/images/values/people.webp",
+      imageAlt: "A leadership team looking out over a city from a high-rise office",
     },
     {
       n: "05",
       title: "Responsible, Sustainable Growth",
       body: "We pursue profitable, long-term business growth through strategic expansion, innovation, local capability development, and responsible corporate development; creating lasting value for our customers, partners, employees, and communities.",
+      image: "/images/values/growth.webp",
+      imageAlt: "A dew-covered leaf with a glowing blue vein",
     },
   ],
 };
