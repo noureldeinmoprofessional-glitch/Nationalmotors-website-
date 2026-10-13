@@ -1,16 +1,21 @@
 "use client";
 
+import { useRef, useState, useCallback } from "react";
 import Image from "next/image";
-import { useReveal, useClipReveal } from "@/lib/hooks";
+import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import { useIsoLayoutEffect, useReveal } from "@/lib/hooks";
 import { LEADERSHIP_HEADER, BOARD, LEADERSHIP } from "@/lib/aboutContent";
 
-type Accent = "sand" | "blue";
+type Group = "family" | "exec";
 
 type Person = {
+  id: string;
   name: string;
   role: string;
   image: string | null;
   paragraphs: string[];
+  group: Group;
+  tag: string;
 };
 
 function initials(name: string) {
@@ -23,128 +28,163 @@ function initials(name: string) {
     .toUpperCase();
 }
 
-/** Portrait card: name first, role beneath, bio revealed on hover/focus. */
-function ProfileCard({ p, accent }: { p: Person; accent: Accent }) {
-  return (
-    <article
-      className="nm-ld__card"
-      data-accent={accent}
-      tabIndex={0}
-      aria-label={`${p.name}, ${p.role}`}
-      data-reveal
-    >
-      <div className="nm-ld__card-media">
-        {p.image ? (
-          <Image
-            src={p.image}
-            alt={`${p.name}, ${p.role}, National Motors`}
-            fill
-            sizes="(max-width: 900px) 100vw, 26vw"
-            style={{ objectFit: "cover", objectPosition: "50% 18%" }}
-          />
-        ) : (
-          <div className="nm-ld__mono" aria-hidden="true">
-            <span>{initials(p.name)}</span>
-          </div>
-        )}
-        <span className="nm-ld__card-scrim" aria-hidden="true" />
-      </div>
+const FAMILY: Person[] = [
+  {
+    id: "emad-abdelnaby",
+    name: BOARD.chairman.name,
+    role: BOARD.chairman.role,
+    image: BOARD.chairman.image,
+    paragraphs: BOARD.chairman.paragraphs,
+    group: "family",
+    tag: "Chairman · The Founding Family",
+  },
+  ...BOARD.members.map((m, i) => ({
+    id: `family-${i}`,
+    name: m.name,
+    role: m.role,
+    image: m.image,
+    paragraphs: m.paragraphs,
+    group: "family" as const,
+    tag: "The Founding Family",
+  })),
+];
 
-      <div className="nm-ld__card-caption">
-        <h3 className="nm-ld__card-name">{p.name}</h3>
-        <p className="nm-ld__card-role">{p.role}</p>
-        <div className="nm-ld__card-bioclip">
-          <div className="nm-ld__card-bio">
-            <div className="nm-ld__card-bio-in">
-              {p.paragraphs.map((t, i) => (
-                <p key={i}>{t}</p>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </article>
-  );
-}
+const EXEC: Person[] = LEADERSHIP.people.map((p, i) => ({
+  id: `exec-${i}`,
+  name: p.name,
+  role: p.role,
+  image: p.image,
+  paragraphs: [p.bio],
+  group: "exec" as const,
+  tag: "Executive Team",
+}));
+
+const ALL = [...FAMILY, ...EXEC];
 
 export default function LeadershipSection() {
-  const introRef = useReveal<HTMLDivElement>({ y: 24, stagger: 0.1, start: "top 88%" });
-  const chairPortraitRef = useClipReveal<HTMLDivElement>({ from: "inset(0 0 100% 0)" });
-  const chairBodyRef = useReveal<HTMLDivElement>({ y: 26, stagger: 0.1, start: "top 82%" });
-  const familyRef = useReveal<HTMLDivElement>({ y: 42, stagger: 0.12, start: "top 84%" });
-  const execRef = useReveal<HTMLDivElement>({ y: 42, stagger: 0.12, start: "top 85%" });
+  const sectionRef = useRef<HTMLElement>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const revealRef = useReveal<HTMLDivElement>({ y: 20, stagger: 0.08, start: "top 85%" });
 
-  const { chairman } = BOARD;
+  const [active, setActive] = useState<Person | null>(null);
+  const activeId = active?.id ?? null;
+
+  // Cursor-following portrait (fine pointers only).
+  useIsoLayoutEffect(() => {
+    const cursor = cursorRef.current;
+    const section = sectionRef.current;
+    if (!cursor || !section) return;
+    if (prefersReducedMotion()) return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+    gsap.set(cursor, { xPercent: -50, yPercent: -50 });
+    const xTo = gsap.quickTo(cursor, "x", { duration: 0.55, ease: "power3" });
+    const yTo = gsap.quickTo(cursor, "y", { duration: 0.55, ease: "power3" });
+    // Offset the portrait up-and-right of the pointer so it floats into the
+    // gutter rather than covering the name being read.
+    const OX = 70;
+    const OY = -24;
+    let seeded = false;
+    const onMove = (e: PointerEvent) => {
+      const tx = e.clientX + OX;
+      const ty = e.clientY + OY;
+      if (!seeded) {
+        gsap.set(cursor, { x: tx, y: ty });
+        seeded = true;
+        return;
+      }
+      xTo(tx);
+      yTo(ty);
+    };
+    section.addEventListener("pointermove", onMove);
+    return () => section.removeEventListener("pointermove", onMove);
+  }, []);
+
+  const Row = useCallback(
+    (p: Person, n: number) => (
+      <li key={p.id} className="nm-ldx__row" data-reveal>
+        <button
+          type="button"
+          className="nm-ldx__rowbtn"
+          data-active={activeId === p.id || undefined}
+          onPointerEnter={() => setActive(p)}
+          onFocus={() => setActive(p)}
+          aria-label={`${p.name}, ${p.role}`}
+        >
+          <span className="nm-ldx__num">{String(n).padStart(2, "0")}</span>
+          <span className="nm-ldx__name">{p.name}</span>
+          <span className="nm-ldx__role">{p.role}</span>
+          <span className="nm-ldx__arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+        </button>
+      </li>
+    ),
+    [activeId]
+  );
 
   return (
-    <section id="leadership" className="nm-ld" aria-label="Leadership">
-      <div className="nm-shell">
-        <header className="nm-ld__head">
-          <p className="nm-eyebrow nm-eyebrow--gap">{LEADERSHIP_HEADER.eyebrow}</p>
-          <div ref={introRef} className="nm-ld__intro">
-            <p className="nm-lead" data-reveal>{LEADERSHIP_HEADER.intro}</p>
-          </div>
-        </header>
+    <section
+      ref={sectionRef}
+      id="leadership"
+      className="nm-ldx"
+      aria-label="Leadership"
+      data-engaged={active ? true : undefined}
+      onPointerLeave={() => setActive(null)}
+    >
+      <div className="nm-shell nm-ldx__wrap">
+        {/* Left rail — eyebrow + live detail (crossfades on hover) */}
+        <aside className="nm-ldx__rail">
+          <p className="nm-eyebrow nm-eyebrow--static">{LEADERSHIP_HEADER.eyebrow}</p>
 
-        {/* Tier 1 — The founding family (warm / distinguished) */}
-        <div className="nm-ld__tier" data-accent="sand">
-          <div className="nm-ld__tier-head">
-            <p className="nm-ld__tier-label">{LEADERSHIP_HEADER.familyLabel}</p>
-            <p className="nm-ld__tier-note">{LEADERSHIP_HEADER.familyNote}</p>
-          </div>
+          <div className="nm-ldx__detail">
+            <div className="nm-ldx__detail-intro" aria-hidden={active ? true : undefined}>
+              <p className="nm-lead">{LEADERSHIP_HEADER.intro}</p>
+            </div>
 
-          {/* Chairman — his own larger feature block */}
-          <article className="nm-ld__chair">
-            <div ref={chairPortraitRef} className="nm-ld__chair-portrait">
-              {chairman.image ? (
-                <Image
-                  src={chairman.image}
-                  alt={`${chairman.name}, ${chairman.role}, National Motors`}
-                  fill
-                  sizes="(max-width: 900px) 100vw, 40vw"
-                  style={{ objectFit: "cover", objectPosition: "50% 20%" }}
-                />
-              ) : (
-                <div className="nm-ld__mono nm-ld__mono--lg" aria-hidden="true">
-                  <span>{initials(chairman.name)}</span>
+            {active && (
+              <div key={active.id} className="nm-ldx__detail-person" data-accent={active.group === "family" ? "sand" : "blue"}>
+                <p className="nm-ldx__detail-tag">{active.tag}</p>
+                <h3 className="nm-ldx__detail-name">{active.name}</h3>
+                <p className="nm-ldx__detail-role">{active.role}</p>
+                <div className="nm-ldx__detail-bio">
+                  {active.paragraphs.map((t, i) => (
+                    <p key={i} className={i === 0 ? "nm-lead" : ""}>{t}</p>
+                  ))}
                 </div>
-              )}
-            </div>
-            <div ref={chairBodyRef} className="nm-ld__chair-body">
-              <h3 className="nm-ld__chair-name" data-reveal>{chairman.name}</h3>
-              <p className="nm-ld__chair-role" data-reveal>{chairman.role}</p>
-              <div className="nm-ld__chair-bio">
-                {chairman.paragraphs.map((t, i) => (
-                  <p key={i} className={i === 0 ? "nm-lead" : ""} data-reveal>{t}</p>
-                ))}
               </div>
-            </div>
-          </article>
+            )}
+          </div>
+        </aside>
 
-          {/* Family members */}
-          <div ref={familyRef} className="nm-ld__grid nm-ld__grid--family">
-            {BOARD.members.map((m) => (
-              <ProfileCard key={m.name} p={m} accent="sand" />
-            ))}
+        {/* Right — the kinetic name index */}
+        <div ref={revealRef} className="nm-ldx__index">
+          <div className="nm-ldx__group" data-accent="sand">
+            <p className="nm-ldx__group-label" data-reveal>{LEADERSHIP_HEADER.familyLabel}</p>
+            <ul className="nm-ldx__list">{FAMILY.map((p, i) => Row(p, i + 1))}</ul>
+          </div>
+
+          <div className="nm-ldx__group" data-accent="blue">
+            <p className="nm-ldx__group-label" data-reveal>{LEADERSHIP_HEADER.execLabel}</p>
+            <ul className="nm-ldx__list">{EXEC.map((p, i) => Row(p, i + 1))}</ul>
           </div>
         </div>
+      </div>
 
-        {/* Tier 2 — The executive team (cool / operational) */}
-        <div className="nm-ld__tier" data-accent="blue">
-          <div className="nm-ld__tier-head">
-            <p className="nm-ld__tier-label">{LEADERSHIP_HEADER.execLabel}</p>
-            <p className="nm-ld__tier-note">{LEADERSHIP_HEADER.execNote}</p>
-          </div>
-
-          <div ref={execRef} className="nm-ld__grid nm-ld__grid--exec">
-            {LEADERSHIP.people.map((person) => (
-              <ProfileCard
-                key={person.name}
-                p={{ ...person, paragraphs: [person.bio] }}
-                accent="blue"
-              />
-            ))}
-          </div>
+      {/* Floating portrait that follows the cursor */}
+      <div ref={cursorRef} className="nm-ldx__cursor" aria-hidden="true">
+        <div className="nm-ldx__cursor-inner">
+          {ALL.map((p) => (
+            <div key={p.id} className="nm-ldx__cursor-img" data-active={activeId === p.id || undefined}>
+              {p.image ? (
+                <Image src={p.image} alt="" width={280} height={350} style={{ objectFit: "cover", objectPosition: "50% 18%" }} />
+              ) : (
+                <div className="nm-ldx__cursor-mono"><span>{initials(p.name)}</span></div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </section>
