@@ -217,7 +217,6 @@ export const FOOTER_NAV = [
       { label: "Our Story", href: "/about#story" },
       { label: "Leadership", href: "/about#leadership" },
       { label: "Our Sectors", href: "/about#sectors" },
-      { label: "Corporate Social Responsibility", href: "/about#csr" },
     ],
   },
   {
