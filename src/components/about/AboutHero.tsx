@@ -6,11 +6,11 @@ import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
 import { useIsoLayoutEffect } from "@/lib/hooks";
 import { ABOUT_HERO } from "@/lib/aboutContent";
 
-// Four core sectors — order is fixed: Automotive → Agriculture → Tyres → Real Estate.
+// Four core sectors — order is fixed: Automotive → Agriculture → CSR → Real Estate.
 const INDUSTRIES = [
   { key: "automotive", label: "Automotive", image: "/images/about-hero/automotive.jpg", pos: "50% 58%", alt: "National Motors commercial vehicles driving through a city" },
   { key: "agriculture", label: "Agriculture", image: "/images/about-hero/agriculture.jpg", pos: "50% 55%", alt: "A tractor working an agricultural field at sunset" },
-  { key: "tyres", label: "After Market", image: "/images/about-hero/tyres.jpg", pos: "50% 50%", alt: "A technician inspecting a tyre in a workshop" },
+  { key: "csr", label: "CSR", image: "/images/sectors-photo/csr.png", pos: "50% 50%", alt: "A family at sunset overlooking the Nile and the Cairo skyline" },
   { key: "realestate", label: "Real Estate", image: "/images/about-hero/real-estate.jpg", pos: "50% 45%", alt: "A modern residential real-estate development at golden hour" },
 ];
 

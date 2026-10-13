@@ -26,7 +26,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       },
       {
         q: "What sectors does National Motors operate in?",
-        a: "National Motors operates across the automotive, after-market products, agriculture, and real estate sectors. The company also maintains investments in other fields and supports communities through its corporate social responsibility activities.",
+        a: "National Motors operates across the automotive, agriculture, real estate, and corporate social responsibility (CSR) sectors. The company also maintains investments in other fields and continues to support the communities around it.",
       },
       {
         q: "What automotive brands does National Motors represent?",

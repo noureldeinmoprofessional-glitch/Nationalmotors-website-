@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: "%s | National Motors",
   },
   description:
-    "National Motors is an Egyptian automotive and diversified business group founded in 1978, representing Joylong, Farizon and Blu across automotive, tyres, agriculture and real estate.",
+    "National Motors is an Egyptian automotive and diversified business group founded in 1978, representing Joylong, Farizon and Blu across automotive, agriculture, real estate and CSR.",
   keywords: [
     "National Motors",
     "Joylong Egypt",

@@ -12,12 +12,12 @@ import FutureSection from "@/components/about/FutureSection";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "National Motors is an Egyptian automotive group founded in 1978, managed across generations of the Abdelnaby family and transitioning toward National Motors Group by the end of 2026 — across automotive, tyres, agriculture and real estate.",
+    "National Motors is an Egyptian automotive group founded in 1978, managed across generations of the Abdelnaby family and transitioning toward National Motors Group by the end of 2026 — across automotive, agriculture, real estate and CSR.",
   alternates: { canonical: "/about" },
   openGraph: {
     title: "About National Motors",
     description:
-      "Founded in 1978. An Egyptian automotive group across automotive, tyres, agriculture and real estate — moving toward National Motors Group.",
+      "Founded in 1978. An Egyptian automotive group across automotive, agriculture, real estate and CSR — moving toward National Motors Group.",
     url: "/about",
     images: [{ url: "/images/hero/joylong-a4-high-roof.png", width: 1920, height: 1080, alt: "National Motors" }],
   },

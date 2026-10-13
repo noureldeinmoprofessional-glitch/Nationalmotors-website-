@@ -17,7 +17,7 @@ const orgSchema = {
   telephone: CONTACT.hotline,
   areaServed: "EG",
   description:
-    "An Egyptian automotive and diversified business group founded in 1978, representing Joylong, Farizon and Blu across automotive, tyres, agriculture and real estate.",
+    "An Egyptian automotive and diversified business group founded in 1978, representing Joylong, Farizon and Blu across automotive, agriculture, real estate and CSR.",
   sameAs: [
     CONTACT.socials.facebook,
     CONTACT.socials.instagram,

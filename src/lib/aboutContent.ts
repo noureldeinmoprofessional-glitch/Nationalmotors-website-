@@ -37,8 +37,8 @@ export const HERITAGE = {
 };
 
 /* Sector descriptions: only Agriculture and Real Estate are described in the
-   PPTX summary. Automotive references the approved brand portfolio. Tyres has
-   no supplied description, so it carries only its label. */
+   PPTX summary. Automotive references the approved brand portfolio. CSR
+   reflects the company's community commitment. */
 export const SECTORS = [
   {
     n: "01",
@@ -49,10 +49,10 @@ export const SECTORS = [
   },
   {
     n: "02",
-    name: "After Market",
-    note: "",
-    image: "/images/sectors/tyres.png",
-    imageAlt: "Close inspection of a tyre tread",
+    name: "CSR",
+    note: "Creating lasting value for the communities around us.",
+    image: "/images/sectors-photo/csr.png",
+    imageAlt: "A family at sunset overlooking the Nile and the Cairo skyline",
   },
   {
     n: "03",
@@ -338,7 +338,7 @@ export const BOARD = {
     role: "Chairman",
     image: "/images/leadership/emad-abdelnaby.webp",
     paragraphs: [
-      "Emad Abdelnaby leads the development and diversification of National Motors' business portfolio. His responsibilities include identifying new business opportunities, developing new sectors, and overseeing investments across automotive, aftermarket, agriculture, and real estate.",
+      "Emad Abdelnaby leads the development and diversification of National Motors' business portfolio. His responsibilities include identifying new business opportunities, developing new sectors, and overseeing investments across automotive, agriculture, real estate, and corporate social responsibility.",
     ],
   },
   members: [
