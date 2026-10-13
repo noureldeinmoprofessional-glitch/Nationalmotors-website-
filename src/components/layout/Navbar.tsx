@@ -6,12 +6,26 @@ import { Search, ChevronDown } from "lucide-react";
 import Logo from "@/components/ui/Logo";
 import { NAV } from "@/lib/site";
 import MobileNav from "./MobileNav";
+import SearchOverlay from "@/components/search/SearchOverlay";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [lang, setLang] = useState<"EN" | "AR">("EN");
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  // Global shortcut: Cmd/Ctrl + K toggles search.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setSearchOpen((o) => !o);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   useEffect(() => {
     let raf = 0;
@@ -106,7 +120,12 @@ export default function Navbar() {
           </nav>
 
           <div className="nm-nav__actions">
-            <button className="nm-nav__icon" aria-label="Search" data-cursor="SEARCH">
+            <button
+              className="nm-nav__icon"
+              aria-label="Search"
+              data-cursor="SEARCH"
+              onClick={() => setSearchOpen(true)}
+            >
               <Search strokeWidth={1.6} />
             </button>
             <div className="nm-nav__lang" role="group" aria-label="Language">
@@ -143,7 +162,16 @@ export default function Navbar() {
         </div>
       </header>
 
-      <MobileNav open={mobileOpen} onClose={() => setMobileOpen(false)} />
+      <MobileNav
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        onSearch={() => {
+          setMobileOpen(false);
+          setSearchOpen(true);
+        }}
+      />
+
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   );
 }

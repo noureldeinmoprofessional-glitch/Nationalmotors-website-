@@ -2,16 +2,18 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { X, Plus, Minus, Phone } from "lucide-react";
+import { X, Plus, Minus, Phone, Search } from "lucide-react";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import { NAV, CONTACT } from "@/lib/site";
 
 export default function MobileNav({
   open,
   onClose,
+  onSearch,
 }: {
   open: boolean;
   onClose: () => void;
+  onSearch?: () => void;
 }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -92,6 +94,13 @@ export default function MobileNav({
             <X strokeWidth={1.6} />
           </button>
         </div>
+
+        {onSearch && (
+          <button type="button" className="nm-mnav__search" onClick={onSearch} tabIndex={open ? 0 : -1} data-mnav-item>
+            <Search strokeWidth={1.6} aria-hidden="true" />
+            <span>Search National Motors…</span>
+          </button>
+        )}
 
         <nav className="nm-mnav__nav" aria-label="Mobile">
           <ul>
