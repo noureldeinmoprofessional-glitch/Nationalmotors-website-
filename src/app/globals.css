@@ -1274,7 +1274,7 @@ img, svg, video { display: block; max-width: 100%; }
    ============================================================ */
 .nm-footer {
   background: var(--color-nm-black);
-  padding-block: clamp(1.5rem, 3vh, 2.5rem) 2rem;
+  padding-block: clamp(5rem, 10vh, 9rem) 2rem;
   border-block-start: 1px solid var(--color-nm-border);
 }
 .nm-footer__cta {
@@ -1297,6 +1297,7 @@ img, svg, video { display: block; max-width: 100%; }
 .nm-footer__cta-accent { color: var(--color-nm-electric); }
 .nm-footer__cta-body {
   max-width: 40rem;
+  margin-block-start: clamp(1.5rem, 3vw, 2.25rem);
   margin-inline: auto;
   display: flex;
   flex-direction: column;

@@ -35,61 +35,67 @@ export default function HeroHome() {
   const rootRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Scroll-scrubbed video: pin the hero and drive video.currentTime from the
-  // scroll, with eased catch-up (scrub). Hero text blur-reveals in, then
-  // blurs out as the clip finishes, releasing the pin to the next section.
+  // Hero behaviour:
+  //  • Text + buttons blur-reveal in ON LOAD (independent of scroll) so the
+  //    hero feels alive the moment the page settles.
+  //  • On desktop with motion allowed, the video is additionally pinned and
+  //    scroll-scrubbed; the text reveal no longer depends on that timeline.
   useIsoLayoutEffect(() => {
     const root = rootRef.current;
     const video = videoRef.current;
     if (!root || !video) return;
 
-    // Fallback: reduced-motion or small screens → autoplay muted loop, no pin.
-    if (prefersReducedMotion() || window.innerWidth <= 768) {
+    const reducedMotion = prefersReducedMotion();
+    const smallOrReduced = reducedMotion || window.innerWidth <= 768;
+
+    // Reduced-motion / small screens → autoplay muted loop, no pin/scrub.
+    if (smallOrReduced) {
       video.loop = true;
       video.muted = true;
       video.play?.().catch(() => {});
-      return;
     }
 
-    video.pause();
     const ctx = gsap.context(() => {
-      // hide/blur reveal targets up front (before paint) to avoid a flash
-      gsap.set(".nm-vh__reveal", { autoAlpha: 0, "--b": 18 });
+      // ---- On-load entrance (not scroll-driven) ----
+      if (!reducedMotion) {
+        // Hide before paint to avoid a flash, then play immediately on mount.
+        gsap.set(".nm-vh__reveal", { autoAlpha: 0, "--b": 18, y: 28 });
+        gsap.to(".nm-vh__reveal", {
+          autoAlpha: 1,
+          "--b": 0,
+          y: 0,
+          duration: 0.95,
+          stagger: 0.14,
+          ease: "power3.out",
+          delay: 0.25,
+        });
+      }
 
-      // The pin + text reveal are built unconditionally so the hero never
-      // depends on the video decoding. The video scrub is layered in when the
-      // clip's metadata is ready.
-      const tl = gsap.timeline({
-        defaults: { ease: "none" },
-        scrollTrigger: {
-          trigger: root,
-          start: "top top",
-          end: () => "+=" + Math.round(window.innerHeight * 1.8),
-          pin: true,
-          scrub: 1,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
-      });
+      // ---- Desktop scroll-scrubbed video (motion allowed only) ----
+      if (!smallOrReduced) {
+        video.pause();
+        const tl = gsap.timeline({
+          defaults: { ease: "none" },
+          scrollTrigger: {
+            trigger: root,
+            start: "top top",
+            end: () => "+=" + Math.round(window.innerHeight * 1.8),
+            pin: true,
+            scrub: 1,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        });
 
-      // text blur-reveals in early and then holds — the hero stays on its
-      // last frame at the end of the pin; scrolling on reveals the next
-      // section by scrolling the whole hero away (no fade-to-black).
-      tl.fromTo(
-        ".nm-vh__reveal",
-        { autoAlpha: 0, "--b": 18, y: 26 },
-        { autoAlpha: 1, "--b": 0, y: 0, duration: 0.22, stagger: 0.05 },
-        0.08
-      );
-
-      const addVideoScrub = () => {
-        const d = video.duration;
-        if (!d || !isFinite(d)) return;
-        tl.fromTo(video, { currentTime: 0 }, { currentTime: d - 0.05, duration: 1 }, 0);
-        ScrollTrigger.refresh();
-      };
-      if (video.readyState >= 1 && video.duration) addVideoScrub();
-      else video.addEventListener("loadedmetadata", addVideoScrub, { once: true });
+        const addVideoScrub = () => {
+          const d = video.duration;
+          if (!d || !isFinite(d)) return;
+          tl.fromTo(video, { currentTime: 0 }, { currentTime: d - 0.05, duration: 1 }, 0);
+          ScrollTrigger.refresh();
+        };
+        if (video.readyState >= 1 && video.duration) addVideoScrub();
+        else video.addEventListener("loadedmetadata", addVideoScrub, { once: true });
+      }
     }, root);
 
     return () => ctx.revert();
