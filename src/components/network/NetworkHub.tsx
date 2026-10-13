@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Wrench, Store, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useLineReveal, useReveal } from "@/lib/hooks";
 
 type Card = {
@@ -14,10 +14,6 @@ type Card = {
   image: string;
   imageAlt: string;
   pos?: string;
-  /** Either a lucide icon badge or a brand logo badge. */
-  icon?: "wrench" | "store";
-  logo?: string;
-  logoAlt?: string;
 };
 
 const CARDS: Card[] = [
@@ -30,7 +26,6 @@ const CARDS: Card[] = [
     image: "/images/service/body-repair-paint.png",
     imageAlt: "A National Motors service center at dusk",
     pos: "50% 55%",
-    icon: "wrench",
   },
   {
     id: "showrooms",
@@ -41,7 +36,6 @@ const CARDS: Card[] = [
     image: "/images/hero/joylong-a4-high-roof.png",
     imageAlt: "A National Motors showroom vehicle at a contemporary entrance",
     pos: "50% 60%",
-    icon: "store",
   },
   {
     id: "joylong",
@@ -52,8 +46,6 @@ const CARDS: Card[] = [
     image: "/images/brands/joylong.png",
     imageAlt: "A Joylong minibus by National Motors on a city highway",
     pos: "50% 45%",
-    logo: "/images/brands/timeline/joylong.png",
-    logoAlt: "Joylong",
   },
   {
     id: "blu",
@@ -64,8 +56,6 @@ const CARDS: Card[] = [
     image: "/images/brands/blu-light-mobility.png",
     imageAlt: "A Blu light-mobility vehicle by National Motors",
     pos: "50% 45%",
-    logo: "/images/brands/timeline/blu.png",
-    logoAlt: "Blu",
   },
 ];
 
@@ -76,7 +66,6 @@ export default function NetworkHub() {
   const heroBodyRef = useReveal<HTMLDivElement>({ y: 22, stagger: 0.1, start: "top 92%" });
   const legendRef = useReveal<HTMLUListElement>({ y: 18, stagger: 0.08, start: "top 92%" });
   const gridRef = useReveal<HTMLDivElement>({ y: 32, stagger: 0.1, start: "top 86%" });
-  const closeRef = useReveal<HTMLDivElement>({ y: 22, stagger: 0.08, start: "top 90%" });
 
   return (
     <>
@@ -128,15 +117,6 @@ export default function NetworkHub() {
                   />
                 </div>
                 <span className="nm-nhub__card-scrim" aria-hidden="true" />
-                <span className="nm-nhub__card-badge" aria-hidden="true">
-                  {c.logo ? (
-                    <Image src={c.logo} alt="" width={72} height={28} style={{ objectFit: "contain", width: "auto", height: "1.5rem" }} />
-                  ) : c.icon === "wrench" ? (
-                    <Wrench strokeWidth={1.6} />
-                  ) : (
-                    <Store strokeWidth={1.6} />
-                  )}
-                </span>
               </div>
 
               <div className="nm-nhub__card-body">
@@ -150,25 +130,6 @@ export default function NetworkHub() {
               </div>
             </Link>
           ))}
-        </div>
-      </section>
-
-      {/* Closing statement band */}
-      <section className="nm-nhub__close" aria-hidden="true">
-        <div className="nm-nhub__close-img">
-          <Image
-            src="/images/about-hero/automotive.jpg"
-            alt=""
-            fill
-            sizes="100vw"
-            style={{ objectFit: "cover", objectPosition: "50% 60%" }}
-          />
-        </div>
-        <span className="nm-nhub__close-scrim" />
-        <div ref={closeRef} className="nm-shell nm-nhub__close-inner">
-          <p data-reveal className="nm-nhub__close-text">
-            Supporting a stronger,<br />more connected Egypt.
-          </p>
         </div>
       </section>
     </>

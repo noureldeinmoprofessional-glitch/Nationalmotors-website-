@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import NetworkHub from "@/components/network/NetworkHub";
+import ClientsMarquee from "@/components/sections/ClientsMarquee";
 
 export const metadata: Metadata = {
   title: "Network",
@@ -23,6 +24,7 @@ export default function NetworkPage() {
       <Navbar />
       <main id="main">
         <NetworkHub />
+        <ClientsMarquee />
       </main>
       <Footer />
     </>
