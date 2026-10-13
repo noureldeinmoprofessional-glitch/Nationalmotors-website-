@@ -11,7 +11,6 @@ import SearchOverlay from "@/components/search/SearchOverlay";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const [lang, setLang] = useState<"EN" | "AR">("EN");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
@@ -129,22 +128,9 @@ export default function Navbar() {
               <Search strokeWidth={1.6} />
             </button>
             <div className="nm-nav__lang" role="group" aria-label="Language">
-              <button
-                aria-pressed={lang === "EN"}
-                className={lang === "EN" ? "is-active" : ""}
-                onClick={() => setLang("EN")}
-              >
-                EN
-              </button>
+              <button className="is-active" aria-pressed="true">EN</button>
               <span aria-hidden="true">/</span>
-              <button
-                aria-pressed={lang === "AR"}
-                className={lang === "AR" ? "is-active" : ""}
-                onClick={() => setLang("AR")}
-                lang="ar"
-              >
-                AR
-              </button>
+              <button lang="ar" disabled title="Arabic — coming soon" aria-label="Arabic — coming soon">AR</button>
             </div>
             <Link href="/contact" className="nm-nav__cta" data-cursor="VIEW">
               Contact Us

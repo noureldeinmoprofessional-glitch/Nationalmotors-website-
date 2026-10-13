@@ -91,17 +91,6 @@ export default function ValuesSection() {
                 <h3 className="nm-val__title">{v.title}</h3>
                 <p className="nm-val__desc">{v.body}</p>
               </div>
-              <span className="nm-val__arrow" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M5 12h14M13 6l6 6-6 6"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
               <div className="nm-val__thumb">
                 <Image
                   src={v.image}

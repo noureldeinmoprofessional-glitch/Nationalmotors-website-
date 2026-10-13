@@ -184,7 +184,7 @@ export default function MobileNav({
             <div className="nm-mnav__lang">
               <button className="is-active" tabIndex={open ? 0 : -1}>EN</button>
               <span>/</span>
-              <button lang="ar" tabIndex={open ? 0 : -1}>AR</button>
+              <button lang="ar" disabled title="Arabic — coming soon" aria-label="Arabic — coming soon">AR</button>
             </div>
           </div>
         </div>

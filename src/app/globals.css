@@ -16,11 +16,15 @@
   --color-nm-silver: #b8bdbd;
   --color-nm-gray: #7f8789;
 
-  /* Brand accent — primary blue (token names kept for stability;
-     roles mapped: base = primary, light = hover, deep = pressed). */
-  --color-nm-green: #3b60a7;
-  --color-nm-green-light: #4a72bc;
-  --color-nm-green-deep: #29477f;
+  /* Brand accent — primary blue. Prefer the --color-nm-accent* names in
+     new code; the --color-nm-green* names are kept as aliases so existing
+     usages keep working (base = primary, light = hover, deep = pressed). */
+  --color-nm-accent: #3b60a7;
+  --color-nm-accent-light: #4a72bc;
+  --color-nm-accent-deep: #29477f;
+  --color-nm-green: var(--color-nm-accent);
+  --color-nm-green-light: var(--color-nm-accent-light);
+  --color-nm-green-deep: var(--color-nm-accent-deep);
 
   /* Secondary accents */
   --color-nm-electric: #6f91c7; /* restrained lighter blue (Farizon / EV / tech) */
@@ -555,6 +559,8 @@ img, svg, video { display: block; max-width: 100%; }
 }
 .nm-nav__lang button { background: none; border: none; color: var(--color-nm-gray); padding: 0.2rem; transition: color 0.3s var(--ease-nm); }
 .nm-nav__lang button.is-active { color: var(--color-nm-white); }
+.nm-nav__lang button:disabled { opacity: 0.4; cursor: not-allowed; }
+.nm-mnav__lang button:disabled { opacity: 0.4; cursor: not-allowed; }
 .nm-nav__lang button:hover { color: var(--color-nm-silver); }
 
 .nm-nav__cta {
@@ -3872,7 +3878,7 @@ html.nm-ready .nm-svc:not(.is-in) .nm-svc__card {
 .nm-val__row {
   position: relative;
   display: grid;
-  grid-template-columns: auto auto minmax(0, 1fr) auto auto;
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
   align-items: center;
   gap: clamp(1rem, 2.4vw, 2.5rem);
   padding-block: clamp(1.5rem, 3vw, 2.5rem);
@@ -3962,7 +3968,7 @@ html.nm-ready .nm-svc:not(.is-in) .nm-svc__card {
   border: 1px solid color-mix(in srgb, var(--color-nm-sand) 22%, transparent);
   will-change: clip-path;
 }
-.nm-ldr__hero-photo img { filter: grayscale(1) contrast(1.02); transition: filter 0.8s var(--ease-nm), transform 1.1s var(--ease-nm); }
+.nm-ldr__hero-photo img { filter: grayscale(1) contrast(1.06) brightness(0.96); transition: filter 0.8s var(--ease-nm), transform 1.1s var(--ease-nm); }
 .nm-ldr__hero:hover .nm-ldr__hero-photo img { filter: grayscale(0); transform: scale(1.03); }
 .nm-ldr__hero-tag { font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-nm-sand); margin-block-end: 1rem; }
 .nm-ldr__hero-name { font-size: var(--fs-7xl); font-weight: 700; letter-spacing: -0.03em; line-height: 1; color: var(--color-nm-white); }
@@ -4001,7 +4007,7 @@ html.nm-ready .nm-svc:not(.is-in) .nm-svc__card {
   background: var(--color-nm-graphite);
   border: 1px solid color-mix(in srgb, var(--color-nm-white) 8%, transparent);
 }
-.nm-ldr__card-photo img { filter: grayscale(1) contrast(1.02); transition: filter 0.7s var(--ease-nm), transform 0.9s var(--ease-nm); }
+.nm-ldr__card-photo img { filter: grayscale(1) contrast(1.06) brightness(0.96); transition: filter 0.7s var(--ease-nm), transform 0.9s var(--ease-nm); }
 .nm-ldr__card:hover .nm-ldr__card-photo img,
 .nm-ldr__card:focus-within .nm-ldr__card-photo img { filter: grayscale(0); transform: scale(1.04); }
 .nm-ldr__card-bio {
@@ -4024,7 +4030,7 @@ html.nm-ready .nm-svc:not(.is-in) .nm-svc__card {
 .nm-ldr__card-name::after { content: ""; display: block; width: 0; height: 2px; margin-block-start: 0.55rem; background: var(--ld-accent); transition: width 0.5s var(--ease-nm); }
 .nm-ldr__card:hover .nm-ldr__card-name::after,
 .nm-ldr__card:focus-within .nm-ldr__card-name::after { width: 1.8rem; }
-.nm-ldr__card-role { margin-block-start: 0.35rem; font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-nm-gray); }
+.nm-ldr__card-role { margin-block-start: 0.35rem; font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-nm-silver); }
 
 /* --- Responsive --- */
 @media (max-width: 1024px) {
