@@ -3,41 +3,18 @@
 import Link from "next/link";
 import { Phone, Mail, ArrowUpRight } from "lucide-react";
 import { Facebook, Instagram, Linkedin, Youtube } from "@/components/ui/SocialIcons";
-import { useLineReveal, useReveal } from "@/lib/hooks";
+import { useReveal } from "@/lib/hooks";
 import { CONTACT, FOOTER_NAV } from "@/lib/site";
 import Logo from "@/components/ui/Logo";
-import CTAButton from "@/components/ui/CTAButton";
 
 const YEAR = 2026;
 
 export default function Footer() {
-  const ctaHeadRef = useLineReveal<HTMLHeadingElement>();
-  const ctaBodyRef = useReveal<HTMLDivElement>({ y: 24, stagger: 0.1 });
   const colsRef = useReveal<HTMLDivElement>({ y: 30, stagger: 0.07, start: "top 88%" });
 
   return (
-    <footer className="nm-footer" aria-labelledby="footer-cta-title">
+    <footer className="nm-footer" aria-label="Site footer">
       <div className="nm-shell">
-        {/* Closing CTA — primary global action: Contact Us */}
-        <div className="nm-footer__cta">
-          <p className="nm-eyebrow">Get in Touch</p>
-          <h2 ref={ctaHeadRef} id="footer-cta-title" className="nm-footer__cta-title">
-            <span className="nm-line-mask"><span className="nm-line-inner">Let&rsquo;s Get</span></span>
-            <span className="nm-line-mask"><span className="nm-line-inner nm-footer__cta-accent">in Touch</span></span>
-          </h2>
-          <div ref={ctaBodyRef} className="nm-footer__cta-body">
-            <p className="nm-lead" data-reveal>
-              Have a question about our vehicles, services, or mobility solutions? Our
-              team is here to help.
-            </p>
-            <div data-reveal>
-              <CTAButton href="/contact" variant="primary" cursor="VIEW">
-                Contact Us
-              </CTAButton>
-            </div>
-          </div>
-        </div>
-
         {/* Main */}
         <div ref={colsRef} className="nm-footer__main">
           <div className="nm-footer__brand" data-reveal>

@@ -289,7 +289,7 @@ export const LEADERSHIP = {
       name: "Mr. Nagy Mengel",
       role: "Chief Financial Officer",
       image: "/images/leadership/nagy-mengel.png",
-      bio: "Combining financial leadership with extensive commercial-management experience across diverse products and industries. At National Motors, he supports disciplined financial management, investment evaluation, and expansion planning; helping the company pursue larger opportunities with a balance of ambition, commercial insight, and financial responsibility.",
+      bio: "Nagy Mengel leads financial management at National Motors, including financial planning, investment evaluation, and performance management. He also brings commercial management experience across different products and industries.",
     },
     {
       name: "Mr. Ahmed Nazmy",
@@ -301,13 +301,13 @@ export const LEADERSHIP = {
       name: "Mr. Mahmoud Abdelaziz",
       role: "Human Resources and Administration Director",
       image: "/images/leadership/mahmoud-abdelaziz.png",
-      bio: "Mr. Mahmoud Abdelaziz is a key steward of National Motors' organization and people. Drawing on extensive experience in human resources and talent management, he has introduced a strategic approach to organizational development, administration, and capability building; bringing experienced professionals and innovative thinkers together within a clear, accountable, and performance-focused organization.",
+      bio: "Mahmoud Abdelaziz leads human resources and administration at National Motors. His responsibilities include organizational development, talent management, recruitment, and building the organizational capabilities required to support the company's growth.",
     },
     {
       name: "Eng. Ahmed Farouk",
       role: "Information Technology Director",
       image: "/images/leadership/ahmed-farouk.png",
-      bio: "Leading technology development beyond the boundaries of traditional IT support. From developing business applications to continuously strengthening the company's digital infrastructure, he has initiated multiple technological advancements across National Motors; positioning technology as a driver of operational efficiency, connectivity, scalability, and future growth.",
+      bio: "Ahmed Farouk leads information technology at National Motors, overseeing the systems and technology platforms that support the company's operations. His responsibilities include SAP and other business systems, CRM, data management, IT infrastructure, and digital transformation initiatives across the organization.",
     },
   ],
 };
@@ -338,9 +338,7 @@ export const BOARD = {
     role: "Chairman",
     image: "/images/leadership/emad-abdelnaby.webp",
     paragraphs: [
-      "Mr. Emad Abdelnaby is the architect of National Motors' modern business legacy. Building on the established foundation, he shaped a leadership philosophy defined by independent thinking, market creation, and disciplined diversification.",
-      "Rather than competing only within established categories, he has consistently pursued a blue-ocean approach; identifying unmet needs, opening new markets, and building businesses with clear strategic distinction.",
-      "His ability to guide a diverse portfolio across the automotive, after-market, agriculture, and real-estate sectors has been central to National Motors' resilience, expansion, and long-term success.",
+      "Emad Abdelnaby leads the development and diversification of National Motors' business portfolio. His responsibilities include identifying new business opportunities, developing new sectors, and overseeing investments across automotive, aftermarket, agriculture, and real estate.",
     ],
   },
   members: [
@@ -349,9 +347,7 @@ export const BOARD = {
       role: "Chief Executive Officer",
       image: "/images/leadership/ahmed-abdelnaby.png",
       paragraphs: [
-        "Mr. Ahmed Abdelnaby has played a defining role in developing some of National Motors' flagship and highest-performing brands. His leadership focuses on strengthening business models, elevating brand performance, and creating scalable and sustainable sources of revenue.",
-        "Throughout the past decade, he has helped guide National Motors through changing market conditions, operational challenges, and important strategic turning points. His ability to combine forward-looking business thinking with decisive executive leadership has contributed to the company's continued strength and development.",
-        "His professional journey represents a compelling example of leadership built through experience, adaptability, and the ability to transform challenges into opportunities for growth.",
+        "Ahmed Abdelnaby leads National Motors' overall business and brand development. His responsibilities include portfolio growth, business performance, and the development of new revenue opportunities across the company's automotive businesses.",
       ],
     },
     {
@@ -359,9 +355,7 @@ export const BOARD = {
       role: "Chief Operating Officer",
       image: "/images/leadership/hatem-abdelnaby.png",
       paragraphs: [
-        "Mr. Hatem Abdelnaby leads operational strategy and execution across National Motors. He played a central role in introducing electric vehicles into the company's portfolio and continues to oversee relationships with international suppliers, strategic partners, and government stakeholders.",
-        "Combining strategic vision with hands-on execution, he drives new-market entry, category development, operational transformation, and cross-functional delivery across the company.",
-        "His leadership connects ambitious ideas with the systems, partnerships, and operational capabilities required to turn them into sustainable businesses, new mobility solutions, and long-term market opportunities.",
+        "Hatem Abdelnaby leads operations and business execution across National Motors. His responsibilities include operational development, international supplier relationships, strategic partnerships, and the introduction of new products and business areas, including electric mobility.",
       ],
     },
     {
@@ -369,7 +363,7 @@ export const BOARD = {
       role: "Managing Director",
       image: "/images/leadership/omar-abdelnaby.png",
       paragraphs: [
-        "Maintaining close oversight of National Motors' ongoing business processes, helping ensure that strategy translates into coordinated execution. His product-development experience includes directing one of the company's most successful initiatives: transforming market feedback into the development of Blu golf carts designed around the needs of customers in Egypt.",
+        "Omar Abdelnaby oversees day-to-day business operations and execution across National Motors. His experience includes product development and the development of Blu Light Mobility golf carts based on customer and market requirements in Egypt.",
       ],
     },
   ],

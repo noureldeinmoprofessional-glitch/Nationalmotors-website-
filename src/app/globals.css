@@ -1274,7 +1274,7 @@ img, svg, video { display: block; max-width: 100%; }
    ============================================================ */
 .nm-footer {
   background: var(--color-nm-black);
-  padding-block: clamp(5rem, 10vh, 9rem) 2rem;
+  padding-block: clamp(1.5rem, 3vh, 2.5rem) 2rem;
   border-block-start: 1px solid var(--color-nm-border);
 }
 .nm-footer__cta {
@@ -1735,7 +1735,8 @@ html.nm-ready .nm-ah__word {
    ============================================================ */
 .nm-bt {
   position: relative;
-  background: var(--color-nm-charcoal);
+  background: var(--color-nm-black);
+  border-block-start: 1px solid color-mix(in srgb, var(--color-nm-white) 7%, transparent);
   overflow: hidden;
   --bt-logo-h: 64px;
   --bt-dot-gap: 30px;
