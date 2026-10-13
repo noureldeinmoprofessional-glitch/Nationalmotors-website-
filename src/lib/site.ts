@@ -49,6 +49,7 @@ export const NAV: NavItem[] = [
     ],
   },
   { label: "After-Sales", href: "/after-sales" },
+  { label: "Network", href: "/network" },
   {
     label: "News & Media",
     href: "/news",

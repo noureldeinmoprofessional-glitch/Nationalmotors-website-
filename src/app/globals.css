@@ -5786,3 +5786,196 @@ html.nm-ready .nm-sx__nameinner { transform: translateY(118%); }
   .nm-val__num, .nm-val__arrow, .nm-val__desc, .nm-val__thumb img, .nm-val__row::before, .nm-val__sep { transition: none; }
   .nm-val__fill { transform: scaleY(1); }
 }
+
+/* ============================================================
+   NETWORK (hub page, /network) — typographic hero + network grid
+   ============================================================ */
+.nm-nhub__hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 80% at 14% 0%, #13203366 0%, rgba(0, 0, 0, 0) 55%),
+    linear-gradient(170deg, #0a0f17 0%, var(--color-nm-black) 62%);
+  padding-block: clamp(8rem, 18vh, 12rem) clamp(3.5rem, 8vh, 6rem);
+}
+.nm-nhub__hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: end;
+}
+.nm-nhub__title {
+  max-width: 14ch;
+  font-size: var(--fs-8xl);
+  font-weight: var(--fw-extrabold);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  color: var(--color-nm-white);
+}
+.nm-nhub__title .nm-line-mask { display: block; overflow: hidden; padding-block: 0.02em; }
+.nm-nhub__accent { color: var(--color-nm-green-light); }
+.nm-nhub__hero-body { margin-block-start: clamp(1.6rem, 3vw, 2.4rem); max-width: 34rem; }
+.nm-nhub__intro { color: var(--color-nm-silver); }
+
+.nm-nhub__legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+  margin: 0;
+  padding: 0 0 0.5rem;
+  list-style: none;
+}
+.nm-nhub__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-nm-silver);
+}
+.nm-nhub__legend-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--color-nm-green-light);
+  box-shadow: 0 0 10px 1px color-mix(in srgb, var(--color-nm-green-light) 55%, transparent);
+}
+
+/* ---- Grid ---- */
+.nm-nhub__grid-sec {
+  background: var(--color-nm-black);
+  padding-block: clamp(1.5rem, 3vh, 2.5rem) clamp(4.5rem, 9vh, 8rem);
+}
+.nm-nhub__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.25rem, 2.4vw, 2rem);
+}
+.nm-nhub__card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-nm-charcoal);
+  border: 1px solid var(--color-nm-border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.4s var(--ease-nm), transform 0.4s var(--ease-nm),
+    box-shadow 0.4s var(--ease-nm);
+}
+.nm-nhub__card:hover,
+.nm-nhub__card:focus-visible {
+  border-color: color-mix(in srgb, var(--color-nm-green-light) 55%, var(--color-nm-border));
+  transform: translateY(-4px);
+  box-shadow: 0 26px 50px -28px rgba(0, 0, 0, 0.8);
+}
+.nm-nhub__card-media { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--color-nm-graphite); }
+.nm-nhub__card-img { position: absolute; inset: 0; transition: transform 0.9s var(--ease-nm); }
+.nm-nhub__card-img img { width: 100%; height: 100%; }
+.nm-nhub__card:hover .nm-nhub__card-img,
+.nm-nhub__card:focus-visible .nm-nhub__card-img { transform: scale(1.045); }
+.nm-nhub__card-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0) 42%, rgba(10, 12, 16, 0.62) 100%);
+}
+.nm-nhub__card-badge {
+  position: absolute;
+  inset-block-start: 1.1rem;
+  inset-inline-start: 1.1rem;
+  display: inline-grid;
+  place-items: center;
+  min-width: 48px;
+  height: 48px;
+  padding-inline: 0.8rem;
+  background: color-mix(in srgb, var(--color-nm-black) 66%, transparent);
+  backdrop-filter: blur(8px);
+  border: 1px solid color-mix(in srgb, var(--color-nm-white) 14%, transparent);
+  border-radius: 8px;
+  color: var(--color-nm-white);
+}
+.nm-nhub__card-badge svg { width: 1.3rem; height: 1.3rem; }
+.nm-nhub__card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: clamp(1.4rem, 2.4vw, 2rem);
+}
+.nm-nhub__card-title {
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-bold);
+  line-height: 1.14;
+  letter-spacing: -0.02em;
+  color: var(--color-nm-white);
+}
+.nm-nhub__card-rule {
+  display: block;
+  width: 2.5rem;
+  height: 2px;
+  margin-block: 0.9rem 1.1rem;
+  background: var(--color-nm-green);
+}
+.nm-nhub__card-desc { font-size: var(--fs-md); line-height: 1.6; color: var(--color-nm-silver); max-width: 34rem; }
+.nm-nhub__card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-block-start: auto;
+  padding-block-start: clamp(1.25rem, 2.4vw, 1.75rem);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-nm-white);
+}
+.nm-nhub__card-link svg { width: 1rem; height: 1rem; transition: transform 0.4s var(--ease-nm); }
+.nm-nhub__card:hover .nm-nhub__card-link svg,
+.nm-nhub__card:focus-visible .nm-nhub__card-link svg { transform: translateX(5px); }
+
+/* ---- Closing band ---- */
+.nm-nhub__close {
+  position: relative;
+  min-height: clamp(260px, 42vh, 420px);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  isolation: isolate;
+}
+.nm-nhub__close-img { position: absolute; inset: 0; z-index: 0; }
+.nm-nhub__close-img img { width: 100%; height: 100%; }
+.nm-nhub__close-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, var(--color-nm-black) 0%, rgba(8, 10, 13, 0.35) 42%, rgba(8, 10, 13, 0.78) 100%),
+    linear-gradient(90deg, rgba(8, 10, 13, 0.7) 0%, rgba(8, 10, 13, 0) 62%);
+}
+.nm-nhub__close-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding-block: clamp(2.5rem, 6vh, 4.5rem);
+}
+.nm-nhub__close-text {
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  line-height: 2.1;
+  text-transform: uppercase;
+  color: var(--color-nm-silver);
+}
+
+@media (max-width: 980px) {
+  .nm-nhub__hero-grid { grid-template-columns: 1fr; align-items: start; }
+  .nm-nhub__legend {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.7rem 1.6rem;
+    margin-block-start: clamp(2rem, 5vw, 3rem);
+    padding-block-end: 0;
+  }
+}
+@media (max-width: 760px) {
+  .nm-nhub__grid { grid-template-columns: 1fr; }
+}
