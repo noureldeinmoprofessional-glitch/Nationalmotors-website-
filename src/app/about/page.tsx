@@ -3,7 +3,6 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import AboutHero from "@/components/about/AboutHero";
 import HeritageTimeline from "@/components/about/HeritageTimeline";
-import SectorsSection from "@/components/about/SectorsSection";
 import BrandStories from "@/components/about/BrandStories";
 import VisionMission from "@/components/about/VisionMission";
 import ValuesSection from "@/components/about/ValuesSection";
@@ -31,7 +30,6 @@ export default function AboutPage() {
       <main id="main">
         <AboutHero />
         <HeritageTimeline />
-        <SectorsSection />
         <BrandStories />
         <VisionMission />
         <ValuesSection />

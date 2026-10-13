@@ -216,7 +216,7 @@ export const FOOTER_NAV = [
       { label: "About Us", href: "/about" },
       { label: "Our Story", href: "/about#story" },
       { label: "Leadership", href: "/about#leadership" },
-      { label: "Our Sectors", href: "/about#sectors" },
+      { label: "Our Sectors", href: "/sectors" },
     ],
   },
   {
