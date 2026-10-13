@@ -325,7 +325,7 @@ export const BOARD = {
   chairman: {
     name: "Mr. Emad Abdelnaby",
     role: "Chairman",
-    image: null, // No authentic portrait supplied — rendered as a monogram placeholder.
+    image: "/images/leadership/emad-abdelnaby.webp",
     paragraphs: [
       "Mr. Emad Abdelnaby is the architect of National Motors' modern business legacy. Building on the established foundation, he shaped a leadership philosophy defined by independent thinking, market creation, and disciplined diversification.",
       "Rather than competing only within established categories, he has consistently pursued a blue-ocean approach; identifying unmet needs, opening new markets, and building businesses with clear strategic distinction.",
