@@ -15,7 +15,7 @@ export default function ContactView() {
   const introRef = useReveal<HTMLDivElement>({ y: 22, stagger: 0.1, start: "top 86%" });
   const formRef = useReveal<HTMLFormElement>({ y: 26, stagger: 0.07, start: "top 84%" });
 
-  const [form, setForm] = useState({ name: "", phone: "", brand: "", inquiry: "" });
+  const [form, setForm] = useState({ name: "", phone: "", regarding: "", inquiry: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
@@ -27,7 +27,7 @@ export default function ContactView() {
     const err: Record<string, string> = {};
     if (!form.name.trim()) err.name = t.errors.name;
     if (!form.phone.trim()) err.phone = t.errors.phone;
-    if (!form.brand) err.brand = t.errors.brand;
+    if (!form.regarding) err.regarding = t.errors.regarding;
     if (!form.inquiry.trim()) err.inquiry = t.errors.inquiry;
     setErrors(err);
     return Object.keys(err).length === 0;
@@ -45,7 +45,7 @@ export default function ContactView() {
     const lines = [
       `${CONTACT.en.labels.name}: ${form.name}`,
       `${CONTACT.en.labels.phone}: ${form.phone}`,
-      `${CONTACT.en.labels.brand}: ${form.brand}`,
+      `${CONTACT.en.labels.regarding}: ${form.regarding}`,
       `${CONTACT.en.labels.inquiry}: ${form.inquiry}`,
     ];
     await new Promise((res) => setTimeout(res, 800));
@@ -54,7 +54,7 @@ export default function ContactView() {
     setSent(true);
   };
 
-  const reset = () => { setForm({ name: "", phone: "", brand: "", inquiry: "" }); setErrors({}); setSent(false); };
+  const reset = () => { setForm({ name: "", phone: "", regarding: "", inquiry: "" }); setErrors({}); setSent(false); };
 
   return (
     <div className="nm-ct" dir={rtl ? "rtl" : "ltr"} lang={lang}>
@@ -106,13 +106,12 @@ export default function ContactView() {
                   {errors.phone && <span className="nm-field__error" role="alert">{errors.phone}</span>}
                 </div>
                 <div className="nm-field" data-reveal>
-                  <label className="nm-cr-label" htmlFor="ct-brand">{t.labels.brand}</label>
-                  <select id="ct-brand" value={form.brand} onChange={set("brand")} aria-invalid={!!errors.brand}>
-                    <option value="" disabled>{t.brandPlaceholder}</option>
-                    {CONTACT.brands.map((b) => <option key={b} value={b}>{b}</option>)}
-                    <option value={t.generalOption}>{t.generalOption}</option>
+                  <label className="nm-cr-label" htmlFor="ct-regarding">{t.labels.regarding}</label>
+                  <select id="ct-regarding" value={form.regarding} onChange={set("regarding")} aria-invalid={!!errors.regarding}>
+                    <option value="" disabled>{t.regardingPlaceholder}</option>
+                    {t.regardingOptions.map((o) => <option key={o} value={o}>{o}</option>)}
                   </select>
-                  {errors.brand && <span className="nm-field__error" role="alert">{errors.brand}</span>}
+                  {errors.regarding && <span className="nm-field__error" role="alert">{errors.regarding}</span>}
                 </div>
                 <div className="nm-field" data-reveal>
                   <label className="nm-cr-label" htmlFor="ct-inquiry">{t.labels.inquiry}</label>

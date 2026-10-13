@@ -6,6 +6,7 @@ import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import { useIsoLayoutEffect, useLineReveal, useReveal, useClipReveal, useParallax } from "@/lib/hooks";
 import CTAButton from "@/components/ui/CTAButton";
 import BrandLocations from "./BrandLocations";
+import TestDriveCTA from "./TestDriveCTA";
 import type { BrandPageData } from "@/lib/brandsData";
 
 export default function BrandPage({ brand }: { brand: BrandPageData }) {
@@ -56,6 +57,9 @@ export default function BrandPage({ brand }: { brand: BrandPageData }) {
           <p className="nm-bp-hero__tagline" data-bp-fade>
             {brand.hero.tagline ?? brand.hero.descriptor}
           </p>
+          <div className="nm-bp-hero__cta" data-bp-fade>
+            <TestDriveCTA brand={brand.name} />
+          </div>
         </div>
         <div className="nm-bp-hero__cue" aria-hidden="true">
           <span>Scroll</span>

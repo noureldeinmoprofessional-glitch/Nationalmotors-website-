@@ -6,6 +6,7 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import { useIsoLayoutEffect } from "@/lib/hooks";
+import TestDriveCTA from "./TestDriveCTA";
 
 /* Our Brands — a quiet, editorial gateway. Three equal brand portals.
    No brand hierarchy, no detailed content: image + space + type + interaction.
@@ -183,6 +184,9 @@ export default function BrandsIndex() {
           <p className="nm-obr-hero__lead nm-lead">
             Choose a National Motors brand to explore.
           </p>
+          <div className="nm-obr-hero__cta">
+            <TestDriveCTA />
+          </div>
         </div>
       </section>
 
