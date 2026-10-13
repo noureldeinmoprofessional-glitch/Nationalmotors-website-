@@ -55,7 +55,9 @@ export default function SectorsScroll() {
           onUpdate: (self) => {
             if (fillRef.current) gsap.set(fillRef.current, { scaleX: self.progress });
             if (idxRef.current) {
-              const i = Math.min(CARDS.length - 1, Math.floor(self.progress * CARDS.length + 0.0001));
+              // Map scroll progress to the card nearest the viewport centre:
+              // progress 0 → first card, progress 1 → last card.
+              const i = Math.round(self.progress * (CARDS.length - 1));
               idxRef.current.textContent = CARDS[i].n;
             }
           },

@@ -8,8 +8,13 @@ import { useIsoLayoutEffect } from "@/lib/hooks";
 
 const LEGACY_IMG = "/images/about-hero/automotive.jpg";
 
+// Years of operation are derived from the 1978 founding year so the figure
+// stays accurate over time instead of drifting from a hard-coded number.
+const FOUNDED = 1978;
+const YEARS_OF_OPERATION = new Date().getFullYear() - FOUNDED;
+
 const STATS = [
-  { to: 50, label: "Years" },
+  { to: YEARS_OF_OPERATION, label: "Years" },
   { to: 4, label: "Sectors" },
   { to: 13, label: "Brands" },
   { to: 23458, label: "Vehicles Sold" },
