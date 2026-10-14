@@ -2,7 +2,7 @@
 
 import { Fragment, useRef } from "react";
 import Image from "next/image";
-import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
 import { useIsoLayoutEffect } from "@/lib/hooks";
 import { ABOUT_HERO } from "@/lib/aboutContent";
 
@@ -65,20 +65,23 @@ export default function AboutHero() {
       };
 
       if (reduce) {
-        // Reduced motion: full sentence sharp, no animation.
+        // Reduced motion: full sentence sharp, no pin, no scrub.
         words.forEach((el) => { el.style.opacity = "1"; el.style.filter = "none"; el.style.transform = "none"; });
       } else if (N) {
-        // Play once on load (no pin, no scrub): a time-driven progress
-        // runs the same staggered word blur-in, so the sentence always
-        // finishes sharp and is never stranded mid-reveal by scrolling.
+        // Scroll-triggered reveal: the sentence sharpens word-by-word as the
+        // hero is pinned and scrolled through.
         applyBlur(0);
-        const prog = { v: 0 };
-        gsap.to(prog, {
-          v: 1,
-          duration: 1.7,
-          ease: "power2.out",
-          delay: 0.35,
-          onUpdate: () => applyBlur(prog.v),
+        ScrollTrigger.create({
+          trigger: root,
+          start: "top top",
+          end: () => "+=" + (window.innerWidth < 768 ? 900 : 1500),
+          pin: root,
+          pinSpacing: true,
+          anticipatePin: 1,
+          scrub: true,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => applyBlur(self.progress),
+          onRefresh: (self) => applyBlur(self.progress),
         });
       }
 

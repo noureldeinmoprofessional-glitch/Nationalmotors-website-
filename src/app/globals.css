@@ -476,7 +476,10 @@ img, svg, video { display: block; max-width: 100%; }
   background: none;
   border: 0;
   cursor: pointer;
-  font: inherit;
+  /* Inherit only the font family — keep the size/weight from .nm-nav__link
+     (a bare `font: inherit` would reset the font-size to the body size and
+     make this item larger than its siblings). */
+  font-family: inherit;
   line-height: inherit;
 }
 .nm-nav__caret {
@@ -1494,9 +1497,9 @@ html.nm-ready .nm-mask-lines .nm-line-inner {
   z-index: 1;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.46) 0%, rgba(0, 0, 0, 0.26) 45%, rgba(0, 0, 0, 0.64) 100%),
-    linear-gradient(90deg, rgba(8, 10, 11, 0.74) 0%, rgba(8, 10, 11, 0.36) 46%, rgba(8, 10, 11, 0) 78%),
-    rgba(0, 0, 0, 0.16);
+    linear-gradient(180deg, rgba(0, 0, 0, 0.56) 0%, rgba(0, 0, 0, 0.38) 45%, rgba(0, 0, 0, 0.72) 100%),
+    linear-gradient(90deg, rgba(8, 10, 11, 0.82) 0%, rgba(8, 10, 11, 0.48) 46%, rgba(8, 10, 11, 0.12) 78%),
+    rgba(0, 0, 0, 0.28);
 }
 
 .nm-ah__content {
@@ -5802,26 +5805,17 @@ html.nm-ready .nm-sx__nameinner { transform: translateY(118%); }
   background:
     radial-gradient(120% 80% at 14% 0%, #13203366 0%, rgba(0, 0, 0, 0) 55%),
     linear-gradient(170deg, #0a0f17 0%, var(--color-nm-black) 62%);
-  padding-block: clamp(8rem, 18vh, 12rem) clamp(3.5rem, 8vh, 6rem);
+  padding-block: clamp(7rem, 15vh, 10rem) clamp(2.75rem, 6vh, 4.5rem);
 }
-.nm-nhub__hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: end;
-}
-.nm-nhub__title {
-  max-width: 14ch;
-  font-size: var(--fs-8xl);
-  font-weight: var(--fw-bold);
-  line-height: 1.06;
-  letter-spacing: -0.03em;
+.nm-nhub__hero-inner { max-width: 52rem; }
+.nm-nhub__hero-body { margin-block-start: clamp(1rem, 2.2vw, 1.75rem); max-width: 46rem; }
+.nm-nhub__intro {
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-medium);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
   color: var(--color-nm-white);
 }
-.nm-nhub__title .nm-line-mask { display: block; overflow: hidden; padding-block: 0.06em; }
-.nm-nhub__accent { color: var(--color-nm-green-light); }
-.nm-nhub__hero-body { margin-block-start: clamp(1.6rem, 3vw, 2.4rem); max-width: 34rem; }
-.nm-nhub__intro { color: var(--color-nm-silver); }
 
 .nm-nhub__legend {
   display: flex;

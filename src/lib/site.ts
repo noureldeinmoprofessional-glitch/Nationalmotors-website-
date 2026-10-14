@@ -69,7 +69,6 @@ export const NAV: NavItem[] = [
     ],
   },
   { label: "Careers", href: "/careers" },
-  { label: "Contact Us", href: "/contact" },
 ];
 
 export type HeroSlide = {

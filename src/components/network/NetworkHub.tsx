@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { useLineReveal, useReveal } from "@/lib/hooks";
+import { useReveal } from "@/lib/hooks";
 
 type Card = {
   id: string;
@@ -59,45 +59,23 @@ const CARDS: Card[] = [
   },
 ];
 
-const LEGEND = ["Showrooms", "Service Centers", "Authorized Distributors"];
-
 export default function NetworkHub() {
-  const titleRef = useLineReveal<HTMLHeadingElement>({ start: "top 92%" });
   const heroBodyRef = useReveal<HTMLDivElement>({ y: 22, stagger: 0.1, start: "top 92%" });
-  const legendRef = useReveal<HTMLUListElement>({ y: 18, stagger: 0.08, start: "top 92%" });
   const gridRef = useReveal<HTMLDivElement>({ y: 32, stagger: 0.1, start: "top 86%" });
 
   return (
     <>
       {/* Typographic hero — no imagery */}
       <section className="nm-nhub__hero" aria-label="Network">
-        <div className="nm-shell nm-nhub__hero-grid">
-          <div className="nm-nhub__hero-main">
-            <p className="nm-eyebrow nm-eyebrow--static nm-eyebrow--gap">Network</p>
-            <h1 ref={titleRef} className="nm-nhub__title nm-mask-lines">
-              <span className="nm-line-mask"><span className="nm-line-inner">A network</span></span>
-              <span className="nm-line-mask"><span className="nm-line-inner">that keeps</span></span>
-              <span className="nm-line-mask">
-                <span className="nm-line-inner">you <span className="nm-nhub__accent">moving.</span></span>
-              </span>
-            </h1>
-            <div ref={heroBodyRef} className="nm-nhub__hero-body">
-              <p className="nm-lead nm-nhub__intro" data-reveal>
-                From showrooms to service centers and authorized distributors, our nationwide
-                network brings you closer to the brands you trust — with professional support
-                wherever you are in Egypt.
-              </p>
-            </div>
+        <div className="nm-shell nm-nhub__hero-inner">
+          <h1 className="nm-eyebrow nm-eyebrow--static nm-eyebrow--gap nm-nhub__eyebrow">Network</h1>
+          <div ref={heroBodyRef} className="nm-nhub__hero-body">
+            <p className="nm-lead nm-nhub__intro" data-reveal>
+              From showrooms to service centers and authorized distributors, our nationwide
+              network brings you closer to the brands you trust — with professional support
+              wherever you are in Egypt.
+            </p>
           </div>
-
-          <ul ref={legendRef} className="nm-nhub__legend" aria-hidden="true">
-            {LEGEND.map((l) => (
-              <li key={l} data-reveal className="nm-nhub__legend-item">
-                <span className="nm-nhub__legend-dot" />
-                <span>{l}</span>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 

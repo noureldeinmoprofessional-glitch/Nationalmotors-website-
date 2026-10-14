@@ -80,7 +80,6 @@ export default function LeadershipSection() {
             )}
           </div>
           <div ref={heroBodyRef} className="nm-ldr__hero-body">
-            <p className="nm-ldr__hero-tag" data-reveal>{LEADERSHIP_HEADER.familyLabel}</p>
             <h3 className="nm-ldr__hero-name" data-reveal>{chairman.name}</h3>
             <p className="nm-ldr__hero-role" data-reveal>{chairman.role}</p>
             <div className="nm-ldr__hero-bio">
@@ -93,10 +92,6 @@ export default function LeadershipSection() {
 
         {/* The founding family */}
         <section className="nm-ldr__tier" data-accent="sand" aria-label={LEADERSHIP_HEADER.familyLabel}>
-          <header className="nm-ldr__tier-head">
-            <p className="nm-ldr__tier-label">{LEADERSHIP_HEADER.familyLabel}</p>
-            <p className="nm-ldr__tier-note">{LEADERSHIP_HEADER.familyNote}</p>
-          </header>
           <div ref={familyRef} className="nm-ldr__grid nm-ldr__grid--3">
             {BOARD.members.map((m, i) => (
               <PersonCard key={m.name} p={m} n={i + 1} accent="sand" />
@@ -106,10 +101,6 @@ export default function LeadershipSection() {
 
         {/* Executive team */}
         <section className="nm-ldr__tier" data-accent="blue" aria-label={LEADERSHIP_HEADER.execLabel}>
-          <header className="nm-ldr__tier-head">
-            <p className="nm-ldr__tier-label">{LEADERSHIP_HEADER.execLabel}</p>
-            <p className="nm-ldr__tier-note">{LEADERSHIP_HEADER.execNote}</p>
-          </header>
           <div ref={execRef} className="nm-ldr__grid nm-ldr__grid--4">
             {LEADERSHIP.people.map((person, i) => (
               <PersonCard key={person.name} p={{ ...person, paragraphs: [person.bio] }} n={i + 1} accent="blue" />
