@@ -361,7 +361,7 @@ export const BOARD = {
     {
       name: "Mr. Omar Abdelnaby",
       role: "Managing Director",
-      image: "/images/leadership/omar-abdelnaby.png",
+      image: "/images/leadership/Board-Members-Omar-Abdelnaby-2.webp",
       paragraphs: [
         "Omar Abdelnaby oversees day-to-day business operations and execution across National Motors. His experience includes product development and the development of Blu Light Mobility golf carts based on customer and market requirements in Egypt.",
       ],
