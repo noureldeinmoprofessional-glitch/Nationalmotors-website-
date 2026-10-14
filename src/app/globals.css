@@ -1318,21 +1318,23 @@ img, svg, video { display: block; max-width: 100%; }
 
 .nm-footer__main {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
   gap: clamp(2.5rem, 5vw, 5rem);
   padding-block: clamp(3.5rem, 7vw, 6rem);
+  align-items: start;
 }
-.nm-footer__brand { max-width: 22rem; }
+.nm-footer__brand { max-width: 24rem; }
 .nm-footer__logo-svg { height: 40px; width: auto; color: var(--color-nm-white); }
 .nm-footer__tag { margin-block: 1.5rem; color: var(--color-nm-silver); line-height: 1.55; }
-.nm-footer__contact { display: flex; flex-direction: column; gap: 0.75rem; }
+.nm-footer__contact { display: flex; flex-direction: column; gap: 0.75rem; margin-block-start: clamp(1.5rem, 3vw, 2rem); }
+.nm-footer__brand .nm-footer__social { margin-block-start: clamp(1.5rem, 3vw, 2rem); flex-wrap: wrap; }
 .nm-footer__contact-item { display: inline-flex; align-items: center; gap: 0.6rem; color: var(--color-nm-silver); transition: color 0.3s var(--ease-nm); }
 .nm-footer__contact-item svg { width: 1rem; height: 1rem; color: var(--color-nm-green-light); }
 .nm-footer__contact-item:hover { color: var(--color-nm-white); }
 
 .nm-footer__cols {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(1.75rem, 3vw, 2.5rem) clamp(1.5rem, 3vw, 3rem);
 }
 .nm-footer__heading {
@@ -1617,7 +1619,7 @@ html.nm-ready .nm-ah__word {
   font-weight: 700;
   letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: var(--color-nm-sand);
+  color: var(--color-nm-accent-light);
 }
 .nm-heritage__year-num {
   display: block;
@@ -3983,7 +3985,11 @@ html.nm-ready .nm-svc:not(.is-in) .nm-svc__card {
 /* --- Tiers --- */
 .nm-ldr__tier { --ld-accent: var(--color-nm-green-light); }
 .nm-ldr__tier[data-accent="sand"] { --ld-accent: var(--color-nm-sand); }
-.nm-ldr__tier + .nm-ldr__tier { margin-block-start: clamp(3rem, 6vw, 5.5rem); }
+.nm-ldr__tier + .nm-ldr__tier {
+  margin-block-start: clamp(3rem, 6vw, 5rem);
+  padding-block-start: clamp(3rem, 6vw, 5rem);
+  border-block-start: 1px solid color-mix(in srgb, var(--color-nm-white) 10%, transparent);
+}
 .nm-ldr__tier-head {
   display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.5rem 1.4rem;
   padding-block-end: 1rem; margin-block-end: clamp(1.75rem, 3vw, 2.5rem);

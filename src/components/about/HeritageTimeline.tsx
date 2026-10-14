@@ -56,7 +56,7 @@ export default function HeritageTimeline() {
   return (
     <section ref={sectionRef} id="story" className="nm-heritage" aria-label="Our Story">
       <div className="nm-shell">
-        <p className="nm-eyebrow nm-eyebrow--static nm-eyebrow--gap nm-heritage__eyebrow" data-accent="sand">
+        <p className="nm-eyebrow nm-eyebrow--static nm-eyebrow--gap nm-heritage__eyebrow">
           {HERITAGE.eyebrow}
         </p>
 

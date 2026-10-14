@@ -1,14 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { Phone, Mail, ArrowUpRight } from "lucide-react";
-import { Facebook, Instagram, Linkedin, Youtube } from "@/components/ui/SocialIcons";
+import { Phone, Mail } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Youtube, Whatsapp, Tiktok } from "@/components/ui/SocialIcons";
 import { useReveal } from "@/lib/hooks";
 import { CONTACT, FOOTER_NAV } from "@/lib/site";
 import Logo from "@/components/ui/Logo";
 import CTAButton from "@/components/ui/CTAButton";
 
 const YEAR = 2026;
+const WHATSAPP_URL = `https://wa.me/20${CONTACT.whatsapp.replace(/^0/, "")}`;
 
 export default function Footer() {
   const ctaBodyRef = useReveal<HTMLDivElement>({ y: 24, stagger: 0.1 });
@@ -33,16 +34,12 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Main */}
+        {/* Main — single row: brand/contact/social + link columns */}
         <div ref={colsRef} className="nm-footer__main">
           <div className="nm-footer__brand" data-reveal>
             <Link href="/" aria-label="National Motors — home" className="nm-footer__logo">
               <Logo className="nm-footer__logo-svg" />
             </Link>
-            <p className="nm-footer__tag">
-              Automotive &amp; mobility solutions in Egypt — moving toward National
-              Motors Group.
-            </p>
             <div className="nm-footer__contact">
               <a href={`tel:${CONTACT.hotline}`} className="nm-footer__contact-item">
                 <Phone strokeWidth={1.6} />
@@ -53,6 +50,14 @@ export default function Footer() {
                 <span>{CONTACT.email}</span>
               </a>
             </div>
+            <ul className="nm-footer__social">
+              <li><a href={CONTACT.socials.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook"><Facebook /></a></li>
+              <li><a href={CONTACT.socials.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Instagram /></a></li>
+              <li><a href={CONTACT.socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin /></a></li>
+              <li><a href={CONTACT.socials.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube"><Youtube /></a></li>
+              <li><a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><Whatsapp /></a></li>
+              <li><a href={CONTACT.socials.tiktok} target="_blank" rel="noopener noreferrer" aria-label="TikTok"><Tiktok /></a></li>
+            </ul>
           </div>
 
           <nav className="nm-footer__cols" aria-label="Footer">
@@ -70,17 +75,6 @@ export default function Footer() {
                 </ul>
               </div>
             ))}
-            <div className="nm-footer__col nm-footer__col--contact" data-reveal>
-              <h3 className="nm-footer__heading">Contact</h3>
-              <ul>
-                <li><Link href="/contact" className="nm-footer__link"><span>Contact Us</span></Link></li>
-                <li><a href={`tel:${CONTACT.hotline}`} className="nm-footer__link"><span>Hotline {CONTACT.hotline}</span></a></li>
-                <li><a href={`mailto:${CONTACT.email}`} className="nm-footer__link"><span>Email Us</span></a></li>
-              </ul>
-              <Link href="/contact" className="nm-footer__contact-cta" data-cursor="VIEW">
-                Get in touch <ArrowUpRight strokeWidth={1.6} />
-              </Link>
-            </div>
           </nav>
         </div>
 
@@ -98,14 +92,8 @@ export default function Footer() {
             <div className="nm-footer__lang">
               <button className="is-active">English</button>
               <span aria-hidden="true">/</span>
-              <button lang="ar">العربية</button>
+              <button lang="ar" disabled title="Arabic — coming soon">العربية</button>
             </div>
-            <ul className="nm-footer__social">
-              <li><a href={CONTACT.socials.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook"><Facebook /></a></li>
-              <li><a href={CONTACT.socials.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Instagram /></a></li>
-              <li><a href={CONTACT.socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin /></a></li>
-              <li><a href={CONTACT.socials.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube"><Youtube /></a></li>
-            </ul>
           </div>
         </div>
       </div>

@@ -205,44 +205,32 @@ export const FOOTER_NAV = [
     heading: "Company",
     links: [
       { label: "About Us", href: "/about" },
-      { label: "Our Story", href: "/about#story" },
-      { label: "Leadership", href: "/about#leadership" },
-      { label: "Our Sectors", href: "/sectors" },
+      { label: "Story", href: "/about#story" },
     ],
   },
   {
-    heading: "Our Brands",
+    heading: "Brands",
     links: [
-      { label: "Joylong", href: "/brands/joylong" },
       { label: "Farizon", href: "/brands/farizon" },
-      { label: "Blu", href: "/brands/blu-light-mobility" },
+      { label: "Joylong", href: "/brands/joylong" },
+      { label: "Blu Mobility", href: "/brands/blu-light-mobility" },
     ],
   },
   {
     heading: "Support",
     links: [
-      { label: "After-Sales Services", href: "/after-sales" },
-      { label: "Spare Parts", href: "/after-sales#spare-parts" },
-      { label: "Maintenance", href: "/after-sales#maintenance" },
-      { label: "Service Centers", href: "/after-sales#centers" },
-      { label: "Book a Service", href: "/after-sales#book" },
+      { label: "Service Centers", href: "/locations/service-centers" },
+      { label: "Showrooms", href: "/locations/showrooms" },
+      { label: "Book A Service", href: "/after-sales#book" },
     ],
   },
   {
     heading: "Discover",
     links: [
-      { label: "News & Media", href: "/news/press-releases" },
       { label: "Press Releases", href: "/news/press-releases" },
       { label: "Articles & Insights", href: "/news/articles" },
       { label: "Media", href: "/news/media" },
       { label: "FAQ", href: "/faq" },
-    ],
-  },
-  {
-    heading: "Locations",
-    links: [
-      { label: "Showrooms", href: "/locations/showrooms" },
-      { label: "Service Centers", href: "/locations/service-centers" },
     ],
   },
 ];
