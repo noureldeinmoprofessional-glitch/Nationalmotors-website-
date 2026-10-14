@@ -48,7 +48,6 @@ export const NAV: NavItem[] = [
       { label: "Blu", href: "/brands/blu-light-mobility" },
     ],
   },
-  { label: "After-Sales", href: "/after-sales" },
   { label: "Network", href: "/network" },
   {
     label: "News & Media",
@@ -58,14 +57,6 @@ export const NAV: NavItem[] = [
       { label: "Press Releases", href: "/news/press-releases" },
       { label: "Articles & Insights", href: "/news/articles" },
       { label: "Media", href: "/news/media" },
-    ],
-  },
-  {
-    label: "Locations",
-    href: "/locations/showrooms",
-    children: [
-      { label: "Showrooms", href: "/locations/showrooms" },
-      { label: "Service Centers", href: "/locations/service-centers" },
     ],
   },
   { label: "Careers", href: "/careers" },
