@@ -67,14 +67,16 @@ export default function NetworkHub() {
     <>
       {/* Typographic hero — no imagery */}
       <section className="nm-nhub__hero" aria-label="Network">
-        <div className="nm-shell nm-nhub__hero-inner">
-          <h1 className="nm-eyebrow nm-eyebrow--static nm-eyebrow--gap nm-nhub__eyebrow">Network</h1>
-          <div ref={heroBodyRef} className="nm-nhub__hero-body">
-            <p className="nm-lead nm-nhub__intro" data-reveal>
-              From showrooms to service centers and authorized distributors, our nationwide
-              network brings you closer to the brands you trust — with professional support
-              wherever you are in Egypt.
-            </p>
+        <div className="nm-shell">
+          <div className="nm-nhub__hero-inner">
+            <h1 className="nm-eyebrow nm-eyebrow--static nm-eyebrow--gap nm-nhub__eyebrow">Network</h1>
+            <div ref={heroBodyRef} className="nm-nhub__hero-body">
+              <p className="nm-lead nm-nhub__intro" data-reveal>
+                From showrooms to service centers and authorized distributors, our nationwide
+                network brings you closer to the brands you trust — with professional support
+                wherever you are in Egypt.
+              </p>
+            </div>
           </div>
         </div>
       </section>
