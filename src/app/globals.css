@@ -4066,7 +4066,7 @@ html.nm-ready .nm-svc:not(.is-in) .nm-svc__card {
 /* ---- Future ---- */
 .nm-future {
   position: relative;
-  min-height: 640px;
+  min-height: 740px;
   display: flex;
   align-items: center;
   overflow: hidden;
