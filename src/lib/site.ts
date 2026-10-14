@@ -213,7 +213,7 @@ export const FOOTER_NAV = [
     links: [
       { label: "Farizon", href: "/brands/farizon" },
       { label: "Joylong", href: "/brands/joylong" },
-      { label: "Blu Mobility", href: "/brands/blu-light-mobility" },
+      { label: "Blu", href: "/brands/blu-light-mobility" },
     ],
   },
   {
