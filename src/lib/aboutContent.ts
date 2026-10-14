@@ -385,7 +385,7 @@ export const FUTURE = {
   // Verbatim approved transition wording.
   statement:
     "National Motors is transitioning toward National Motors Group by the end of 2026.",
-  image: "/images/hero/farizon-v6e.png",
-  imageAlt: "A contemporary National Motors commercial vehicle",
+  image: "/images/future/next-chapter.webp",
+  imageAlt: "Light trails streaking down a dark road toward the horizon",
   cta: { label: "Explore Our Brands", href: "/brands" },
 };
