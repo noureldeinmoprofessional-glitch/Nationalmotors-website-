@@ -2579,6 +2579,11 @@ html.nm-ready .nm-svc:not(.is-in) .nm-svc__card {
 @media (max-width: 860px) {
   .nm-aw__grid { grid-template-columns: 1fr; }
 }
+@media (max-width: 560px) {
+  .nm-aw__actions { width: 100%; }
+  .nm-aw__actions .nm-btn { width: 100%; justify-content: space-between; }
+  .nm-aw__actions .nm-btn__text { white-space: normal; }
+}
 
 /* 03 — Booking form */
 .nm-book {
