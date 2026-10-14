@@ -1,9 +1,11 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { useReveal } from "@/lib/hooks";
+import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
+import { useIsoLayoutEffect } from "@/lib/hooks";
 
 type Card = {
   id: string;
@@ -60,18 +62,59 @@ const CARDS: Card[] = [
 ];
 
 export default function NetworkHub() {
-  const heroBodyRef = useReveal<HTMLDivElement>({ y: 22, stagger: 0.1, start: "top 92%" });
-  const gridRef = useReveal<HTMLDivElement>({ y: 32, stagger: 0.1, start: "top 86%" });
+  const rootRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const gridRef = useRef<HTMLElement>(null);
+
+  useIsoLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    // Reduced motion / no JS: everything stays visible by default.
+    if (prefersReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      // ---- Hero entrance ----
+      gsap.set(".nm-nhub__eyebrow", { autoAlpha: 0, y: 20 });
+      gsap.set(".nm-nhub__intro", { autoAlpha: 0, y: 28, filter: "blur(8px)" });
+
+      const hero = gsap.timeline({
+        defaults: { ease: "power3.out" },
+        scrollTrigger: { trigger: heroRef.current, start: "top 82%" },
+      });
+      hero
+        .to(".nm-nhub__eyebrow", { autoAlpha: 1, y: 0, duration: 0.7 })
+        .to(".nm-nhub__intro", { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 1 }, "-=0.4");
+
+      // ---- Grid cards: lift in + clip-reveal the media (image hover zoom is
+      // left untouched so it keeps working after the entrance). ----
+      gsap.set(".nm-nhub__card", { autoAlpha: 0, y: 46 });
+      gsap.set(".nm-nhub__card-media", { clipPath: "inset(0 0 100% 0)" });
+      gsap.set(".nm-nhub__card-body > *", { autoAlpha: 0, y: 18 });
+
+      const grid = gsap.timeline({
+        defaults: { ease: "power3.out" },
+        scrollTrigger: { trigger: gridRef.current, start: "top 84%" },
+      });
+      grid
+        .to(".nm-nhub__card", { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.13 }, 0)
+        .to(".nm-nhub__card-media", { clipPath: "inset(0 0 0% 0)", duration: 1, stagger: 0.13, ease: "power4.inOut" }, 0.12)
+        .to(".nm-nhub__card-body > *", { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.045 }, 0.5);
+
+      ScrollTrigger.refresh();
+    }, root);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <>
+    <div ref={rootRef}>
       {/* Typographic hero — no imagery */}
-      <section className="nm-nhub__hero" aria-label="Network">
+      <section ref={heroRef} className="nm-nhub__hero" aria-label="Network">
         <div className="nm-shell">
           <div className="nm-nhub__hero-inner">
             <h1 className="nm-eyebrow nm-eyebrow--static nm-eyebrow--gap nm-nhub__eyebrow">Network</h1>
-            <div ref={heroBodyRef} className="nm-nhub__hero-body">
-              <p className="nm-lead nm-nhub__intro" data-reveal>
+            <div className="nm-nhub__hero-body">
+              <p className="nm-lead nm-nhub__intro">
                 From showrooms to service centers and authorized distributors, our nationwide
                 network brings you closer to the brands you trust — with professional support
                 wherever you are in Egypt.
@@ -82,10 +125,10 @@ export default function NetworkHub() {
       </section>
 
       {/* Network grid */}
-      <section className="nm-nhub__grid-sec" aria-label="Our network">
-        <div ref={gridRef} className="nm-shell nm-nhub__grid">
+      <section ref={gridRef} className="nm-nhub__grid-sec" aria-label="Our network">
+        <div className="nm-shell nm-nhub__grid">
           {CARDS.map((c) => (
-            <Link key={c.id} href={c.href} className="nm-nhub__card" data-reveal data-cursor="VIEW">
+            <Link key={c.id} href={c.href} className="nm-nhub__card" data-cursor="VIEW">
               <div className="nm-nhub__card-media">
                 <div className="nm-nhub__card-img">
                   <Image
@@ -112,6 +155,6 @@ export default function NetworkHub() {
           ))}
         </div>
       </section>
-    </>
+    </div>
   );
 }
